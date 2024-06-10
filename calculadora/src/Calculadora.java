@@ -4,7 +4,7 @@ public class Calculadora {
     public static void main(String[] args) throws Exception {
         Scanner entrada = new Scanner(System.in);
         int primeiro = 0, segundo = 0;
-        int resultado;
+        double resultado;
     
         double resDiv; 
 
@@ -44,6 +44,10 @@ public class Calculadora {
                 // vamos realizar uma divisão
                     resDiv = (double)primeiro / (double)segundo;
                     System.out.printf("%.10f",resDiv);
+                    break;
+                case 5:
+                    resultado = Math.pow(primeiro, segundo);
+                    System.out.println(resultado);
                     break;
                 
                 default:
