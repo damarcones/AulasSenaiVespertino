@@ -1,4 +1,4 @@
-package Automovel;
+package src.Automovel;
 
 public class Carro implements Veiculo, Proprietario {
 

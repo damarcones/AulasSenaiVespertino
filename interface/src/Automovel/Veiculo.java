@@ -1,4 +1,4 @@
-package Automovel;
+package src.Automovel;
 
 public interface Veiculo {
     public String placa(String nome);

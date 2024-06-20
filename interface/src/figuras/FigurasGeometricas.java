@@ -1,4 +1,4 @@
-package figuras;
+package src.figuras;
 
 public interface FigurasGeometricas {
     public String getNomeFigura();

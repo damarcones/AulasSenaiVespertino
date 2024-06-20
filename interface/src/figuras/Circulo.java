@@ -1,4 +1,4 @@
-package figuras;
+package src.figuras;
 
 public class Circulo implements FigurasGeometricas {
     private double raio;

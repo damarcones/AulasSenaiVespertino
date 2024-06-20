@@ -1,4 +1,4 @@
-package figuras;
+package src.figuras;
 
 public class Triangulo implements FigurasGeometricas {
     private double base;
