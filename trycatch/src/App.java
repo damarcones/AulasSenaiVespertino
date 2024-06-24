@@ -1,33 +1,77 @@
 
+import java.text.ParseException;
 import javax.swing.*;
+import javax.swing.text.MaskFormatter;
 public class App {
-    public static void main(String[] args) throws Exception {
-        // int[] vetor = new int[3];
+    public static void main(String[] args) throws CepInvalido {
+        String cpf = "";
+        String telefone = "";
+        String cep = "";
 
-        // try {
+        JTextField getCpf = new JTextField(10);
+        JTextField getTelefone = new JTextField(10);
+        JTextField getCep = new JTextField(10);
+       
+        Object[] message = {
+            "Insira o CPF:", getCpf,
+            "Insira o Telefone:", getTelefone,
+            "Insira o cep:", getCep
+        };
 
-        //     System.out.println(1/0);
-        // }
-        // catch(ArithmeticException f){
-        //     System.err.println(f.getMessage());
-        // }
-         
-
-        // try { for(int i = 0; i < 4; i++){
-        //     vetor[i] = i; 
-        //     System.out.println(vetor[i]);
-        // }
-        // } catch (IndexOutOfBoundsException e) {
-        //     System.err.println(e.getMessage());
-        // }
-        // finally{
-        //     System.err.println("Final segundo try.");
-            
-        // }
-
-     
-       int x =  Integer.parseInt(JOptionPane.showInputDialog("Teste"));
         
-       JOptionPane.showConfirmDialog(null, args, null, x);
+        
+        int opcao = JOptionPane.showConfirmDialog(null, message, "Insira os valores", JOptionPane.OK_CANCEL_OPTION);
+
+        if (opcao == JOptionPane.OK_OPTION){
+            cpf = getCpf.getText();
+            telefone = getTelefone.getText();
+            cep = getCep.getText();
+        }
+
+        String padraoCep = "##.###-###";
+        String padraoCpf = "###.###.###-##";
+        String padraoTelefone = "(##) # ####-####";
+
+        String cpfFormatado = FormataCpf(cpf, padraoCpf);
+        String telefoneFormatado =  FormataTelefone(telefone, padraoTelefone);
+        String cepFormatado = FormataCep(cep, padraoCep);
+
+        JOptionPane.showMessageDialog(null,"CPF: " + cpfFormatado +"\nTelefone: " + telefoneFormatado +"\nCEP: "+ cepFormatado);
+
     }
+    static String FormataCep(String cep, String padrao) throws CepInvalido{
+        MaskFormatter mascara;
+        
+        try {
+            mascara =  new MaskFormatter(padrao);
+            mascara.setValueContainsLiteralCharacters(false);
+            return mascara.valueToString(cep);
+        }
+         catch ( ParseException  e) {
+            throw new RuntimeException(e);
+        }
+    } 
+
+    static String FormataCpf(String cpf, String padrao){
+        MaskFormatter mascara;
+        try {
+            mascara =  new MaskFormatter(padrao);
+            mascara.setValueContainsLiteralCharacters(false);
+            return mascara.valueToString(cpf);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    } 
+
+    static String FormataTelefone(String telefone, String padrao){
+        MaskFormatter mascara;
+        try {
+            mascara =  new MaskFormatter(padrao);
+            mascara.setValueContainsLiteralCharacters(false);
+            return mascara.valueToString(telefone);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    } 
+
 }
