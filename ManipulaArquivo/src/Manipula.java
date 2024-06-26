@@ -1,9 +1,9 @@
 public class Manipula {
     public static void main(String[] args) throws Exception {
         
-        String caminho = "ManipulaArquivo\\teste.txt";
+        String caminho = "ManipulaArquivo\\entrada.txt";
 
-        ManipuladorArquivos.escrita(caminho);
+        // ManipuladorArquivos.escrita(caminho);
         ManipuladorArquivos.leitura(caminho);
     }
 }
