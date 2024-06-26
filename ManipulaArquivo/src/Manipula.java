@@ -3,7 +3,7 @@ public class Manipula {
         
         String caminho = "ManipulaArquivo\\entrada.txt";
 
-        // ManipuladorArquivos.escrita(caminho);
-        ManipuladorArquivos.leitura(caminho);
+        ManipuladorArquivos.escrita("ManipulaArquivo\\saida2.txt");
+        // ManipuladorArquivos.leitura(caminho);
     }
 }
