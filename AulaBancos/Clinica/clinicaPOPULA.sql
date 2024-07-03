@@ -37,3 +37,14 @@ VALUES 	(61954842347,2),
 		(61954885347,6),
 		(61954882347,7),
 		(61954328347,10);
+        
+INSERT INTO RECEITA(IDCONSULTA, DESCRICAO)
+VALUES 	(1, ''),
+		(1, 'REPOUSO'),
+        (3, 'iNGESTÃO DE LIQUIDOS');
+        
+INSERT INTO MEDICAMENTOPRES(MEDICAMENTO, IDRECEITA)
+VALUES	('Dipirona', 1),
+		('Xarope', 1),
+        ('metformina', 3),
+        ('laxante', 2);
