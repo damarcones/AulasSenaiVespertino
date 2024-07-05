@@ -80,29 +80,6 @@ VALUES	(10.50, '2025-06-30', 'Caneta Esferográfica Azul', 'Caneta esferográfic
 		(9.99, '2024-09-30', 'Estojo Escolar', 'Estojo escolar com divisórias para lápis e acessórios.', 70, '11223344500111');
 
 
-INSERT INTO PRODUTO (PRECO, VALIDADE, NOMEPRODUTO, DESCRICAO, QUANTIDADE, CNPJ) VALUES
-(10.50, '2025-06-30', 'Caneta Esferográfica Azul', 'Caneta esferográfica de ponta média, tinta azul.', 100, '12345678000100'),
-(5.75, '2024-12-31', 'Caderno Universitário 200 folhas', 'Caderno universitário com capa dura, pauta interna e 200 folhas.', 50, '23456789000123'),
-(3.25, '2023-08-15', 'Lápis HB Nº2', 'Lápis com grafite HB Nº2, ideal para escrita.', 200, '34567890000134'),
-(15.90, '2025-04-20', 'Borracha Branca', 'Borracha branca macia, fácil de apagar.', 150, '45678901000145'),
-(20.00, '2024-11-30', 'Marcador de Texto Amarelo', 'Marcador de texto amarelo fluorescente.', 80, '56789012000156'),
-(7.99, '2023-12-31', 'Agenda Diária 2024', 'Agenda diária para o ano de 2024, com capa flexível.', 30, '67890123000167'),
-(12.50, '2025-02-28', 'Pasta Catálogo A4', 'Pasta catálogo A4 com 100 folhas transparentes.', 40, '78901234000178'),
-(8.75, '2024-09-15', 'Caneta Marca Texto Verde', 'Caneta marca texto verde fluorescente.', 70, '89012345000189'),
-(6.49, '2023-10-31', 'Tesoura Escolar', 'Tesoura escolar com pontas arredondadas, ideal para uso seguro por crianças.', 90, '90123456000190'),
-(18.75, '2025-03-31', 'Calculadora Científica', 'Calculadora científica com funções trigonométricas e estatísticas.', 25, '11223344500011'),
-(4.99, '2023-07-15', 'Apontador com Depósito', 'Apontador de lápis com depósito para as aparas.', 120, '22334455600022'),
-(2.99, '2024-10-30', 'Borracha Colorida', 'Borracha colorida em formato de animal, ideal para uso escolar.', 180, '33445566700033'),
-(9.25, '2025-01-31', 'Caneta Gel Azul', 'Caneta gel azul de escrita suave.', 60, '44556677800044'),
-(14.50, '2024-08-31', 'Mochila Escolar', 'Mochila escolar com compartimento para notebook e alças acolchoadas.', 35, '55667788900055'),
-(22.99, '2025-05-31', 'Giz de Cera 12 Cores', 'Giz de cera com 12 cores diferentes.', 100, '66778899000066'),
-(3.75, '2024-07-31', 'Régua 30 cm', 'Régua escolar de 30 cm em plástico transparente.', 200, '77889900100077'),
-(5.00, '2023-11-15', 'Lápis de Cor 24 Cores', 'Lápis de cor com 24 cores vibrantes.', 150, '88990011200088'),
-(6.99, '2024-06-30', 'Corretivo Líquido', 'Corretivo líquido de secagem rápida.', 80, '99001122300099'),
-(11.25, '2025-03-15', 'Papel Sulfite A4 500 folhas', 'Papel sulfite A4 branco, 75g/m², pacote com 500 folhas.', 50, '33445566700100'),
-(9.99, '2024-09-30', 'Estojo Escolar', 'Estojo escolar com divisórias para lápis e acessórios.', 70, '11223344500111');
-
-
 
 INSERT INTO VENDAS(MATRICULA, CPF)
 VALUES 	(1000,11223344556),
