@@ -4,7 +4,7 @@ Essa branch é destinada para o trabalho prático de ``` Java ``` da turma ```  
 
 ## Enunciado
 
-Você foi contratado(a) pela Turistando, uma empresa que possui uma frota de veículos que transporta turistas em Porto Seguro - BA, para desenvolver um programa cujo objetivo é contabilizar os gastos (abastecimento, manutenção, impostos e multas) gerados com os carros da empresa.
+Você foi contratado(a) pela Turistando, uma empresa que possui uma frota de veículos que transporta turistas em Porto Seguro - BA, para desenvolver um programa cujo objetivo é contabilizar os gastos (abastecimento, manutenção, impostos, multas e outros) gerados com os carros da empresa.
 
 Uma das exigências da Turistando é que o programa faça o cálculo do consumo de combustível de seus veículos, ou seja, calcule quantos quilometros o veículo faz por litro de combustível. Para isso, foi informado a você que todo abastecimento do veículo é do tipo "completar o tanque" até o automático da bomba; e para registrar o abastecimento é preciso inserir o valor e a quantidade de combustível abastecido, e a quilometragem atual do veículo (exemplo: 168,00, 27.42 e 112,352). Assim, você deverá utilizar todos os abastecimentos registrados no sistema e apresentar quantos quilometros o veículo faz, em média, por litro de combustível.
 
