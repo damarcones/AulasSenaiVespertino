@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 public class UsuarioController {
 
+    
+
     @Autowired
     private UsuarioView view;
 
@@ -23,5 +25,6 @@ public class UsuarioController {
         return view.listAll();
     }
     
+    //    localhost:8080/
 
 }

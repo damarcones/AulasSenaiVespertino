@@ -18,6 +18,7 @@ public class UsuarioView {
     public List<Usuario> listAll(){
         List <Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario("Damarcones", "1234"));
+        usuarios.add(new Usuario("Porto","5678"));
         return usuarios;
     }
 }
