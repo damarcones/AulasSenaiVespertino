@@ -1,5 +1,7 @@
 package br.com.api.api.modelo;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,12 +11,12 @@ import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "Pessoas") // Caso queira mudar o nome da tabela, senão a tabela recebe o nome da classe
+@Table(name = "Populacao") // Caso queira mudar o nome da tabela, senão a tabela recebe o nome da classe
 public class Pessoa {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(generator= "UUID")
+    private UUID id;
     private String nome;
     private int idade;
 
