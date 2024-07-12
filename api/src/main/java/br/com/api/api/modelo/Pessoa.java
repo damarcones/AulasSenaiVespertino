@@ -1,6 +1,6 @@
 package br.com.api.api.modelo;
 
-import java.util.UUID;
+// import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +15,8 @@ import jakarta.persistence.Table;
 public class Pessoa {
 
     @Id
-    @GeneratedValue(generator= "UUID")
-    private UUID id;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private int id;
     private String nome;
     private int idade;
 
@@ -32,5 +32,7 @@ public class Pessoa {
     public void setIdade(int idade) {
         this.idade = idade;
     }
-
+    public void setId(int id) {
+        this.id = id;
+    }
 }
