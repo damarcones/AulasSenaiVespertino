@@ -1,0 +1,3 @@
+# Enunciado
+
+Criar uma aplicação Spring referente a um ambiente escolar, onde acontecerá o cadastro de diversos alunos com as seguintes informações: Nome, idade, sexo, matricula, turma e turno, e, além dessas informações, será necessário armazenar as quatro notas referente a cada bimestre do ano de cinco disciplinas diferentes (Matemática, Português, História, Geografia e Ciências) e apresentar por meio de um request se o aluno foi aprovado, reprovado ou está de recuperação (Média >= 6 aprovado, Média entre 5 e 5.9 de "Recuperação", Média < 5 reprovado). Todas as informações devem ser recuperadas mesmo encerrando o programa.
