@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public class InterfaceUsuario {
     public static void main(String[] args) {
-        controler.GerenciamentoVeiculos gerenciamento = new controler.GerenciamentoVeiculos();
+        GerenciamentoVeiculos gerenciamento = new GerenciamentoVeiculos();
 
         while (true) {
             String[] options = {"Cadastrar Veículo", "Registrar Abastecimento", "Registrar Despesa", "Calcular Consumo Médio", "Sair"};
@@ -49,6 +49,7 @@ public class InterfaceUsuario {
             String placa = JOptionPane.showInputDialog("Digite a placa do veículo:");
             String renavam = JOptionPane.showInputDialog("Digite o renavam do veículo:");
 
+            @SuppressWarnings("rawtypes")
             Veiculo veiculo = new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveis, cor, placa, renavam);
             gerenciamento.cadastrarVeiculo(veiculo);
             JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
@@ -57,10 +58,11 @@ public class InterfaceUsuario {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     private static void registrarAbastecimento(GerenciamentoVeiculos gerenciamento) {
         try {
             String placa = JOptionPane.showInputDialog("Digite a placa do veículo:");
-            Veiculo veiculo = gerenciamento.getVeiculos().stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);
+            Veiculo veiculo = buscarVeiculoPorPlaca(gerenciamento, placa);
 
             if (veiculo == null) {
                 JOptionPane.showMessageDialog(null, "Veículo não encontrado.");
@@ -79,10 +81,22 @@ public class InterfaceUsuario {
         }
     }
 
+    @SuppressWarnings("rawtypes")
+    private static Veiculo buscarVeiculoPorPlaca(GerenciamentoVeiculos gerenciamento, String placa) {
+        for (Veiculo veiculo : gerenciamento.getVeiculos()) {
+            if (veiculo.getPlaca().equals(placa)) {
+                return veiculo;
+            }
+        }
+        return null;
+    }
+    
+
     private static void registrarDespesa(GerenciamentoVeiculos gerenciamento) {
         try {
             String placa = JOptionPane.showInputDialog("Digite a placa do veículo:");
-            Veiculo veiculo = gerenciamento.getVeiculos().stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);
+            @SuppressWarnings("rawtypes")
+            Veiculo veiculo = buscarVeiculoPorPlaca(gerenciamento, placa);
 
             if (veiculo == null) {
                 JOptionPane.showMessageDialog(null, "Veículo não encontrado.");
@@ -92,9 +106,8 @@ public class InterfaceUsuario {
             String tipo = JOptionPane.showInputDialog("Digite o tipo da despesa:");
             double valor = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor da despesa:"));
             String descricao = JOptionPane.showInputDialog("Digite a descrição da despesa:");
-            LocalDate data = LocalDate.now(); // Usa a data atual
 
-            Despesa despesa = new Despesa(tipo, valor, descricao, data);
+            Despesa despesa = new Despesa(tipo, valor, descricao, LocalDate.now());
             gerenciamento.adicionarDespesa(veiculo, despesa);
             JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
         } catch (ExcecaoPersonalizada | NumberFormatException e) {
@@ -105,7 +118,8 @@ public class InterfaceUsuario {
     private static void calcularConsumoMedio(GerenciamentoVeiculos gerenciamento) {
         try {
             String placa = JOptionPane.showInputDialog("Digite a placa do veículo:");
-            Veiculo veiculo = gerenciamento.getVeiculos().stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);
+            @SuppressWarnings("rawtypes")
+            Veiculo veiculo = buscarVeiculoPorPlaca(gerenciamento, placa);
 
             if (veiculo == null) {
                 JOptionPane.showMessageDialog(null, "Veículo não encontrado.");
