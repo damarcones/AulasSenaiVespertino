@@ -12,7 +12,7 @@ public class Abastecimento {
     private double valorTotal;
     
     //Método Construtor
-    public Abastecimento(int id, Veiculo veiculo, double quilometragem, String tipoCombustivel,
+    public Abastecimento(Veiculo veiculo, double quilometragem, String tipoCombustivel,
             double quantidadeCombustivel, double valorTotal) 
         {
             this.id = proximoId++; //auto incrementa o id
@@ -70,6 +70,16 @@ public class Abastecimento {
 
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
-    }  
+    }
 
+    @Override
+    public String toString() {
+        return   "ID: " + getId() + 
+                 "\nVeiculo: " + getVeiculo().getModelo() +
+                 "\nPlaca: "+ getVeiculo().getPlaca()+ 
+                 "\nQuilometragem: " + getQuilometragem() + 
+                 "\nTipoCombustivel: " + getTipoCombustivel()+ 
+                 "\nQuantidade Combustivel(litros): " + getQuantidadeCombustivel() + 
+                 "\nValor Total: R$" + getValorTotal();
+    }      
 }

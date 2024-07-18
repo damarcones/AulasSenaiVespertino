@@ -144,8 +144,24 @@ public class Veiculo {
         this.renavam = renavam;
     }
 
-        
 
+    @Override
+    public String toString() {
+        return "Id: " + getId() + 
+               "\nMarca: " + getMarca() + 
+               "\nModelo: " + getModelo() + 
+               "\nAno Fabricacao: " + getAnoFabricacao() +
+               "\nAno Modelo: " + getAnoModelo() + 
+               "\nMotorizacao: " + getMotorizacao() + 
+               "\nCapacidade Tanque: " + getCapacidadeTanque() + 
+               "\nCombustiveis Aceitos: " + getCombustiveisAceitos() + 
+               "\nCor: " + getCor() + 
+               "\nPlaca: " + getPlaca() + 
+               "\nRenavam: " + getRenavam();
+    }
+
+        
+    
 
     
 
