@@ -14,7 +14,7 @@ public class InterfaceUsuario {
         GerenciamentoVeiculos gerenciamento = new GerenciamentoVeiculos();
 
         while (true) {
-            String[] options = {"Cadastrar Veículo", "Registrar Abastecimento", "Registrar Despesa", "Calcular Consumo Médio", "Sair"};
+            String[] options = {"Cadastrar Veículo", "Registrar Abastecimento", "Registrar Despesa", "Calcular Consumo Médio","Listar Veículos", "Sair"};
             int escolha = JOptionPane.showOptionDialog(null, "Escolha uma opção", "Turistando", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
 
             switch (escolha) {
@@ -30,7 +30,11 @@ public class InterfaceUsuario {
                 case 3:
                     calcularConsumoMedio(gerenciamento);
                     break;
+
                 case 4:
+                    listarVeiculos(gerenciamento);
+                    break;
+                case 5:
                     System.exit(0);
             }
         }
@@ -131,5 +135,16 @@ public class InterfaceUsuario {
         } catch (ExcecaoPersonalizada e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+    }
+
+    private static void listarVeiculos(GerenciamentoVeiculos gerenciamento) {
+        StringBuilder listaVeiculos = new StringBuilder("Veículos cadastrados:\n");
+        for (@SuppressWarnings("rawtypes") Veiculo veiculo : gerenciamento.getVeiculos()) {
+            listaVeiculos.append("Placa: ").append(veiculo.getPlaca())
+                         .append(", Modelo: ").append(veiculo.getModelo())
+                         .append(", Marca: ").append(veiculo.getMarca())
+                         .append("\n");
+        }
+        JOptionPane.showMessageDialog(null, listaVeiculos.toString());
     }
 }
