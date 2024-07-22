@@ -4,6 +4,8 @@ import com.abastecimento.Abastecimento;
 import com.gasto.Gasto;
 import com.veiculo.Veiculo;
 import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class SistemaTuristando {
 
@@ -12,10 +14,13 @@ public class SistemaTuristando {
 
     private ArrayList<Gasto> listaGastos = new ArrayList<>(); // criando a instancia do array
 
-    
     //Metodo que adiociona todos os Veiculos a uma lista
-    public void adicionarVeiculoALista(Veiculo veiculo){
+    public void adicionarVeiculo(Veiculo veiculo){
         this.listaVeiculos.add(veiculo);
+    }
+
+    public void registrarGasto(Gasto gasto){
+        this.listaGastos.add(gasto);
     }
 
 
@@ -27,14 +32,6 @@ public class SistemaTuristando {
 
     }
 
-    public Veiculo encontrarVeiculoPorPlaca(String placa) {
-        for (Veiculo veiculo : listaVeiculos) {
-            if (veiculo.getPlaca().equals(placa)) {
-                return veiculo;
-            }
-        }
-        return null;
-    }
 
     public void calcularConsumoMedio() {
         // percorre os veiculos e os abastecimentos
@@ -69,6 +66,15 @@ public class SistemaTuristando {
                         veiculo.getMarca(), veiculo.getModelo());
             }
         }
+    }
+
+    public Veiculo encontrarVeiculoPorPlaca(String placa) {
+        for (Veiculo veiculo : listaVeiculos) {
+            if (veiculo.getPlaca().equals(placa)) {
+                return veiculo;
+            }
+        }
+        return null;
     }
 
     //Metodo usando sobrecarga, onde pode-se calcular o consumo de um unico veiculo atraves da placa como parametro.
@@ -108,14 +114,15 @@ public class SistemaTuristando {
         }
     }
 
-
-    public void registrarGasto(Gasto gasto){
-        this.listaGastos.add(gasto);
-    }
-
     //Metodo que exibe o relatorio geral(não categoria) do sistema
     public void gerarRelatorio() {
         System.out.println("Relatório Geral de Eventos:");
+
+        System.out.println("\nVeiculos:");
+        for (Veiculo veiculo : listaVeiculos) {
+            System.out.println(veiculo);
+            System.out.println();
+        }
 
         // Exibir todos os abastecimentos
         System.out.println("\nAbastecimentos:");
@@ -125,30 +132,42 @@ public class SistemaTuristando {
             System.out.println();
         }
 
-        System.out.println();
-
-        System.out.println("\nVeiculos:");
-        for (Veiculo veiculo : listaVeiculos) {
-            System.out.println(veiculo);
+        // Exibir todos os gastos
+        System.out.println("\nGastos:");
+        for (Gasto gasto : listaGastos) {
+            System.out.println(gasto);
             System.out.println();
         }
-
+        
     }
 
-    public void exibirListaVeiculos() {
-        System.out.println("Lista Veiculos:");
+    public void listarVeiculos() {
+        if (listaVeiculos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Abastecimento abastecimento : listaAbastecimentos) {
+                System.out.println(abastecimento);
+                System.out.println();
 
-        // Exibir todos os abastecimentos
-        System.out.println("\nVeiculos:");
-        for (Veiculo veiculo : listaVeiculos) {
-            System.out.println(veiculo);
+
+            JOptionPane.showMessageDialog(null, new JLabel(veiculosList.toString()), "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public void exibirListaGastos() {
+    public void listarAbastecimentos() {
+        // Exibir todos os abastecimentos
+        System.out.println("\nAbastecimentos:");
+        //percorrendo e imprimindo a lista
+        for (Abastecimento abastecimento : listaAbastecimentos) {
+            System.out.println(abastecimento);
+            System.out.println();
+        }
+    }
+
+    public void listarGastos() {
         System.out.println("Lista Gastos:");
 
-        // Exibir todos os abastecimentos
+        // Exibir todos os gastos
         System.out.println("\nGastos:");
         for (Gasto gasto : listaGastos) {
             System.out.println(gasto);
