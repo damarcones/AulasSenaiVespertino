@@ -145,11 +145,11 @@ public class SistemaTuristando {
         if (listaVeiculos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            for (Abastecimento abastecimento : listaAbastecimentos) {
-                System.out.println(abastecimento);
-                System.out.println();
-
-
+           StringBuilder  veiculosList = new StringBuilder("<html>");
+            for (Veiculo veiculo : listaVeiculos) {
+                veiculosList.append(veiculo.toString()).append("<br><br>");
+            }
+            veiculosList.append("</html>");
             JOptionPane.showMessageDialog(null, new JLabel(veiculosList.toString()), "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
