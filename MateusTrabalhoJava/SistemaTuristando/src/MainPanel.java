@@ -37,6 +37,7 @@ public class MainPanel {
                 if (veiculo != null) {
                     JOptionPane.showMessageDialog(null, new JLabel(veiculo.toString()), "Informações do Veículo", JOptionPane.INFORMATION_MESSAGE);
                 }
+                
                 sistema.adicionarVeiculo(veiculo);
             }
         });

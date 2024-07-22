@@ -4,7 +4,6 @@ import com.abastecimento.Abastecimento;
 import com.gasto.Gasto;
 import com.veiculo.Veiculo;
 import java.util.ArrayList;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class SistemaTuristando {
@@ -145,12 +144,18 @@ public class SistemaTuristando {
         if (listaVeiculos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-           StringBuilder  veiculosList = new StringBuilder("<html>");
-            for (Veiculo veiculo : listaVeiculos) {
-                veiculosList.append(veiculo.toString()).append("<br><br>");
+           ArrayList<Veiculo> veiculos = new ArrayList();
+            
+           for (Veiculo veiculo : listaVeiculos) {
+               
+            veiculos.add(veiculo);
+            
             }
-            veiculosList.append("</html>");
-            JOptionPane.showMessageDialog(null, new JLabel(veiculosList.toString()), "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+            //StringBuilder  veiculosList = new StringBuilder("<html>");
+            //veiculosList.append(veiculos.toString()).append("<br><br>");
+
+            JOptionPane.showMessageDialog(null, veiculos, "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+            //veiculosList.append("</html>");
         }
     }
 

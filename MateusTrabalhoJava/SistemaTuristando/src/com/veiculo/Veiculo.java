@@ -144,23 +144,20 @@ public class Veiculo {
         this.renavam = renavam;
     }
 
-    
 
     @Override
     public String toString() {
-        return String.format(
-                "<html>Marca: %s<br>" +
-                "Modelo: %s<br>" +
-                "Ano de Fabricação: %d<br>" +
-                "Ano do Modelo: %d<br>" +
-                "Motorização: %s<br>" +
-                "Capacidade do Tanque: %.2f litros<br>" +
-                "Combustíveis Aceitos: %s<br>" +
-                "Cor: %s<br>" +
-                "Placa: %s<br>" +
-                "RENAVAM: %s</html>",
-                marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam
-        );
+        return "Id: " + getId() + 
+               "\nMarca: " + getMarca() + 
+               "\nModelo: " + getModelo()+ 
+               "\nAno Fabricacao: " + getAnoFabricacao() + 
+               "\nAno Modelo: " + getAnoModelo()+ 
+               "\nMotorizacao: " + getMotorizacao() + 
+               "\nCapacidade Tanque: " + getCapacidadeTanque() + 
+               "\nCombustiveis Aceitos: " + getCombustiveisAceitos() + 
+               "\nCor: " + getCor() + 
+               "\nPlaca: "+ getPlaca() + 
+               "\nRenavam: " + getRenavam();
     }
 
 }
