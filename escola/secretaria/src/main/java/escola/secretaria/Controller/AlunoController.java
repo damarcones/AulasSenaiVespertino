@@ -1,10 +1,11 @@
 package escola.secretaria.Controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import escola.secretaria.Model.Aluno;
@@ -14,8 +15,6 @@ import escola.secretaria.Repository.AlunoRepository;
 import escola.secretaria.Repository.DisciplinaRepository;
 import escola.secretaria.Repository.ResultadosRepository;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -52,6 +51,12 @@ public class AlunoController {
         return disciplinaRepository.save(disciplinas);
 
     }
+
+    @GetMapping("/mostrardisciplina")
+    public List<DisciplinasModel> listaDisciplina() {
+        return disciplinaRepository.findAll();
+    }
+    
 
     @PostMapping("/lancarnotas")
     public Resultados inserirNotas(@RequestBody Resultados resultados){

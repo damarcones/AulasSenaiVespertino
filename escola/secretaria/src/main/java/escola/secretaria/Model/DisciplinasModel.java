@@ -6,10 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GenerationType;
 
 
 @Entity
@@ -22,9 +22,9 @@ public class DisciplinasModel {
     private long id;
 
     @Column(name = "Nome")
-    // @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @NotNull
-    private String disciplinas;
+    private Disciplinas disciplinas;
 
     public long getId() {
         return id;
@@ -34,11 +34,11 @@ public class DisciplinasModel {
         this.id = id;
     }
 
-    public String getDisciplinas() {
+    public Disciplinas getDisciplinas() {
         return disciplinas;
     }
 
-    public void setDisciplinas(String disciplinas) {
+    public void setDisciplinas(Disciplinas disciplinas) {
         this.disciplinas = disciplinas;
     }
 
