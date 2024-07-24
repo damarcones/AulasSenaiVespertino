@@ -49,6 +49,15 @@ public class Aluno {
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
 
+    public Aluno(String nome, long matricula, Turnos turnos, int idade, Sexo sexo, Turma turma){
+        this.nome = nome;
+        this.matricula = matricula;
+        this.turnos = turnos;
+        this.idade = idade;
+        this.sexo = sexo;
+        this.turma = turma;
+    }
+
     public String getNome() {
         return nome;
     }

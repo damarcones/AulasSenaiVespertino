@@ -14,6 +14,8 @@ import escola.secretaria.Model.Resultados;
 import escola.secretaria.Repository.AlunoRepository;
 import escola.secretaria.Repository.DisciplinaRepository;
 import escola.secretaria.Repository.ResultadosRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -60,8 +62,14 @@ public class AlunoController {
 
     @PostMapping("/lancarnotas")
     public Resultados inserirNotas(@RequestBody Resultados resultados){
+        resultados.resultado(resultados.getPriNota(), resultados.getSegNota(), resultados.getTerNota(), resultados.getQuaNota());
         return resultadoRepository.save(resultados);
     }
+    @GetMapping("/vernotas")
+    public List<Resultados> listarNotas() {
+        return resultadoRepository.findAll();
+    }
+    
     
     
 

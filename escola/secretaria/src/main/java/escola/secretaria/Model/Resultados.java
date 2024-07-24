@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 public class Resultados {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id RES")
     private long idRes;
 
@@ -26,7 +26,7 @@ public class Resultados {
     private Aluno matricula;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Id Disciplina", referencedColumnName = "Id Disciplina")
+    @JoinColumn(name = "IdDisciplina", referencedColumnName = "IdDisciplina")
     private DisciplinasModel idDis;
 
     @Column(name  = "PriNota")
@@ -39,6 +39,51 @@ public class Resultados {
     @NotNull
     private double segNota;
 
+    public double getPriNota() {
+        return priNota;
+    }
+
+    public void setPriNota(double priNota) {
+        this.priNota = priNota;
+    }
+
+    public double getSegNota() {
+        return segNota;
+    }
+
+    public void setSegNota(double segNota) {
+        this.segNota = segNota;
+    }
+
+    public double getTerNota() {
+        return terNota;
+    }
+
+    public void setTerNota(double terNota) {
+        this.terNota = terNota;
+    }
+
+    public double getQuaNota() {
+        return quaNota;
+    }
+
+    public void setQuaNota(double quaNota) {
+        this.quaNota = quaNota;
+    }
+
+    public double getMedia() {
+        return media;
+    }
+    public void resultado(double pri, double seg, double ter, double qua){
+        double media = 0.0;
+        media = (pri + seg + ter + qua)/4;
+        setMedia(media);
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
+    }
+
     @Column(name  = "TerNota")
     @NotBlank
     @NotNull
@@ -50,8 +95,6 @@ public class Resultados {
     private double quaNota;
 
     @Column(name  = "Media")
-    @NotBlank
-    @NotNull
     private double media;
 
 

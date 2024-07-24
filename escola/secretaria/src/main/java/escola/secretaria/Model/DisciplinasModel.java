@@ -17,7 +17,7 @@ import jakarta.validation.constraints.NotNull;
 public class DisciplinasModel {
 
     @Id
-    @Column(name = "Id Disciplina")
+    @Column(name = "IdDisciplina")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
