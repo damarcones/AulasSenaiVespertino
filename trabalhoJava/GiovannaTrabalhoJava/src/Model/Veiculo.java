@@ -1,11 +1,8 @@
 package Model;
-
 import java.util.ArrayList;
+import java.util.List;
 
-
-
-    @SuppressWarnings("hiding")
-    
+    @SuppressWarnings({"hiding", "rawtypes"})
 public class Veiculo<Abastecimento, Gasto> {
     private String marca;
     private String modelo;
@@ -17,8 +14,9 @@ public class Veiculo<Abastecimento, Gasto> {
     private String cor;
     private String placa;
     private String renavam;
-    private ArrayList<Abastecimento> abastecimentos;
-    private ArrayList<Gasto> gastos;
+    private ArrayList abastecimentos;
+    private ArrayList gastos;
+
 
     public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao, double capacidadeTanque, String combustivel, String cor, String placa, String renavam) {
         this.marca = marca;
@@ -115,42 +113,14 @@ public class Veiculo<Abastecimento, Gasto> {
         this.renavam = renavam;
     }
 
-    public ArrayList<Abastecimento> getAbastecimentos() {
+    @SuppressWarnings("unchecked")
+    public List<Abastecimento> getAbastecimentos() {
         return abastecimentos;
     }
 
-    public void setAbastecimentos(ArrayList<Abastecimento> abastecimentos) {
-        this.abastecimentos = abastecimentos;
-    }
-
-    public ArrayList<Gasto> getGastos() {
+    @SuppressWarnings("unchecked")
+    public List<Gasto> getGastos() {
         return gastos;
     }
-
-    public void setGastos(ArrayList<Gasto> gastos) {
-        this.gastos = gastos;
-    }
-
-    public void adicionarAbastecimento(Model.Abastecimento abastecimento) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adicionarAbastecimento'");
-    }
-
-    public void adicionarGasto(Model.Gasto gasto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'adicionarGasto'");
-    }
-
-    public double calcularConsumoMedio() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularConsumoMedio'");
-    }
-
-    public double calcularGastosTotais() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularGastosTotais'");
-    }
-
-    
 
 }

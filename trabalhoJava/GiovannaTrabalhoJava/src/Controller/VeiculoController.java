@@ -1,49 +1,70 @@
 package Controller;
 
+import Model.Veiculo;
 import exception.Excecao;
-import java.time.LocalDate;
+
+import java.util.List;
+
 import Model.Abastecimento;
 import Model.Gasto;
-import Model.Veiculo;
 
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({"rawtypes", "unchecked"})
 public class VeiculoController {
+
     private Veiculo veiculo;
 
     public VeiculoController(Veiculo veiculo) {
         this.veiculo = veiculo;
     }
 
-
-    public void adicionarAbastecimento(int quilometragem, double valor, double quantidade) throws Excecao{
-        if (valor <= 0 || quantidade <= 0) {
-            throw new Excecao("Valor ou quantidade de combustível não podem ser negativos ou zero.");
+    public void adicionarAbastecimento(Abastecimento abastecimento) throws Excecao {
+        if (abastecimento == null) {
+            throw new Excecao("Abastecimento não pode ser nulo.");
         }
-        if (quilometragem < 0) {
-            throw new Excecao("A quilometragem não pode ser negativa.");
-        }
-        veiculo.adicionarAbastecimento(new Abastecimento(quilometragem, valor, quantidade));
+        veiculo.getAbastecimentos().add(abastecimento);
     }
 
-    public void adicionarGasto(String categoria, String descricao, double valor, LocalDate data) throws Excecao {
-        if (categoria == null || categoria.isBlank()) {
-            throw new Excecao("A categoria não pode ser vazia.");
+    public void adicionarGasto(Gasto gasto) throws Excecao {
+        if (gasto == null) {
+            throw new Excecao("Gasto não pode ser nulo.");
         }
-        if (descricao == null || descricao.isBlank()) {
-            throw new Excecao("A descrição não pode ser vazia.");
-        }
-        if (valor <= 0) {
-            throw new Excecao("O valor do gasto não pode ser negativo ou zero.");
-        }
-        veiculo.adicionarGasto(new Gasto(categoria, descricao, valor, data));
+        veiculo.getGastos().add(gasto);
     }
 
-    public double calcularConsumoMedio() {
-        return veiculo.calcularConsumoMedio();
+        // Getter para a lista de abastecimentos
+    public List<Abastecimento> getAbastecimentos() {
+        return getAbastecimentos();
     }
 
-    public double calcularGastoTotal() {
-        return veiculo.calcularGastosTotais();
+    // Getter para a lista de gastos
+    public List<Gasto> getGastos() {
+        return getGastos();
+    }
+
+    public double calcularConsumoMedio() throws Excecao {
+        double totalQuilometragem = 0;
+        double totalCombustivel = 0;
+
+        for (Abastecimento abastecimento : Abastecimento.getAbastecimentos()) {
+            totalQuilometragem += abastecimento.getQuilometragem();
+            totalCombustivel += abastecimento.getQuantidade();
+        }
+
+        if (totalCombustivel == 0) {
+            throw new Excecao("Nenhum abastecimento registrado.");
+        }
+
+        return totalQuilometragem / totalCombustivel;
+    }
+
+    public double calcularGastoTotal() throws Excecao {
+        double gastoTotal = 0;
+
+        for (Gasto gasto : Gasto.getGastos()) {
+            gastoTotal += gasto.getValor();
+        }
+
+        return gastoTotal;
     }
 }

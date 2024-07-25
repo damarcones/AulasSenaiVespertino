@@ -1,16 +1,14 @@
 package Model;
 
 public class Abastecimento {
-
     private int quilometragem;
-    private double quantidade;
     private double valor;
+    private double quantidade;
 
-    public Abastecimento(int quilometragem, double valor, double quantidade){
-
-        this.quantidade = quantidade;
+    public Abastecimento(int quilometragem, double valor, double quantidade) {
         this.quilometragem = quilometragem;
         this.valor = valor;
+        this.quantidade = quantidade;
     }
 
     public int getQuilometragem() {
@@ -21,14 +19,6 @@ public class Abastecimento {
         this.quilometragem = quilometragem;
     }
 
-    public double getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(double quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public double getValor() {
         return valor;
     }
@@ -37,6 +27,16 @@ public class Abastecimento {
         this.valor = valor;
     }
 
-    
+    public double getQuantidade() {
+        return quantidade;
+    }
 
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public static Abastecimento[] getAbastecimentos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAbastecimentos'");
+    }
 }

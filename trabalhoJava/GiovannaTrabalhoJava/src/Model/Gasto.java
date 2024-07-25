@@ -36,6 +36,11 @@ public class Gasto {
         this.data = data;
     }
 
+    public static Gasto[] getGastos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getGastos'");
+    }
+
     
 }
 
