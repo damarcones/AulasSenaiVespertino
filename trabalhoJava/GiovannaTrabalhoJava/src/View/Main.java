@@ -5,7 +5,6 @@ import exception.Excecao;
 import Model.Abastecimento;
 import Model.Gasto;
 import Model.Veiculo;
-
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -287,12 +286,8 @@ public class Main {
         }
 
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-        try {
-            double consumoMedio = veiculoController.calcularConsumoMedio();
-            JOptionPane.showMessageDialog(null, "O consumo médio do veículo é: " + consumoMedio + " km/l", "Consumo Médio", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Excecao e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-        }
+        double consumoMedio = veiculoController.calcularConsumoMedio();
+        JOptionPane.showMessageDialog(null, "O consumo médio do veículo é: " + consumoMedio + " km/l", "Consumo Médio", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static void calcularGastoTotal() throws Excecao {

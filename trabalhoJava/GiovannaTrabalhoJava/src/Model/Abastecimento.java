@@ -35,8 +35,8 @@ public class Abastecimento {
         this.quantidade = quantidade;
     }
 
-    public static Abastecimento[] getAbastecimentos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAbastecimentos'");
+    public String getAbastecimento() {
+        return "Quilometragem: " + quilometragem +
+               ", Valor: R$ " + valor + ", Quantidade: " + quantidade + " litros";
     }
 }

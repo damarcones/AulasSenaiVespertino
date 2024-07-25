@@ -122,5 +122,9 @@ public class Veiculo<Abastecimento, Gasto> {
     public List<Gasto> getGastos() {
         return gastos;
     }
-
+    
+    @SuppressWarnings("unchecked")
+    public void adicionarGasto(Gasto gasto) {
+        gastos.add(gasto);
+    }
 }

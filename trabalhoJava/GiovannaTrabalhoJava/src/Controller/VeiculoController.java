@@ -2,9 +2,8 @@ package Controller;
 
 import Model.Veiculo;
 import exception.Excecao;
-
+import java.time.LocalDate;
 import java.util.List;
-
 import Model.Abastecimento;
 import Model.Gasto;
 
@@ -42,26 +41,37 @@ public class VeiculoController {
         return getGastos();
     }
 
-    public double calcularConsumoMedio() throws Excecao {
-        double totalQuilometragem = 0;
-        double totalCombustivel = 0;
-
-        for (Abastecimento abastecimento : Abastecimento.getAbastecimentos()) {
-            totalQuilometragem += abastecimento.getQuilometragem();
-            totalCombustivel += abastecimento.getQuantidade();
+    public double calcularConsumoMedio() {
+        List<Abastecimento> abastecimentos = veiculo.getAbastecimentos();
+        if (abastecimentos.size() < 2) {
+            return 0.0; // Não há dados suficientes para calcular o consumo
         }
 
-        if (totalCombustivel == 0) {
-            throw new Excecao("Nenhum abastecimento registrado.");
+        // Calculando consumo médio (km/l)
+        double totalKm = 0.0;
+        double totalLitros = 0.0;
+
+        for (int i = 1; i < abastecimentos.size(); i++) {
+            Abastecimento atual = abastecimentos.get(i);
+            Abastecimento anterior = abastecimentos.get(i - 1);
+
+            totalKm += atual.getQuilometragem() - anterior.getQuilometragem();
+            totalLitros += atual.getQuantidade();
         }
 
-        return totalQuilometragem / totalCombustivel;
+        return totalKm / totalLitros;
     }
 
-    public double calcularGastoTotal() throws Excecao {
-        double gastoTotal = 0;
+    public void adicionarGasto(String categoria, String descricao, double valor, LocalDate data) {
+        Gasto gasto = new Gasto(categoria, descricao, valor, data);
+        veiculo.adicionarGasto(gasto);
+    }
 
-        for (Gasto gasto : Gasto.getGastos()) {
+    public double calcularGastoTotal() {
+        List<Gasto> gastos = veiculo.getGastos();
+        double gastoTotal = 0.0;
+
+        for (Gasto gasto : gastos) {
             gastoTotal += gasto.getValor();
         }
 
