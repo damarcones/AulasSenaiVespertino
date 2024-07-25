@@ -1,0 +1,23 @@
+organizando as telas (JOptionPane) separadamente, comentar sobre o trabalho a cada commit (GitHub),
+anotando algumas ideias de como vai funcionar vários tópicos (janela sobre imposto, calcular a velocidade e se o sujeito
+								vai tomar multa ou não.)
+=================================================================================================================================
+
+empresa turistando
+
+Objetivos contabilizar gastos de abastecimento, impostos e mutas com o carro da empresa.
+
+O que necessita?
+Consumo -> kilometros por litro de combustível
+Abastecimento -> valor e quantidade abastecida + quilometragem atual
+Registrar/Realizar -> Abastecimento e media de litros / quilometros
+
+outros topicos?
+manutenção(Troca de óleo, alinhamento e balanceamento, etc); imposto(IPVA, licenciamento, etc); multa(Estacionamento proibido,etc)
+e outros(pedágios, balsas, etc); e, sempre que solicitado, o programa exibirá um relatório com todos os eventos 
+lançados no programa, sendo possível selecionar um relatório por categoria de despesa ou um relatório geral.
+
+=================================================================================================================================
+
+ 
+PHONK NXVAMANE FRESH
