@@ -1,26 +1,35 @@
 package View;
 
 import Controller.VeiculoController;
-import exception.Excecao;
 import Model.Abastecimento;
 import Model.Gasto;
+import Model.Gasto.TipoGasto;
 import Model.Veiculo;
+import exception.Excecao;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-    @SuppressWarnings({"rawtypes"})
+@SuppressWarnings({ "rawtypes" })
 public class Main {
 
-
-    private static List<Veiculo> veiculos = new ArrayList<>(); // Lista de veículos registrados
+    private static List<Veiculo> veiculos = new ArrayList<>();
 
     public static void main(String[] args) {
-        while (true) {
-            String[] options = {
+        SwingUtilities.invokeLater(Main::mostrarMenu);
+    }
+
+    private static void mostrarMenu() {
+        JFrame frame = new JFrame("Gerenciamento de Veículos");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new GridLayout(0, 1));
+
+        String[] options = {
                 "Registrar Novo Veículo",
                 "Mostrar Veículos Registrados",
                 "Registrar Abastecimento",
@@ -28,171 +37,220 @@ public class Main {
                 "Calcular Consumo Médio",
                 "Calcular Gasto Total",
                 "Sair"
-            };
-
-            int choice = mostrarMenuVertical(options);
-
-            try {
-                switch (choice) {
-                    case 0:
-                        registrarNovoVeiculo();
-                        break;
-                    case 1:
-                        mostrarVeiculosRegistrados();
-                        break;
-                    case 2:
-                        registrarAbastecimento();
-                        break;
-                    case 3:
-                        registrarGasto();
-                        break;
-                    case 4:
-                        calcularConsumoMedio();
-                        break;
-                    case 5:
-                        calcularGastoTotal();
-                        break;
-                    case 6:
-                        System.exit(0);
-                        break;
-                    default:
-                        break;
-                }
-            } catch (Excecao e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Entrada numérica inválida: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            } catch (DateTimeParseException e) {
-                JOptionPane.showMessageDialog(null, "Data inválida: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro inesperado: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
-    private static int mostrarMenuVertical(String[] options) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        JRadioButton[] radioButtons = new JRadioButton[options.length];
+        };
 
         for (int i = 0; i < options.length; i++) {
-            radioButtons[i] = new JRadioButton(options[i]);
-            radioButtons[i].setActionCommand(String.valueOf(i));
-            buttonGroup.add(radioButtons[i]);
-            panel.add(radioButtons[i]);
-        }
-
-        int result = JOptionPane.showConfirmDialog(null, panel, "Escolha uma opção", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            for (int i = 0; i < radioButtons.length; i++) {
-                if (radioButtons[i].isSelected()) {
-                    return Integer.parseInt(radioButtons[i].getActionCommand());
+            JButton button = new JButton(options[i]);
+            int choice = i;
+            button.addActionListener(e -> {
+                try {
+                    executarOpcao(choice);
+                } catch (Excecao ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Entrada numérica inválida: " + ex.getMessage(), "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                } catch (DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Data inválida: " + ex.getMessage(), "Erro",
+                            JOptionPane.ERROR_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro inesperado: " + ex.getMessage(), "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
-            }
+            });
+            frame.add(button);
         }
-        return -1;
+
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
-    private static void registrarNovoVeiculo() {
+    private static void executarOpcao(int choice) throws Excecao {
+        switch (choice) {
+            case 0:
+                registrarNovoVeiculo();
+                break;
+            case 1:
+                mostrarVeiculosRegistrados();
+                break;
+            case 2:
+                registrarAbastecimento();
+                break;
+            case 3:
+                registrarGasto();
+                break;
+            case 4:
+                calcularConsumoMedio();
+                break;
+            case 5:
+                calcularGastoTotal();
+                break;
+            case 6:
+                System.exit(0);
+                break;
+            default:
+                throw new Excecao("Opção inválida selecionada.");
+        }
+    }
+
+    private static void registrarNovoVeiculo() throws Excecao {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JTextField marcaField = new JTextField(10);
-        JTextField modeloField = new JTextField(10);
-        JTextField anoFabricacaoField = new JTextField(10);
-        JTextField anoModeloField = new JTextField(10);
-        JTextField motorizacaoField = new JTextField(10);
+        JTextField marcaField = new JTextField(20);
+        JTextField modeloField = new JTextField(20);
+        JTextField anoFabricacaoField = new JTextField(4);
+        JTextField anoModeloField = new JTextField(4);
+        JTextField motorizacaoField = new JTextField(20);
         JTextField capacidadeTanqueField = new JTextField(10);
-        JTextField combustivelField = new JTextField(10);
-        JTextField corField = new JTextField(10);
+        JTextField combustiveisField = new JTextField(20);
+        JTextField corField = new JTextField(15);
         JTextField placaField = new JTextField(10);
-        JTextField renavamField = new JTextField(10);
+        JTextField renavamField = new JTextField(20);
 
-        panel.add(new JLabel("Marca:"));
-        panel.add(marcaField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Marca:"), gbc);
+        gbc.gridx = 1;
+        panel.add(marcaField, gbc);
 
-        panel.add(new JLabel("Modelo:"));
-        panel.add(modeloField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Modelo:"), gbc);
+        gbc.gridx = 1;
+        panel.add(modeloField, gbc);
 
-        panel.add(new JLabel("Ano de Fabricação:"));
-        panel.add(anoFabricacaoField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Ano de Fabricação:"), gbc);
+        gbc.gridx = 1;
+        panel.add(anoFabricacaoField, gbc);
 
-        panel.add(new JLabel("Ano do Modelo:"));
-        panel.add(anoModeloField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Ano do Modelo:"), gbc);
+        gbc.gridx = 1;
+        panel.add(anoModeloField, gbc);
 
-        panel.add(new JLabel("Motorização:"));
-        panel.add(motorizacaoField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        panel.add(new JLabel("Motorização:"), gbc);
+        gbc.gridx = 1;
+        panel.add(motorizacaoField, gbc);
 
-        panel.add(new JLabel("Capacidade do Tanque (litros):"));
-        panel.add(capacidadeTanqueField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        panel.add(new JLabel("Capacidade do Tanque (litros):"), gbc);
+        gbc.gridx = 1;
+        panel.add(capacidadeTanqueField, gbc);
 
-        panel.add(new JLabel("Combustível:"));
-        panel.add(combustivelField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        panel.add(new JLabel("Combustíveis:"), gbc);
+        gbc.gridx = 1;
+        panel.add(combustiveisField, gbc);
 
-        panel.add(new JLabel("Cor:"));
-        panel.add(corField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        panel.add(new JLabel("Cor:"), gbc);
+        gbc.gridx = 1;
+        panel.add(corField, gbc);
 
-        panel.add(new JLabel("Placa:"));
-        panel.add(placaField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        panel.add(new JLabel("Placa:"), gbc);
+        gbc.gridx = 1;
+        panel.add(placaField, gbc);
 
-        panel.add(new JLabel("RENAVAM:"));
-        panel.add(renavamField);
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        panel.add(new JLabel("Renavam:"), gbc);
+        gbc.gridx = 1;
+        panel.add(renavamField, gbc);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Novo Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Cadastrar Veículo", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+
         if (result == JOptionPane.OK_OPTION) {
-            String marca = marcaField.getText();
-            String modelo = modeloField.getText();
-            int anoFabricacao = Integer.parseInt(anoFabricacaoField.getText());
-            int anoModelo = Integer.parseInt(anoModeloField.getText());
-            String motorizacao = motorizacaoField.getText();
-            double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
-            String combustivel = combustivelField.getText();
-            String cor = corField.getText();
-            String placa = placaField.getText();
-            String renavam = renavamField.getText();
+            try {
+                String marca = marcaField.getText();
+                String modelo = modeloField.getText();
+                int anoFabricacao = Integer.parseInt(anoFabricacaoField.getText());
+                int anoModelo = Integer.parseInt(anoModeloField.getText());
+                String motorizacao = motorizacaoField.getText();
+                double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
+                String combustiveis = combustiveisField.getText();
+                String cor = corField.getText();
+                String placa = placaField.getText();
+                String renavam = renavamField.getText();
 
-            Veiculo veiculo = new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustivel, cor, placa, renavam);
-            veiculos.add(veiculo);
-
-            JOptionPane.showMessageDialog(null, "Veículo registrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                Veiculo veiculo = new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque,
+                        combustiveis, cor, placa, renavam);
+                veiculos.add(veiculo);
+                JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!", "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException e) {
+                throw new Excecao("Valor inválido inserido: " + e.getMessage());
+            }
         }
     }
 
     private static void mostrarVeiculosRegistrados() {
         if (veiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado.", "Informação", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado.", "Informação",
+                    JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
+        String[] colunas = { "Marca", "Modelo", "Ano de Fabricação", "Ano do Modelo", "Motorização",
+                "Capacidade do Tanque", "Combustível", "Cor", "Placa", "RENAVAM" };
+        DefaultTableModel model = new DefaultTableModel(colunas, 0);
+
         for (Veiculo veiculo : veiculos) {
-            sb.append(veiculo).append("\n");
+            Object[] linha = {
+                    veiculo.getMarca(),
+                    veiculo.getModelo(),
+                    veiculo.getAnoFabricacao(),
+                    veiculo.getAnoModelo(),
+                    veiculo.getMotorizacao(),
+                    veiculo.getCapacidadeTanque(),
+                    veiculo.getCombustivel(),
+                    veiculo.getCor(),
+                    veiculo.getPlaca(),
+                    veiculo.getRenavam()
+            };
+            model.addRow(linha);
         }
 
-        JOptionPane.showMessageDialog(null, sb.toString(), "Veículos Registrados", JOptionPane.INFORMATION_MESSAGE);
+        JTable tabela = new JTable(model);
+        tabela.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(tabela);
+
+        JPanel painel = new JPanel(new BorderLayout());
+        painel.add(scrollPane, BorderLayout.CENTER);
+
+        JFrame frame = new JFrame("Veículos Registrados");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.add(painel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     private static void registrarAbastecimento() throws Excecao {
         if (veiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Veiculo veiculoSelecionado = escolherVeiculo();
         if (veiculoSelecionado == null) {
-            return; // Se cancelado
+            return;
         }
 
         JPanel panel = new JPanel();
@@ -213,113 +271,148 @@ public class Main {
         panel.add(new JLabel("Quantidade de combustível (litros):"));
         panel.add(quantidadeField);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Abastecimento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Abastecimento", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            int quilometragem = Integer.parseInt(quilometragemField.getText());
-            double valor = Double.parseDouble(valorField.getText());
-            double quantidade = Double.parseDouble(quantidadeField.getText());
+            try {
+                int quilometragem = Integer.parseInt(quilometragemField.getText());
+                double valor = Double.parseDouble(valorField.getText());
+                double quantidade = Double.parseDouble(quantidadeField.getText());
 
-            VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-            veiculoController.adicionarAbastecimento(new Abastecimento(quilometragem, valor, quantidade));
+                if (quantidade > veiculoSelecionado.getCapacidadeTanque()) {
+                    throw new Excecao("A quantidade de combustível excede a capacidade do tanque do veículo.");
+                }
 
-            JOptionPane.showMessageDialog(null, "Abastecimento registrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
+                veiculoController.adicionarAbastecimento(new Abastecimento(quilometragem, valor, quantidade));
+
+                JOptionPane.showMessageDialog(null, "Abastecimento registrado com sucesso!", "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException e) {
+                throw new Excecao("Erro ao converter valores numéricos: " + e.getMessage());
+            }
         }
     }
 
     private static void registrarGasto() throws Excecao {
         if (veiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Veiculo veiculoSelecionado = escolherVeiculo();
         if (veiculoSelecionado == null) {
-            return; // Se cancelado
+            return;
         }
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JTextField categoriaField = new JTextField(10);
-        JTextField descricaoField = new JTextField(10);
+        JTextField descricaoField = new JTextField(20);
         JTextField valorField = new JTextField(10);
         JTextField dataField = new JTextField(10);
 
-        panel.add(new JLabel("Categoria:"));
-        panel.add(categoriaField);
-        panel.add(Box.createVerticalStrut(15));
+        JComboBox<TipoGasto> tipoGastoComboBox = new JComboBox<>(TipoGasto.values());
 
-        panel.add(new JLabel("Descrição:"));
-        panel.add(descricaoField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Tipo de Gasto:"), gbc);
+        gbc.gridx = 1;
+        panel.add(tipoGastoComboBox, gbc);
 
-        panel.add(new JLabel("Valor:"));
-        panel.add(valorField);
-        panel.add(Box.createVerticalStrut(15));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Descrição:"), gbc);
+        gbc.gridx = 1;
+        panel.add(descricaoField, gbc);
 
-        panel.add(new JLabel("Data (YYYY-MM-DD):"));
-        panel.add(dataField);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Valor:"), gbc);
+        gbc.gridx = 1;
+        panel.add(valorField, gbc);
 
-        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Gasto", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Data (YYYY-MM-DD):"), gbc);
+        gbc.gridx = 1;
+        panel.add(dataField, gbc);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Gasto", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
         if (result == JOptionPane.OK_OPTION) {
-            String categoria = categoriaField.getText();
-            String descricao = descricaoField.getText();
-            double valor = Double.parseDouble(valorField.getText());
-            LocalDate data = LocalDate.parse(dataField.getText());
+            try {
+                TipoGasto tipoGasto = (TipoGasto) tipoGastoComboBox.getSelectedItem();
+                String descricao = descricaoField.getText();
+                double valor = Double.parseDouble(valorField.getText());
+                LocalDate data = LocalDate.parse(dataField.getText());
 
-            VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-            veiculoController.adicionarGasto(new Gasto(categoria, descricao, valor, data));
+                VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
+                veiculoController.adicionarGasto(new Gasto(tipoGasto, descricao, valor, data));
 
-            JOptionPane.showMessageDialog(null, "Gasto registrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Gasto registrado com sucesso!", "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException e) {
+                throw new Excecao("Erro ao converter valores numéricos: " + e.getMessage());
+            } catch (DateTimeParseException e) {
+                throw new Excecao("Data inválida: " + e.getMessage());
+            }
         }
     }
 
-    private static void calcularConsumoMedio() {
+    private static void calcularConsumoMedio() throws Excecao {
         if (veiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Veiculo veiculoSelecionado = escolherVeiculo();
         if (veiculoSelecionado == null) {
-            return; // Se cancelado
+            return;
         }
 
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
         double consumoMedio = veiculoController.calcularConsumoMedio();
-        JOptionPane.showMessageDialog(null, "O consumo médio do veículo é: " + consumoMedio + " km/l", "Consumo Médio", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "O consumo médio do veículo é: " + consumoMedio + " km/l", "Consumo Médio",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static void calcularGastoTotal() throws Excecao {
         if (veiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         Veiculo veiculoSelecionado = escolherVeiculo();
         if (veiculoSelecionado == null) {
-            return; // Se cancelado
+            return;
         }
 
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
         double gastoTotal = veiculoController.calcularGastoTotal();
-        JOptionPane.showMessageDialog(null, "O gasto total do veículo é: R$ " + gastoTotal, "Gasto Total", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "O gasto total do veículo é: R$ " + gastoTotal, "Gasto Total",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static Veiculo escolherVeiculo() {
         String[] veiculosArray = veiculos.stream()
-            .map(veiculo -> veiculo.getMarca() + " " + veiculo.getModelo() + " - " + veiculo.getPlaca())
-            .toArray(String[]::new);
+                .map(veiculo -> veiculo.getMarca() + " " + veiculo.getModelo() + " - " + veiculo.getPlaca())
+                .toArray(String[]::new);
 
         String escolha = (String) JOptionPane.showInputDialog(
-            null,
-            "Escolha um veículo:",
-            "Selecionar Veículo",
-            JOptionPane.PLAIN_MESSAGE,
-            null,
-            veiculosArray,
-            veiculosArray.length > 0 ? veiculosArray[0] : null
-        );
+                null,
+                "Escolha um veículo:",
+                "Selecionar Veículo",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                veiculosArray,
+                veiculosArray.length > 0 ? veiculosArray[0] : null);
 
         for (Veiculo veiculo : veiculos) {
             if ((veiculo.getMarca() + " " + veiculo.getModelo() + " - " + veiculo.getPlaca()).equals(escolha)) {
@@ -327,6 +420,6 @@ public class Main {
             }
         }
 
-        return null; // Se o usuário cancelar a seleção
+        return null;
     }
 }

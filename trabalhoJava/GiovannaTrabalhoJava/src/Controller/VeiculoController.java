@@ -7,8 +7,7 @@ import java.util.List;
 import Model.Abastecimento;
 import Model.Gasto;
 
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class VeiculoController {
 
     private Veiculo veiculo;
@@ -31,12 +30,10 @@ public class VeiculoController {
         veiculo.getGastos().add(gasto);
     }
 
-        // Getter para a lista de abastecimentos
     public List<Abastecimento> getAbastecimentos() {
         return getAbastecimentos();
     }
 
-    // Getter para a lista de gastos
     public List<Gasto> getGastos() {
         return getGastos();
     }
@@ -44,10 +41,9 @@ public class VeiculoController {
     public double calcularConsumoMedio() {
         List<Abastecimento> abastecimentos = veiculo.getAbastecimentos();
         if (abastecimentos.size() < 2) {
-            return 0.0; // Não há dados suficientes para calcular o consumo
+            return 0.0;
         }
 
-        // Calculando consumo médio (km/l)
         double totalKm = 0.0;
         double totalLitros = 0.0;
 
@@ -63,7 +59,7 @@ public class VeiculoController {
     }
 
     public void adicionarGasto(String categoria, String descricao, double valor, LocalDate data) {
-        Gasto gasto = new Gasto(categoria, descricao, valor, data);
+        Gasto gasto = new Gasto(null, descricao, valor, data);
         veiculo.adicionarGasto(gasto);
     }
 
@@ -77,4 +73,5 @@ public class VeiculoController {
 
         return gastoTotal;
     }
+
 }

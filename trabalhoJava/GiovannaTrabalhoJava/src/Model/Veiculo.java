@@ -1,8 +1,9 @@
 package Model;
+
 import java.util.ArrayList;
 import java.util.List;
 
-    @SuppressWarnings({"hiding", "rawtypes"})
+@SuppressWarnings({ "hiding", "rawtypes" })
 public class Veiculo<Abastecimento, Gasto> {
     private String marca;
     private String modelo;
@@ -17,8 +18,8 @@ public class Veiculo<Abastecimento, Gasto> {
     private ArrayList abastecimentos;
     private ArrayList gastos;
 
-
-    public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao, double capacidadeTanque, String combustivel, String cor, String placa, String renavam) {
+    public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao,
+            double capacidadeTanque, String combustivel, String cor, String placa, String renavam) {
         this.marca = marca;
         this.modelo = modelo;
         this.anoFabricacao = anoFabricacao;
@@ -122,9 +123,17 @@ public class Veiculo<Abastecimento, Gasto> {
     public List<Gasto> getGastos() {
         return gastos;
     }
-    
+
     @SuppressWarnings("unchecked")
     public void adicionarGasto(Gasto gasto) {
         gastos.add(gasto);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Marca: %s, Modelo: %s, Ano de Fabricação: %d, Ano do Modelo: %d, Motorização: %s, Capacidade do Tanque: %.2f litros, Combustível: %s, Cor: %s, Placa: %s, RENAVAM: %s",
+                marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustivel, cor, placa,
+                renavam);
     }
 }
