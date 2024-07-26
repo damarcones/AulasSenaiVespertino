@@ -7,7 +7,7 @@ import java.util.List;
 import Model.Abastecimento;
 import Model.Gasto;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
+
 public class VeiculoController {
 
     private Veiculo veiculo;
@@ -65,13 +65,16 @@ public class VeiculoController {
 
     public double calcularGastoTotal() {
         List<Gasto> gastos = veiculo.getGastos();
+        List<Abastecimento> abastecimentos = veiculo.getAbastecimentos();
         double gastoTotal = 0.0;
 
         for (Gasto gasto : gastos) {
             gastoTotal += gasto.getValor();
         }
 
-        return gastoTotal;
+        for (Abastecimento abastecimento : abastecimentos) {
+            gastoTotal += abastecimento.getValor();
     }
-
+        return gastoTotal;
+} 
 }

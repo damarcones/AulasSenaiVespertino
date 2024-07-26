@@ -6,7 +6,6 @@ import Model.Gasto;
 import Model.Gasto.TipoGasto;
 import Model.Veiculo;
 import exception.Excecao;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -15,7 +14,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({ "rawtypes" })
 public class Main {
 
     private static List<Veiculo> veiculos = new ArrayList<>();

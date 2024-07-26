@@ -36,6 +36,14 @@ public class Gasto {
         throw new UnsupportedOperationException("Unimplemented method 'getGastos'");
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
     public enum TipoGasto {
         IMPOSTO("Imposto"),
         MULTA("Multa"),

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({ "hiding", "rawtypes" })
-public class Veiculo<Abastecimento, Gasto> {
+public class Veiculo {
     private String marca;
     private String modelo;
     private int anoFabricacao;
