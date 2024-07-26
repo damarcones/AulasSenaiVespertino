@@ -1,9 +1,18 @@
-import com.controle.SistemaTuristando;
-import com.veiculo.Veiculo;
-import java.awt.*;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import com.abastecimento.Abastecimento;
+import com.controle.SistemaTuristando;
+import com.gasto.Gasto;
+import com.veiculo.Veiculo;
 
 
 public class MainPanel {
@@ -29,15 +38,15 @@ public class MainPanel {
         JButton calcularConsumoButton = new JButton("Calcular Consumo Médio");
         JButton gerarRelatorioButton = new JButton("Gerar Relatório");
 
-        // Add action listeners
+        //retorna as funcoes ao clicar nos botoes
         adicionarVeiculoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Veiculo veiculo = coletarInformacoesDoVeiculo();
+                Veiculo veiculo = SistemaTuristando.coletarInformacoesDoVeiculo();
+
                 if (veiculo != null) {
                     JOptionPane.showMessageDialog(null, new JLabel(veiculo.toString()), "Informações do Veículo", JOptionPane.INFORMATION_MESSAGE);
                 }
-                
                 sistema.adicionarVeiculo(veiculo);
             }
         });
@@ -49,15 +58,103 @@ public class MainPanel {
             }
         });
 
+        registrarAbastecimentoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Abastecimento abastecimento;
+                JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
+
+                JTextField placaField = new JTextField(10);     
+                panel.add(new JLabel("Insira a Placa do veiculo:"));
+                panel.add(placaField);
+                int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Abastecimento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                
+                if (result == JOptionPane.OK_OPTION) {
+                        String placa = (String) placaField.getText();
+                        
+                         if(sistema.encontrarVeiculoPorPlaca(placa) != null){
+
+                            abastecimento = SistemaTuristando.registrarAbastecimento(placa);
+                            if (abastecimento != null) {
+                            JOptionPane.showMessageDialog(null, new JLabel(abastecimento.toString()), "Informações do Abastecimento", JOptionPane.INFORMATION_MESSAGE);
+                            sistema.registrarAbastecimento(abastecimento);
+                         }                        
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                    }                
+                 }   
+            }
+        });
+
+        listarAbastecimentosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               sistema.listarAbastecimentos();
+            }
+        });
+
+        calcularConsumoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
+
+                    JTextField placaField = new JTextField(10);     
+                    panel.add(new JLabel("Insira a Placa do veiculo:"));
+                    panel.add(placaField);
+                    int result = JOptionPane.showConfirmDialog(null, panel, "Calcular consumo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                    
+                    if (result == JOptionPane.OK_OPTION) {
+                            String placa = (String) placaField.getText();
+                            if(sistema.encontrarVeiculoPorPlaca(placa) != null){
+                            sistema.calcularConsumoMedio(placa);                        
+                            }           
+                    }
+            }                                  
+        });
+
+        registrarGastoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Gasto gasto;
+                JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
+
+                JTextField placaField = new JTextField(10);     
+                panel.add(new JLabel("Insira a Placa do veiculo:"));
+                panel.add(placaField);
+                int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Abastecimento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                
+                if (result == JOptionPane.OK_OPTION) {
+                        String placa = (String) placaField.getText();
+                        
+                         if(sistema.encontrarVeiculoPorPlaca(placa) != null){
+
+                            gasto = SistemaTuristando.coletarInformacoesDoGasto(placa);
+                            if (gasto != null) {
+                            JOptionPane.showMessageDialog(null, new JLabel(gasto.toString()), "Informações do Gasto", JOptionPane.INFORMATION_MESSAGE);
+                            sistema.registrarGasto(gasto);
+                         }                        
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                    }                
+                 }   
+            }
+        });
+
+        listarGastosButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               sistema.listarGastos();
+            }
+        });
 
         // Adiciona os botões ao painel
-        panel.add(listarVeiculosButton);
+        panel.add(listarVeiculosButton);//f
         panel.add(listarGastosButton);
-        panel.add(listarAbastecimentosButton);
-        panel.add(adicionarVeiculoButton);
+        panel.add(listarAbastecimentosButton);//f
+        panel.add(adicionarVeiculoButton);//f
         panel.add(registrarGastoButton);
-        panel.add(registrarAbastecimentoButton);
-        panel.add(calcularConsumoButton);
+        panel.add(registrarAbastecimentoButton);//f
+        panel.add(calcularConsumoButton);//F
         panel.add(gerarRelatorioButton);
 
         // Adiciona o painel ao frame
@@ -65,64 +162,5 @@ public class MainPanel {
         frame.setVisible(true);
     }
 
-    private static Veiculo coletarInformacoesDoVeiculo() {
-        // Criação do painel
-        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
-
-        // Criação dos componentes de entrada
-        JTextField marcaField = new JTextField(10);
-        JTextField modeloField = new JTextField(10);
-        JTextField anoFabricacaoField = new JTextField(10);
-        JTextField anoModeloField = new JTextField(10);
-        JTextField motorizacaoField = new JTextField(10);
-        JTextField capacidadeTanqueField = new JTextField(10);
-        JComboBox<String> combustiveisBox = new JComboBox<>(new String[] {"Gasolina", "Álcool", "Diesel", "Flex", "GNV"});
-        JTextField corField = new JTextField(10);
-        JTextField placaField = new JTextField(10);
-        JTextField renavamField = new JTextField(10);
-
-        // Adição dos componentes ao painel
-        panel.add(new JLabel("Marca:"));
-        panel.add(marcaField);
-        panel.add(new JLabel("Modelo:"));
-        panel.add(modeloField);
-        panel.add(new JLabel("Ano de Fabricação:"));
-        panel.add(anoFabricacaoField);
-        panel.add(new JLabel("Ano do Modelo:"));
-        panel.add(anoModeloField);
-        panel.add(new JLabel("Motorização:"));
-        panel.add(motorizacaoField);
-        panel.add(new JLabel("Capacidade do Tanque (litros):"));
-        panel.add(capacidadeTanqueField);
-        panel.add(new JLabel("Combustíveis Aceitos:"));
-        panel.add(combustiveisBox);
-        panel.add(new JLabel("Cor:"));
-        panel.add(corField);
-        panel.add(new JLabel("Placa:"));
-        panel.add(placaField);
-        panel.add(new JLabel("RENAVAM:"));
-        panel.add(renavamField);
-
-        // Exibir o painel em um JOptionPane
-        int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (result == JOptionPane.OK_OPTION) {
-            // Coletar as informações inseridas
-            String marca = marcaField.getText();
-            String modelo = modeloField.getText();
-            int anoFabricacao = Integer.parseInt(anoFabricacaoField.getText());
-            int anoModelo = Integer.parseInt(anoModeloField.getText());
-            String motorizacao = motorizacaoField.getText();
-            double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
-            String combustiveisAceitos = (String) combustiveisBox.getSelectedItem();
-            String cor = corField.getText();
-            String placa = placaField.getText();
-            String renavam = renavamField.getText();
-
-            // Retornar um novo objeto Veiculo com os dados inseridos
-            return new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam);
-        } else {
-            return null;
-        }
-    }
+   
 }

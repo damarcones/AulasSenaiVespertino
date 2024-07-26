@@ -13,7 +13,8 @@ public class Veiculo {
     private String combustiveisAceitos; 
     private String cor;
     private String placa;
-    private String renavam;
+    private String renavam; 
+    
     
    
     //Método Construtor
@@ -144,20 +145,24 @@ public class Veiculo {
         this.renavam = renavam;
     }
 
+    
 
     @Override
     public String toString() {
-        return "Id: " + getId() + 
-               "\nMarca: " + getMarca() + 
-               "\nModelo: " + getModelo()+ 
-               "\nAno Fabricacao: " + getAnoFabricacao() + 
-               "\nAno Modelo: " + getAnoModelo()+ 
-               "\nMotorizacao: " + getMotorizacao() + 
-               "\nCapacidade Tanque: " + getCapacidadeTanque() + 
-               "\nCombustiveis Aceitos: " + getCombustiveisAceitos() + 
-               "\nCor: " + getCor() + 
-               "\nPlaca: "+ getPlaca() + 
-               "\nRenavam: " + getRenavam();
+        return String.format(
+                "<html>ID: %s"+
+                " Marca: %s" +
+                " Modelo: %s" +
+                " Ano de Fabricação: %d" +
+                " Ano do Modelo: %d" +
+                " Motorização: %s" +
+                " Capacidade do Tanque: %.2f litros" +
+                " Combustíveis Aceitos: %s" +
+                " Cor: %s" +
+                " Placa: %s" +
+                " RENAVAM: %s <br></html>",
+                id, marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam
+        );
     }
 
 }

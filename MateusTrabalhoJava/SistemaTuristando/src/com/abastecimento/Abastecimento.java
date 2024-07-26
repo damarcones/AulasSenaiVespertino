@@ -1,22 +1,23 @@
 package com.abastecimento;
 
-import com.veiculo.Veiculo;
+import java.time.LocalDate;
 
 public class Abastecimento {
     private static int proximoId = 1;
     private int id;
-    private  Veiculo veiculo;
+    private LocalDate data;
+    private String placa;
     private double quilometragem;
     private String tipoCombustivel;
     private double quantidadeCombustivel;
     private double valorTotal;
     
     //Método Construtor
-    public Abastecimento(Veiculo veiculo, double quilometragem, String tipoCombustivel,
-            double quantidadeCombustivel, double valorTotal) 
+    public Abastecimento(LocalDate data, String placa, double quilometragem, String tipoCombustivel, double quantidadeCombustivel, double valorTotal) 
         {
             this.id = proximoId++; //auto incrementa o id
-            this.veiculo = veiculo;
+            this.data = data;
+            this.placa = placa;
             this.quilometragem = quilometragem;
             this.tipoCombustivel = tipoCombustivel;
             this.quantidadeCombustivel = quantidadeCombustivel;
@@ -32,12 +33,12 @@ public class Abastecimento {
         this.id = id;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public String getPlaca() {
+        return placa;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setPlaca(String veiculo) {
+        this.placa = veiculo;
     }
 
     public double getQuilometragem() {
@@ -71,15 +72,26 @@ public class Abastecimento {
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
+    
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
 
     @Override
     public String toString() {
-        return   "ID: " + getId() + 
-                 "\nVeiculo: " + getVeiculo().getModelo() +
-                 "\nPlaca: "+ getVeiculo().getPlaca()+ 
-                 "\nQuilometragem: " + getQuilometragem() + 
-                 "\nTipoCombustivel: " + getTipoCombustivel()+ 
-                 "\nQuantidade Combustivel(litros): " + getQuantidadeCombustivel() + 
-                 "\nValor Total: R$" + getValorTotal();
-    }      
+        return  String.format(
+                "<html>ID: %s" + 
+                " Data: %s"+    
+                " Placa: %s"+ 
+                " Quilometragem: %.1f" + 
+                " TipoCombustivel: %s" + 
+                " Quantidade Combustivel(litros): %.2f" + 
+                " Valor Total: R$ %.2f<br></html>",
+                id, data, placa, quilometragem, tipoCombustivel, quantidadeCombustivel, valorTotal
+            );
+        }      
 }

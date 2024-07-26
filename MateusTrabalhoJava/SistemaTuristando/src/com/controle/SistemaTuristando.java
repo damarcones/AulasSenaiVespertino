@@ -1,82 +1,321 @@
 package com.controle;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 import com.abastecimento.Abastecimento;
 import com.gasto.Gasto;
 import com.veiculo.Veiculo;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class SistemaTuristando {
-
-    private ArrayList<Veiculo> listaVeiculos= new ArrayList<>(); // criando a instancia do array
+    
+    private ArrayList<Gasto> listaGastos = new ArrayList<>(); // criando a instancia do array
+    private static ArrayList<Veiculo> listaVeiculos= new ArrayList<>(); // criando a instancia do array
     private ArrayList<Abastecimento> listaAbastecimentos = new ArrayList<>(); // criando a instancia do array
 
-    private ArrayList<Gasto> listaGastos = new ArrayList<>(); // criando a instancia do array
+    
+    //Metodo que cria a interface grafica para a inserção de informações
+    public static Veiculo coletarInformacoesDoVeiculo() {
+        // Criação do painel
+        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
 
+        // Criação dos componentes de entrada
+        JTextField marcaField = new JTextField(10);
+        JTextField modeloField = new JTextField(10);
+        JTextField anoFabricacaoField = new JTextField(4);
+        JTextField anoModeloField = new JTextField(4);
+        JTextField motorizacaoField = new JTextField(10);
+        JTextField capacidadeTanqueField = new JTextField(5);
+        JComboBox<String> combustiveisBox = new JComboBox<>(new String[] {"Gasolina", "Álcool", "Diesel", "Flex", "GNV"});
+        JTextField corField = new JTextField(12);
+        JTextField placaField = new JTextField(7);
+        JTextField renavamField = new JTextField(10);
+
+        // Adição dos componentes ao painel
+        panel.add(new JLabel("Marca:"));
+        panel.add(marcaField);
+        panel.add(new JLabel("Modelo:"));
+        panel.add(modeloField);
+        panel.add(new JLabel("Ano de Fabricação:"));
+        panel.add(anoFabricacaoField);
+        panel.add(new JLabel("Ano do Modelo:"));
+        panel.add(anoModeloField);
+        panel.add(new JLabel("Motorização:"));
+        panel.add(motorizacaoField);
+        panel.add(new JLabel("Capacidade do Tanque (litros):"));
+        panel.add(capacidadeTanqueField);
+        panel.add(new JLabel("Combustíveis Aceitos:"));
+        panel.add(combustiveisBox);
+        panel.add(new JLabel("Cor:"));
+        panel.add(corField);
+        panel.add(new JLabel("Placa:"));
+        panel.add(placaField);
+        panel.add(new JLabel("RENAVAM:"));
+        panel.add(renavamField);
+
+        // Exibir o painel em um JOptionPane
+        int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+
+            try {
+                
+                if (marcaField.getText().isEmpty() || modeloField.getText().isEmpty() || anoFabricacaoField.getText().isEmpty() || motorizacaoField.getText().isEmpty() || capacidadeTanqueField.getText().isEmpty() || combustiveisBox.getSelectedItem() == null || corField.getText().isEmpty() || placaField.getText().isEmpty() || renavamField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
+                }
+                // Coletar as informações inseridas
+                String marca = marcaField.getText();
+                String modelo = modeloField.getText();
+                
+                int anoFabricacao = Integer.parseInt(anoFabricacaoField.getText());
+                int anoModelo = Integer.parseInt(anoModeloField.getText());
+
+                
+                // Obtém uma instância do calendário com a data e hora atuais
+                Calendar calendar = Calendar.getInstance();
+                // Obtém o ano atual
+                int anoAtual = calendar.get(Calendar.YEAR);
+
+                if ((anoFabricacao > anoAtual || anoModelo > anoAtual) ) {
+                    throw new IllegalArgumentException("Data Fabricação e Modelo deve ser menor ou igual ao ano atual. Confirme os dados e tente novamente.");
+                }
+               
+                String motorizacao = motorizacaoField.getText();
+                
+                double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
+                if ( capacidadeTanque < 0 ) {
+                throw new IllegalArgumentException("Capacidade do tanque deve ser maior que zero. Confirme os dados e tente novamente.");
+                }
+                String combustiveisAceitos = (String) combustiveisBox.getSelectedItem();
+                String cor = corField.getText();
+                
+                String placa = placaField.getText();
+                if (placa.length() > 7) {
+                    throw new IllegalArgumentException("Número placa deve ser de 7 caracteres. Confirme os dados e tente novamente.");
+                    }
+
+                String renavam = renavamField.getText();
+                if ( renavam.length() > 11 ) {
+                    throw new IllegalArgumentException("Número renavam deve ser de 16 caracteres. Confirme os dados e tente novamente.");
+                    }
+
+                // retornar um Veiculo com os dados 
+                return new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam);
+
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Alerta", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
+    }
+    
     //Metodo que adiociona todos os Veiculos a uma lista
     public void adicionarVeiculo(Veiculo veiculo){
         this.listaVeiculos.add(veiculo);
+    }
+
+
+    //Metodo pra filtrar um veiculo pela placa
+    public static Veiculo encontrarVeiculoPorPlaca(String placa) {
+        for (Veiculo veiculo : listaVeiculos) {
+            if (veiculo.getPlaca().equals(placa)) {
+                return veiculo;
+            }
+            else{
+                throw new IllegalArgumentException("Placa de veículo não encontrada. Confirme os dados e tente novamente.");
+            }
+        }
+        return null;
+    }
+    
+    //Metodo para listar todos os veiculos cadastrados
+    public void listarVeiculos() {
+        if (listaVeiculos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+           ArrayList<Veiculo> veiculos = new ArrayList<>();
+            
+           for (Veiculo veiculo : listaVeiculos) {
+            veiculos.add(veiculo);
+            }
+            JOptionPane.showMessageDialog(null, veiculos, "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    
+
+    public static Abastecimento registrarAbastecimento(String placa) {
+        // Criação do painel
+        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
+
+        // Criação dos componentes de entrada
+        JTextField placaField = new JTextField(placa);
+        placaField.setEditable(false);
+        JTextField quilometragemField = new JTextField(10);
+        JComboBox<String> tipoCombustivelBox = new JComboBox<>(new String[]{"Gasolina", "Álcool", "Diesel", "Flex", "GNV"});
+        JTextField quantidadeField = new JTextField(10);
+        JTextField valorField = new JTextField(10);
+
+        // Adição dos componentes ao painel
+        panel.add(new JLabel("Veículo (Placa):"));
+        panel.add(placaField);
+        panel.add(new JLabel("Tipo Combustivel:"));
+        panel.add(tipoCombustivelBox);
+        panel.add(new JLabel("Quilometragem:"));
+        panel.add(quilometragemField);
+        panel.add(new JLabel("Quantidade (litros):"));
+        panel.add(quantidadeField);
+        panel.add(new JLabel("Valor (R$):"));
+        panel.add(valorField);
+
+        // Exibir o painel em um JOptionPane
+        int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Abastecimento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                //verificar se os dados foram preenchidos
+                if (quilometragemField.getText().isEmpty() || quantidadeField.getText().isEmpty() || valorField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
+                }
+
+                Veiculo v = encontrarVeiculoPorPlaca(placaField.getText());
+                String veiculo = placaField.getText();
+                double quilometragem = Double.parseDouble(quilometragemField.getText());
+                double quantidade = Double.parseDouble(quantidadeField.getText());
+                double valor = Double.parseDouble(valorField.getText());
+
+                if (v.getCapacidadeTanque() < quantidade) {
+                    throw new IllegalArgumentException("Quantidade em litros superior ao suportado por este veiculo. Confirme os dados e tente novamente.");
+                }
+
+                String tipoCombustivel = (String) tipoCombustivelBox.getSelectedItem();
+                //Verificação de combustivel para veiculos flex
+                if (!(v.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && v.getCombustiveisAceitos().equals("Flex"))) {
+                    throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
+                }
+
+                //valor negativo
+                if (valor <= 0) {
+                    throw new IllegalArgumentException("Valor deve ser maior que zero. Confirme os dados e tente novamente.");
+                }
+
+                // Retornar um Abastecimento com os dados
+                return new Abastecimento(LocalDate.now(), veiculo, quilometragem, tipoCombustivel, quantidade, valor);
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Alerta", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
+    }    
+
+    //Metodo para listar todos os abastecimentos cadastrados
+    public void listarAbastecimentos() {
+        if (listaAbastecimentos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum abastecimento cadastrado.", "Listar Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+           ArrayList<Abastecimento> abastecimentos = new ArrayList<>();
+            
+           for (Abastecimento abastecimento : listaAbastecimentos) {
+            abastecimentos.add(abastecimento);
+            }
+            JOptionPane.showMessageDialog(null, abastecimentos, "Listar Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } 
+    
+    //Metodo que adiociona todos os Abastecimentos a uma lista
+    public void registrarAbastecimento(Abastecimento abastecimento){
+        this.listaAbastecimentos.add(abastecimento);
+        //this.registrarGasto(new Gasto(abastecimento.getVeiculo(), "Abastecimento", "Abastecimento do Veículo", abastecimento.getValorTotal()));
+    }
+
+    public static Gasto coletarInformacoesDoGasto(String placa){
+        // Criação do painel
+        JPanel panel = new JPanel(new GridLayout(0, 2, 0, 0));
+        panel.setPreferredSize(new Dimension(300, 400));
+
+        // Criação dos componentes de entrada
+        JComboBox<String> tipoGastoBox = new JComboBox<>(new String[]{"Manutenção ", "Imposto", "Multa", "Outros"});
+        JTextArea descricaoGastoArea = new JTextArea(5, 20); // Define 5 linhas e 20 colunas
+        descricaoGastoArea.setLineWrap(true); // Habilita quebra de linha automática
+        descricaoGastoArea.setWrapStyleWord(true); // Quebra de linha apenas entre palavras
+        JScrollPane descricaoGastoScrollPane = new JScrollPane(descricaoGastoArea); // Adiciona JScrollPane ao JTextArea
+        JTextField valorGastoField = new JTextField(10);
+        // Adição dos componentes ao painel
+        panel.add(new JLabel("Tipo Gasto:"));
+        panel.add(tipoGastoBox);
+        panel.add(new JLabel("Descrição Gasto:"));
+        panel.add(descricaoGastoScrollPane);
+        panel.add(new JLabel("Valor Gasto: R$"));
+        panel.add(valorGastoField);
+
+        // Exibir o painel em um JOptionPane
+        int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                //verificar se os dados foram preenchidos
+                if (tipoGastoBox.getSelectedItem() == null || descricaoGastoArea.getText().trim().isEmpty() || valorGastoField.getText().isEmpty()) {
+                    throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
+                }
+
+               // Coletar as informações inseridas
+                String tipoGasto = (String) tipoGastoBox.getSelectedItem();
+                String descricaoGasto = descricaoGastoArea.getText();
+                double valorGasto = Double.parseDouble(valorGastoField.getText());
+
+                //valor negativo
+                if (valorGasto <= 0) {
+                    throw new IllegalArgumentException("Valor deve ser maior que zero. Confirme os dados e tente novamente.");
+                }
+
+                // retornar um Veiculo com os dados 
+                return new Gasto(LocalDate.now(), placa, tipoGasto, descricaoGasto, valorGasto);
+                
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Alerta", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
     }
 
     public void registrarGasto(Gasto gasto){
         this.listaGastos.add(gasto);
     }
 
-
-    //Metodo que adiociona todos os Abastecimentos a uma lista
-    public void registrarAbastecimento(Abastecimento abastecimento){
-        this.listaAbastecimentos.add(abastecimento);
-
-        this.registrarGasto(new Gasto(abastecimento.getVeiculo(), "Abastecimento", "Abastecimento do Veículo", abastecimento.getValorTotal()));
-
-    }
-
-
-    public void calcularConsumoMedio() {
-        // percorre os veiculos e os abastecimentos
-        for (Veiculo veiculo : listaVeiculos) {
-            double totalQuilometros = 0.0;
-            double totalLitros = 0.0;
-            int cont = 0;
+    //Metodo para listar todos os abastecimentos cadastrados
+    public void listarGastos() {
+        if (listaGastos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+           ArrayList<Gasto> gastos = new ArrayList<>();
             
-            Abastecimento abastecimentoAnterior = null;
-
-
-            for (Abastecimento abastecimento : listaAbastecimentos) {
-                //verifica de o abastecimente é do carro em questão
-                if (abastecimento.getVeiculo().equals(veiculo)) {
-                    //caso for, vai calcular a distancia percorrida desde o abastecimento anterior e se n tiver, vai armazenar numa variavel auxiliar
-                    if (abastecimentoAnterior != null) {
-                        double quilometrosPercorridos = abastecimento.getQuilometragem() - abastecimentoAnterior.getQuilometragem();
-                        totalQuilometros += quilometrosPercorridos;
-                        totalLitros += abastecimento.getQuantidadeCombustivel();
-                    }
-                    abastecimentoAnterior = abastecimento;
-                    cont += 1;
-                }
+           for (Gasto gasto : listaGastos) {
+            gastos.add(gasto);
             }
-
-            if (cont >= 2) {
-                double consumoMedio = totalQuilometros / totalLitros;
-                System.out.printf("Consumo médio de %s %s: %.2f km/L%n",
-                        veiculo.getMarca(), veiculo.getModelo(), consumoMedio);
-            } else {
-                System.out.printf("Não há abastecimentos suficientes para calcular o consumo do veículo %s %s.%n",
-                        veiculo.getMarca(), veiculo.getModelo());
-            }
+            JOptionPane.showMessageDialog(null, gastos, "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
         }
-    }
+    } 
 
-    public Veiculo encontrarVeiculoPorPlaca(String placa) {
-        for (Veiculo veiculo : listaVeiculos) {
-            if (veiculo.getPlaca().equals(placa)) {
-                return veiculo;
-            }
-        }
-        return null;
-    }
 
-    //Metodo usando sobrecarga, onde pode-se calcular o consumo de um unico veiculo atraves da placa como parametro.
+    //Metodo calcular o consumo de um unico veiculo atraves da placa como parametro.
     public void calcularConsumoMedio(String placa) {
         Veiculo veiculo = encontrarVeiculoPorPlaca(placa);
 
@@ -88,7 +327,7 @@ public class SistemaTuristando {
             
             for (Abastecimento abastecimento : listaAbastecimentos) {
                 //verifica de o abastecimente é do carro em questão
-                if (abastecimento.getVeiculo().equals(veiculo)) {
+                if (abastecimento.getPlaca().equals(placa)) {
                     //caso for, vai calcular a distancia percorrida desde o abastecimento anterior e se n tiver, vai armazenar numa variavel auxiliar
                     if (abastecimentoAnterior != null) {
                         double quilometrosPercorridos = abastecimento.getQuilometragem() - abastecimentoAnterior.getQuilometragem();
@@ -96,20 +335,19 @@ public class SistemaTuristando {
                         totalLitros += abastecimento.getQuantidadeCombustivel();
                     }
                     abastecimentoAnterior = abastecimento;
-                    cont += 1;
+                    cont++;
                 }
             }
 
             if (cont >= 2) {
                 double consumoMedio = totalQuilometros / totalLitros;
-                System.out.printf("Consumo médio do veículo %s, placa %s : %.2f km/L%n",
-                        veiculo.getModelo() ,veiculo.getPlaca(), consumoMedio);
+                JOptionPane.showMessageDialog(null, "O consumo médio do veículo é: " + String.format("%.2f", consumoMedio) + " km/l");
+
             } else {
-                System.out.printf("Não há abastecimentos suficientes para calcular o consumo do veículo %s",
-                        veiculo.getPlaca());
+                    JOptionPane.showMessageDialog(null, "Não há abastecimentos suficientes para calcular o consumo do veículo","Erro", JOptionPane.ERROR_MESSAGE);        
             }
         } else {
-            System.out.println("Veículo não encontrado!");
+            JOptionPane.showMessageDialog(null, "Veículo não encontrado","Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -140,43 +378,5 @@ public class SistemaTuristando {
         
     }
 
-    public void listarVeiculos() {
-        if (listaVeiculos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-           ArrayList<Veiculo> veiculos = new ArrayList();
-            
-           for (Veiculo veiculo : listaVeiculos) {
-               
-            veiculos.add(veiculo);
-            
-            }
-            //StringBuilder  veiculosList = new StringBuilder("<html>");
-            //veiculosList.append(veiculos.toString()).append("<br><br>");
-
-            JOptionPane.showMessageDialog(null, veiculos, "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
-            //veiculosList.append("</html>");
-        }
-    }
-
-    public void listarAbastecimentos() {
-        // Exibir todos os abastecimentos
-        System.out.println("\nAbastecimentos:");
-        //percorrendo e imprimindo a lista
-        for (Abastecimento abastecimento : listaAbastecimentos) {
-            System.out.println(abastecimento);
-            System.out.println();
-        }
-    }
-
-    public void listarGastos() {
-        System.out.println("Lista Gastos:");
-
-        // Exibir todos os gastos
-        System.out.println("\nGastos:");
-        for (Gasto gasto : listaGastos) {
-            System.out.println(gasto);
-        }
-    }
     
 }

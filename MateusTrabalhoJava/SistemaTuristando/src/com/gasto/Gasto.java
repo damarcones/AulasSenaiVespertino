@@ -1,21 +1,22 @@
 package com.gasto;
 
-import com.veiculo.Veiculo;
+import java.time.LocalDate;
 
 public class Gasto {
 
     private static int proximoId = 1;
     private int id;
-    private  Veiculo veiculo;
-    private  String tipoGasto;
+    private LocalDate data;
+    private String placa;
+    private String tipoGasto;
     private String descricaoGasto;
     private double  valorGasto;
     
-    
     //Metoodo construtor
-    public Gasto( Veiculo veiculo, String tipoGasto, String descricaoGasto, double valorGasto) {
+    public Gasto(LocalDate data, String placa, String tipoGasto, String descricaoGasto, double valorGasto) {
         this.id = proximoId++; //auto incrementa o id
-        this.veiculo = veiculo;
+        this.data = data;
+        this.placa = placa;
         this.tipoGasto = tipoGasto;
         this.descricaoGasto = descricaoGasto;
         this.valorGasto = valorGasto;
@@ -31,16 +32,13 @@ public class Gasto {
         this.id = id;
     }
 
-
-    public Veiculo getVeiculo() {
-        return veiculo;
+    public String getPlaca() {
+        return placa;
     }
 
-
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
+    public void setPlaca(String veiculo) {
+        this.placa = veiculo;
     }
-
 
     public String getTipoGasto() {
         return tipoGasto;
@@ -71,16 +69,27 @@ public class Gasto {
         this.valorGasto = valorGasto;
     }
 
+    
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
+    }
 
     @Override
     public String toString() {
-        return "Id: " + getId() + 
-               "\nVeiculo: " + getVeiculo().getModelo() +
-               "\nPlaca: " +getVeiculo().getPlaca() + 
-               "\nTipo de Gasto: " + getTipoGasto() + 
-               "\nDescrição Gasto: " + getDescricaoGasto() + 
-               "\nValor Gasto R$" + getValorGasto();
-    }
+        return  String.format(
+                "<html>ID: %s" + 
+                " Data: %s"+    
+                " Placa: %s"+ 
+                " Tipo Gasto: %s"  +
+                " Descrição Gasto: %s"+ 
+                " Valor Gasto: R$ %.2f<br></html>",
+                id, data, placa, tipoGasto,descricaoGasto,valorGasto
+            );
+        }  
 
     
 }
