@@ -1,18 +1,17 @@
+package com.view;
+import com.controle.SistemaTuristando;
+import com.model.abastecimento.Abastecimento;
+import com.model.gasto.Gasto;
+import com.model.veiculo.Veiculo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import com.abastecimento.Abastecimento;
-import com.controle.SistemaTuristando;
-import com.gasto.Gasto;
-import com.veiculo.Veiculo;
 
 
 public class MainPanel {
@@ -46,8 +45,8 @@ public class MainPanel {
 
                 if (veiculo != null) {
                     JOptionPane.showMessageDialog(null, new JLabel(veiculo.toString()), "Informações do Veículo", JOptionPane.INFORMATION_MESSAGE);
+                    sistema.adicionarVeiculo(veiculo);
                 }
-                sistema.adicionarVeiculo(veiculo);
             }
         });
 
@@ -76,12 +75,12 @@ public class MainPanel {
 
                             abastecimento = SistemaTuristando.registrarAbastecimento(placa);
                             if (abastecimento != null) {
-                            JOptionPane.showMessageDialog(null, new JLabel(abastecimento.toString()), "Informações do Abastecimento", JOptionPane.INFORMATION_MESSAGE);
-                            sistema.registrarAbastecimento(abastecimento);
-                         }                        
-                    }else {
-                        JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
-                    }                
+                                JOptionPane.showMessageDialog(null, new JLabel(abastecimento.toString()), "Informações do Abastecimento", JOptionPane.INFORMATION_MESSAGE);
+                                sistema.registrarAbastecimento(abastecimento);
+                            }                        
+                        }else {
+                            JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        }                 
                  }   
             }
         });
@@ -104,10 +103,14 @@ public class MainPanel {
                     int result = JOptionPane.showConfirmDialog(null, panel, "Calcular consumo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                     
                     if (result == JOptionPane.OK_OPTION) {
+
+
                             String placa = (String) placaField.getText();
                             if(sistema.encontrarVeiculoPorPlaca(placa) != null){
-                            sistema.calcularConsumoMedio(placa);                        
-                            }           
+                                sistema.calcularConsumoMedio(placa);                        
+                            }else {
+                                JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                            }            
                     }
             }                                  
         });
@@ -123,20 +126,20 @@ public class MainPanel {
                 panel.add(placaField);
                 int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Abastecimento", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                 
-                if (result == JOptionPane.OK_OPTION) {
+                    if (result == JOptionPane.OK_OPTION) {
                         String placa = (String) placaField.getText();
                         
                          if(sistema.encontrarVeiculoPorPlaca(placa) != null){
 
                             gasto = SistemaTuristando.coletarInformacoesDoGasto(placa);
-                            if (gasto != null) {
-                            JOptionPane.showMessageDialog(null, new JLabel(gasto.toString()), "Informações do Gasto", JOptionPane.INFORMATION_MESSAGE);
-                            sistema.registrarGasto(gasto);
-                         }                        
-                    }else {
-                        JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
-                    }                
-                 }   
+                                    if (gasto != null) {
+                                    JOptionPane.showMessageDialog(null, new JLabel(gasto.toString()), "Informações do Gasto", JOptionPane.INFORMATION_MESSAGE);
+                                    sistema.registrarGasto(gasto);
+                                    }                        
+                        }else {
+                            JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        }                
+                    } 
             }
         });
 
@@ -147,12 +150,19 @@ public class MainPanel {
             }
         });
 
+        gerarRelatorioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               sistema.gerarRelatorio();
+            }
+        });
+
         // Adiciona os botões ao painel
         panel.add(listarVeiculosButton);//f
-        panel.add(listarGastosButton);
+        panel.add(listarGastosButton);//f
         panel.add(listarAbastecimentosButton);//f
         panel.add(adicionarVeiculoButton);//f
-        panel.add(registrarGastoButton);
+        panel.add(registrarGastoButton);//f
         panel.add(registrarAbastecimentoButton);//f
         panel.add(calcularConsumoButton);//F
         panel.add(gerarRelatorioButton);

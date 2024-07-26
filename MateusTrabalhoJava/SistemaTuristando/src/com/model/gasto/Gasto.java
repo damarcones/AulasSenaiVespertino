@@ -1,4 +1,4 @@
-package com.gasto;
+package com.model.gasto;
 
 import java.time.LocalDate;
 

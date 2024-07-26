@@ -1,4 +1,4 @@
-package com.abastecimento;
+package com.model.abastecimento;
 
 import java.time.LocalDate;
 

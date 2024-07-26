@@ -1,22 +1,22 @@
 package com.controle;
 
+import com.model.abastecimento.Abastecimento;
+import com.model.gasto.Gasto;
+import com.model.veiculo.Veiculo;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
-import com.abastecimento.Abastecimento;
-import com.gasto.Gasto;
-import com.veiculo.Veiculo;
 
 public class SistemaTuristando {
     
@@ -111,8 +111,6 @@ public class SistemaTuristando {
 
                 // retornar um Veiculo com os dados 
                 return new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam);
-
-
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
             } catch (IllegalArgumentException e) {
@@ -131,12 +129,17 @@ public class SistemaTuristando {
     //Metodo pra filtrar um veiculo pela placa
     public static Veiculo encontrarVeiculoPorPlaca(String placa) {
         for (Veiculo veiculo : listaVeiculos) {
-            if (veiculo.getPlaca().equals(placa)) {
+            try {
+                if (veiculo.getPlaca().equals(placa)) {
                 return veiculo;
             }
             else{
                 throw new IllegalArgumentException("Placa de veículo não encontrada. Confirme os dados e tente novamente.");
             }
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(null, "Valores inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+            }
+            
         }
         return null;
     }
@@ -324,8 +327,8 @@ public class SistemaTuristando {
             double totalQuilometros = 0.0;
             double totalLitros = 0.0;
             int cont = 0;
-            
-            for (Abastecimento abastecimento : listaAbastecimentos) {
+            try {
+                for (Abastecimento abastecimento : listaAbastecimentos) {
                 //verifica de o abastecimente é do carro em questão
                 if (abastecimento.getPlaca().equals(placa)) {
                     //caso for, vai calcular a distancia percorrida desde o abastecimento anterior e se n tiver, vai armazenar numa variavel auxiliar
@@ -346,6 +349,10 @@ public class SistemaTuristando {
             } else {
                     JOptionPane.showMessageDialog(null, "Não há abastecimentos suficientes para calcular o consumo do veículo","Erro", JOptionPane.ERROR_MESSAGE);        
             }
+            } catch (Exception e) {
+            
+            }
+            
         } else {
             JOptionPane.showMessageDialog(null, "Veículo não encontrado","Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -353,28 +360,21 @@ public class SistemaTuristando {
 
     //Metodo que exibe o relatorio geral(não categoria) do sistema
     public void gerarRelatorio() {
-        System.out.println("Relatório Geral de Eventos:");
+        JFrame frame = new JFrame("Gerar Relatório");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 400);
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        
+        
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 1, 10, 10));
 
-        System.out.println("\nVeiculos:");
-        for (Veiculo veiculo : listaVeiculos) {
-            System.out.println(veiculo);
-            System.out.println();
-        }
+        JButton relatButton = new JButton("Relatório Geral");
+        JButton listarGastosButton = new JButton("Relatório Por Categoria");
 
-        // Exibir todos os abastecimentos
-        System.out.println("\nAbastecimentos:");
-        //percorrendo e imprimindo a lista
-        for (Abastecimento abastecimento : listaAbastecimentos) {
-            System.out.println(abastecimento);
-            System.out.println();
-        }
 
-        // Exibir todos os gastos
-        System.out.println("\nGastos:");
-        for (Gasto gasto : listaGastos) {
-            System.out.println(gasto);
-            System.out.println();
-        }
+        
         
     }
 

@@ -1,4 +1,4 @@
-package com.veiculo;
+package com.model.veiculo;
 
 public class Veiculo {
 
