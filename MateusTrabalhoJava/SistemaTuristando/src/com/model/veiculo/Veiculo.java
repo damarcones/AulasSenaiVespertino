@@ -147,22 +147,4 @@ public class Veiculo {
 
     
 
-    @Override
-    public String toString() {
-        return String.format(
-                "<html>ID: %s"+
-                " Marca: %s" +
-                " Modelo: %s" +
-                " Ano de Fabricação: %d" +
-                " Ano do Modelo: %d" +
-                " Motorização: %s" +
-                " Capacidade do Tanque: %.2f litros" +
-                " Combustíveis Aceitos: %s" +
-                " Cor: %s" +
-                " Placa: %s" +
-                " RENAVAM: %s <br></html>",
-                id, marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam
-        );
-    }
-
 }

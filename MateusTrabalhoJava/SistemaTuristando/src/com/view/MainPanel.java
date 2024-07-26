@@ -37,6 +37,21 @@ public class MainPanel {
         JButton calcularConsumoButton = new JButton("Calcular Consumo Médio");
         JButton gerarRelatorioButton = new JButton("Gerar Relatório");
 
+         // Adiciona os botões ao painel
+         panel.add(listarVeiculosButton);//f
+         panel.add(listarGastosButton);//f
+         panel.add(listarAbastecimentosButton);//f
+         panel.add(adicionarVeiculoButton);//f
+         panel.add(registrarGastoButton);//f
+         panel.add(registrarAbastecimentoButton);//f
+         panel.add(calcularConsumoButton);//F
+         panel.add(gerarRelatorioButton);
+        
+         // Adiciona o painel ao frame
+         frame.add(panel);
+         frame.setVisible(true);
+
+
         //retorna as funcoes ao clicar nos botoes
         adicionarVeiculoButton.addActionListener(new ActionListener() {
             @Override
@@ -44,7 +59,7 @@ public class MainPanel {
                 Veiculo veiculo = SistemaTuristando.coletarInformacoesDoVeiculo();
 
                 if (veiculo != null) {
-                    JOptionPane.showMessageDialog(null, new JLabel(veiculo.toString()), "Informações do Veículo", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, new JLabel("Veiculo "+veiculo.getModelo()+", placa: " + veiculo.getPlaca()+" adicionado com sucesso!"), "Informações do Veículo", JOptionPane.INFORMATION_MESSAGE);
                     sistema.adicionarVeiculo(veiculo);
                 }
             }
@@ -78,9 +93,7 @@ public class MainPanel {
                                 JOptionPane.showMessageDialog(null, new JLabel(abastecimento.toString()), "Informações do Abastecimento", JOptionPane.INFORMATION_MESSAGE);
                                 sistema.registrarAbastecimento(abastecimento);
                             }                        
-                        }else {
-                            JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
-                        }                 
+                        }               
                  }   
             }
         });
@@ -153,23 +166,11 @@ public class MainPanel {
         gerarRelatorioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               sistema.gerarRelatorio();
+                    sistema.gerarRelatorio();
             }
         });
 
-        // Adiciona os botões ao painel
-        panel.add(listarVeiculosButton);//f
-        panel.add(listarGastosButton);//f
-        panel.add(listarAbastecimentosButton);//f
-        panel.add(adicionarVeiculoButton);//f
-        panel.add(registrarGastoButton);//f
-        panel.add(registrarAbastecimentoButton);//f
-        panel.add(calcularConsumoButton);//F
-        panel.add(gerarRelatorioButton);
-
-        // Adiciona o painel ao frame
-        frame.add(panel);
-        frame.setVisible(true);
+       
     }
 
    

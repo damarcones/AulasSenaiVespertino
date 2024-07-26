@@ -8,9 +8,7 @@ import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -134,7 +132,7 @@ public class SistemaTuristando {
                 return veiculo;
             }
             else{
-                throw new IllegalArgumentException("Placa de veículo não encontrada. Confirme os dados e tente novamente.");
+                JOptionPane.showMessageDialog(null, "Placa de veículo não encontrada. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
             }
             } catch (NullPointerException e) {
                 JOptionPane.showMessageDialog(null, "Valores inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -149,14 +147,28 @@ public class SistemaTuristando {
         if (listaVeiculos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-           ArrayList<Veiculo> veiculos = new ArrayList<>();
-            
-           for (Veiculo veiculo : listaVeiculos) {
-            veiculos.add(veiculo);
-            }
-            JOptionPane.showMessageDialog(null, veiculos, "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+        StringBuilder listaVeiculosStringB = new StringBuilder("Veículos cadastrados:\n");
+        
+        //  Iterando sobre a lista de veículos e construindo a lista de veículos
+        for (Veiculo veiculo : listaVeiculos) {
+            listaVeiculosStringB.append("\nId: ").append(veiculo.getId())
+                                .append(", Placa: ").append(veiculo.getPlaca())
+                                .append(", Modelo: ").append(veiculo.getModelo())
+                                .append(", Marca: ").append(veiculo.getMarca())
+                                .append("\n");
+             }
+
+        //     Criando um JTextArea para exibir a lista de veículos com scroll
+             JTextArea textArea = new JTextArea(listaVeiculosStringB.toString());
+             textArea.setEditable(false);
+             textArea.setPreferredSize(new Dimension(500, 400)); // Define o tamanho da área de texto
+
+        //   Exibindo a lista de veículos em uma caixa de diálogo com rolagem
+             JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Lista de Veículos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    
     
     
 
@@ -168,7 +180,7 @@ public class SistemaTuristando {
         JTextField placaField = new JTextField(placa);
         placaField.setEditable(false);
         JTextField quilometragemField = new JTextField(10);
-        JComboBox<String> tipoCombustivelBox = new JComboBox<>(new String[]{"Gasolina", "Álcool", "Diesel", "Flex", "GNV"});
+        JComboBox<String> tipoCombustivelBox = new JComboBox<>(new String[]{"Gasolina", "Álcool", "Diesel", "GNV"});
         JTextField quantidadeField = new JTextField(10);
         JTextField valorField = new JTextField(10);
 
@@ -194,29 +206,33 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
                 }
 
-                Veiculo v = encontrarVeiculoPorPlaca(placaField.getText());
-                String veiculo = placaField.getText();
+                Veiculo veiculo = encontrarVeiculoPorPlaca(placaField.getText());
+                String placaVeiculo = placaField.getText();
                 double quilometragem = Double.parseDouble(quilometragemField.getText());
                 double quantidade = Double.parseDouble(quantidadeField.getText());
                 double valor = Double.parseDouble(valorField.getText());
 
-                if (v.getCapacidadeTanque() < quantidade) {
+                if (veiculo.getCapacidadeTanque() < quantidade) {
                     throw new IllegalArgumentException("Quantidade em litros superior ao suportado por este veiculo. Confirme os dados e tente novamente.");
                 }
 
                 String tipoCombustivel = (String) tipoCombustivelBox.getSelectedItem();
                 //Verificação de combustivel para veiculos flex
-                if (!(v.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && v.getCombustiveisAceitos().equals("Flex"))) {
-                    throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
-                }
-
+                
+                //tipoCombustivel armazena qualquer coisa menos "Flex", logo primeiro parametro retorna F,
+                //Caso tipo combustivel for Gasolina ou Alcool, vai retornar V. Logo (F V)
+                //
+                if (!(veiculo.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && veiculo.getCombustiveisAceitos().equals("Flex"))) {
+                     throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
+                 }
+                
                 //valor negativo
-                if (valor <= 0) {
+                if (valor < 0) {
                     throw new IllegalArgumentException("Valor deve ser maior que zero. Confirme os dados e tente novamente.");
                 }
 
                 // Retornar um Abastecimento com os dados
-                return new Abastecimento(LocalDate.now(), veiculo, quilometragem, tipoCombustivel, quantidade, valor);
+                return new Abastecimento(LocalDate.now(), placaVeiculo, quilometragem, tipoCombustivel, quantidade, valor);
                 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -254,11 +270,11 @@ public class SistemaTuristando {
 
         // Criação dos componentes de entrada
         JComboBox<String> tipoGastoBox = new JComboBox<>(new String[]{"Manutenção ", "Imposto", "Multa", "Outros"});
-        JTextArea descricaoGastoArea = new JTextArea(5, 20); // Define 5 linhas e 20 colunas
+        JTextArea descricaoGastoArea = new JTextArea(3, 15); // Define 3 linhas e 15 colunas
         descricaoGastoArea.setLineWrap(true); // Habilita quebra de linha automática
         descricaoGastoArea.setWrapStyleWord(true); // Quebra de linha apenas entre palavras
         JScrollPane descricaoGastoScrollPane = new JScrollPane(descricaoGastoArea); // Adiciona JScrollPane ao JTextArea
-        JTextField valorGastoField = new JTextField(10);
+        JTextField valorGastoField = new JTextField(8);
         // Adição dos componentes ao painel
         panel.add(new JLabel("Tipo Gasto:"));
         panel.add(tipoGastoBox);
@@ -360,21 +376,62 @@ public class SistemaTuristando {
 
     //Metodo que exibe o relatorio geral(não categoria) do sistema
     public void gerarRelatorio() {
-        JFrame frame = new JFrame("Gerar Relatório");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
         
         
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1, 10, 10));
-
-        JButton relatButton = new JButton("Relatório Geral");
-        JButton listarGastosButton = new JButton("Relatório Por Categoria");
-
-
         
+        JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
+        JComboBox<String> relatoriosBox = new JComboBox<>(new String[] {"Relatório Geral", "Relatório Por Categoria"});
+        
+        //JButton relatorioGeralButton = new JButton("Relatório Geral");
+        //JButton relatorioPorCategoriaButton = new JButton("Relatório Por Categoria");
+        //panel.add(relatorioPorCategoriaButton);//f
+        // Adiciona os botões ao painel
+        
+        panel.add(relatoriosBox);//f
+        
+            int result = JOptionPane.showConfirmDialog(null, panel, "Relatório", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            
+            if (result == JOptionPane.OK_OPTION) {
+                if(relatoriosBox.getSelectedItem().equals("Relatório Geral")){
+                    
+                    
+                         StringBuilder listaVeiculosStringB = new StringBuilder("Veículos cadastrados:\n");
+                    //     // Iterando sobre a lista de veículos e construindo a lista de veículos
+                         
+                    for (Veiculo veiculo : listaVeiculos) {
+                        listaVeiculosStringB.append("id: ").append(veiculo.getId())
+                                            .append(", Placa: ").append(veiculo.getPlaca())
+                                            .append(", Modelo: ").append(veiculo.getModelo())
+                                            .append(", Marca: ").append(veiculo.getMarca())
+                                            .append("\n");
+                         }
+
+                    //     Criando um JTextArea para exibir a lista de veículos com scroll
+                         JTextArea textArea = new JTextArea(listaVeiculos.toString());
+                         textArea.setEditable(false);
+                         textArea.setPreferredSize(new Dimension(400, 300)); // Define o tamanho da área de texto
+
+                    //     // Exibindo a lista de veículos em uma caixa de diálogo com rolagem
+                         JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Lista de Veículos", JOptionPane.INFORMATION_MESSAGE);
+                    
+
+                    ArrayList relatorio = new ArrayList();
+
+                    ArrayList<Veiculo> veiculos = new ArrayList<>();
+                    
+                    for (Veiculo veiculo : listaVeiculos) {
+                    veiculos.add(veiculo);
+                    }
+                    relatorio.add(veiculos);
+                    
+                    ArrayList<Abastecimento> abastecimentos = new ArrayList<>();
+                    
+                    for (Abastecimento abastecimento : listaAbastecimentos) {
+                        abastecimentos.add(abastecimento);
+                    }
+                    JOptionPane.showMessageDialog(null, relatorio, "Relatório Geral", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }              
         
     }
 
