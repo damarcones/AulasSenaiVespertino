@@ -31,10 +31,6 @@ public class Gasto {
         this.data = data;
     }
 
-    public static Gasto[] getGastos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGastos'");
-    }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
@@ -56,6 +52,10 @@ public class Gasto {
             this.descricao = descricao;
         }
 
+        public String getDescricao() {
+            return descricao;
+        }
+
         @Override
         public String toString() {
             return descricao;
@@ -65,5 +65,9 @@ public class Gasto {
     @Override
     public String toString() {
         return String.format("%s: %s - R$ %.2f em %s", tipoGasto, descricao, valor, data);
+    }
+
+    public final TipoGasto getTipoGasto(){
+        return tipoGasto;
     }
 }

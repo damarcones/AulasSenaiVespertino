@@ -38,25 +38,25 @@ public class VeiculoController {
         return getGastos();
     }
 
-    public double calcularConsumoMedio() {
+    public double calcularConsumoMedio() throws Excecao {
         List<Abastecimento> abastecimentos = veiculo.getAbastecimentos();
-        if (abastecimentos.size() < 2) {
-            return 0.0;
+        int numAbastecimentos = abastecimentos.size();
+    
+        if (numAbastecimentos < 2) {
+            throw new Excecao("A média só pode ser calculada depois de dois abastecimentos.");
         }
-
-        double totalKm = 0.0;
-        double totalLitros = 0.0;
-
-        for (int i = 1; i < abastecimentos.size(); i++) {
-            Abastecimento atual = abastecimentos.get(i);
-            Abastecimento anterior = abastecimentos.get(i - 1);
-
-            totalKm += atual.getQuilometragem() - anterior.getQuilometragem();
-            totalLitros += atual.getQuantidade();
-        }
-
+    
+        Abastecimento primeiroAbastecimento = abastecimentos.get(0);
+        Abastecimento ultimoAbastecimento = abastecimentos.get(numAbastecimentos - 1);
+    
+        double totalKm = ultimoAbastecimento.getQuilometragem() - primeiroAbastecimento.getQuilometragem();
+        double totalLitros = abastecimentos.stream()
+                                           .mapToDouble(Abastecimento::getQuantidade)
+                                           .sum();
+    
         return totalKm / totalLitros;
     }
+    
 
     public void adicionarGasto(String categoria, String descricao, double valor, LocalDate data) {
         Gasto gasto = new Gasto(null, descricao, valor, data);

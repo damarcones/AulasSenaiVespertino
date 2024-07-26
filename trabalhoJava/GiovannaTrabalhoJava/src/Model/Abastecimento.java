@@ -1,14 +1,29 @@
 package Model;
 
+
+// ultimoAbastecimento - abastecimentoAnterior / quantidadeLitrosaAbastecimento
+
+//ultimoAbastecimento - primeiroAbastecimento / totalQntLitrosAbs
+
 public class Abastecimento {
     private int quilometragem;
     private double valor;
     private double quantidade;
+    private TipoCombustivelAbastecimento tipoCombustivelAbastecimento;
 
-    public Abastecimento(int quilometragem, double valor, double quantidade) {
+
+    public Abastecimento(int quilometragem, double valor, double quantidade, TipoCombustivelAbastecimento tipoCombustivelAbastecimento) {
         this.quilometragem = quilometragem;
         this.valor = valor;
         this.quantidade = quantidade;
+        this.tipoCombustivelAbastecimento = tipoCombustivelAbastecimento;
+    }
+
+    public enum TipoCombustivelAbastecimento {
+        GASOLINA,
+        DIESEL,
+        ALCOOL,
+        GNV
     }
 
     public int getQuilometragem() {
@@ -39,4 +54,14 @@ public class Abastecimento {
         return "Quilometragem: " + quilometragem +
                 ", Valor: R$ " + valor + ", Quantidade: " + quantidade + " litros";
     }
+
+    public TipoCombustivelAbastecimento getTipoCombustivelAbastecimento() {
+        return tipoCombustivelAbastecimento;
+    }
+
+    public void setTipoCombustivelAbastecimento(TipoCombustivelAbastecimento tipoCombustivelAbastecimento) {
+        this.tipoCombustivelAbastecimento = tipoCombustivelAbastecimento;
+    }
+
+
 }
