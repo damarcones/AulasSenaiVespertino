@@ -1,5 +1,5 @@
 package Posto;
 
-public class Combustivel {
+public enum Combustivel {
 
 }

@@ -1,5 +1,5 @@
 package Posto;
 
-public class Quilometragem {
+public enum Quilometragem {
 
 }

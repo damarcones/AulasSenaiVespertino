@@ -1,5 +1,5 @@
 package Posto;
 
-public class Valor {
+public enum Valor {
 
 }
