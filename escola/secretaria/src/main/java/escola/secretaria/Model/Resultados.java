@@ -1,5 +1,7 @@
 package escola.secretaria.Model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -14,29 +17,25 @@ import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Resultados")
-public class Resultados {
+public class Resultados implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Id RES")
+    @Column(name = "IdRES")
     private long idRes;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Matricula", referencedColumnName = "Matricula")
+    @OneToOne
+    @JoinColumn(name = "matricula")
     private Aluno matricula;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "IdDisciplina", referencedColumnName = "IdDisciplina")
+    @OneToOne
+    @JoinColumn(name = "IdDisciplina")
     private DisciplinasModel idDis;
 
     @Column(name  = "PriNota")
-    @NotBlank
-    @NotNull
     private double priNota;
 
     @Column(name  = "SegNota")
-    @NotBlank
-    @NotNull
     private double segNota;
 
     public double getPriNota() {
@@ -85,13 +84,9 @@ public class Resultados {
     }
 
     @Column(name  = "TerNota")
-    @NotBlank
-    @NotNull
     private double terNota;
 
     @Column(name  = "QuaNota")
-    @NotBlank
-    @NotNull
     private double quaNota;
 
     @Column(name  = "Media")

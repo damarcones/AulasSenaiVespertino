@@ -1,8 +1,11 @@
 package escola.secretaria.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import escola.secretaria.Enum.Sexo;
 import escola.secretaria.Enum.Turma;
 import escola.secretaria.Enum.Turnos;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +13,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +30,12 @@ public class Aluno {
     @Column(name = "Matricula")
     @NotNull
     private long matricula;
+
+    @JsonBackReference
+    @OneToOne(mappedBy = "matricula", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Resultados resultados;
+
 
     @Column(name = "Nome")
     @NotBlank(message = "O nome não pode ser vazio")
@@ -104,6 +116,14 @@ public class Aluno {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public Resultados getResultados() {
+        return resultados;
+    }
+
+    public void setResultados(Resultados resultados) {
+        this.resultados = resultados;
     }
 
 
