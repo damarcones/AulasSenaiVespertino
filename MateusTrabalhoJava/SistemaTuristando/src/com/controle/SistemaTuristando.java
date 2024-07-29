@@ -45,11 +45,11 @@ public class SistemaTuristando {
         panel.add(marcaField);
         panel.add(new JLabel("Modelo:"));
         panel.add(modeloField);
-        panel.add(new JLabel("Ano de Fabricação:"));
+        panel.add(new JLabel("Ano de Fabricação: (yyyy)"));
         panel.add(anoFabricacaoField);
-        panel.add(new JLabel("Ano do Modelo:"));
+        panel.add(new JLabel("Ano do Modelo: (yyyy)"));
         panel.add(anoModeloField);
-        panel.add(new JLabel("Motorização:"));
+        panel.add(new JLabel("Motorização: (Cv)"));
         panel.add(motorizacaoField);
         panel.add(new JLabel("Capacidade do Tanque (litros):"));
         panel.add(capacidadeTanqueField);
@@ -88,7 +88,7 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Data Fabricação e Modelo deve ser menor ou igual ao ano atual. Confirme os dados e tente novamente.");
                 }
                
-                String motorizacao = motorizacaoField.getText();
+                int motorizacao = Integer.parseInt(motorizacaoField.getText()) ;
                 
                 double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
                 if ( capacidadeTanque < 0 ) {
@@ -221,7 +221,7 @@ public class SistemaTuristando {
                 
                 //tipoCombustivel armazena qualquer coisa menos "Flex", logo primeiro parametro retorna F,
                 //Caso tipo combustivel for Gasolina ou Alcool, vai retornar V. Logo (F V)
-                //
+                
                 if (!(veiculo.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && veiculo.getCombustiveisAceitos().equals("Flex"))) {
                      throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
                  }
