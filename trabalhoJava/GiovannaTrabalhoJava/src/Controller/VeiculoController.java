@@ -76,5 +76,6 @@ public class VeiculoController {
             gastoTotal += abastecimento.getValor();
     }
         return gastoTotal;
-} 
+}
+
 }

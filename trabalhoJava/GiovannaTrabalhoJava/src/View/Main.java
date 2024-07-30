@@ -5,6 +5,7 @@ import Model.Abastecimento;
 import Model.Abastecimento.TipoCombustivelAbastecimento;
 import Model.Gasto;
 import Model.Gasto.TipoGasto;
+import Model.Gasto.TipoRelatorioGasto;
 import Model.Veiculo;
 import Model.Veiculo.TipoCombustivel;
 import exception.Excecao;
@@ -39,7 +40,7 @@ public class Main {
                 "Registrar Abastecimento",
                 "Registrar Gasto",
                 "Calcular Consumo Médio",
-                "Relatório Geral",
+                "Relatório",
                 "Sair"
         };
 
@@ -88,7 +89,7 @@ public class Main {
                 calcularConsumoMedio();
                 break;
             case 5:
-                relatorioGastoGeral();
+                relatorio();
                 break;
             case 6:
                 System.exit(0);
@@ -259,9 +260,6 @@ public class Main {
             case FLEX:
                 return tipoAbastecimento == TipoCombustivelAbastecimento.GASOLINA
                         || tipoAbastecimento == TipoCombustivelAbastecimento.ALCOOL;
-            case HIBRIDO:
-                return tipoAbastecimento == TipoCombustivelAbastecimento.GASOLINA
-                        || tipoAbastecimento == TipoCombustivelAbastecimento.ALCOOL;
             default:
                 return false;
         }
@@ -286,7 +284,6 @@ public class Main {
         JTextField valorField = new JTextField(10);
         JTextField quantidadeField = new JTextField(10);
 
-        // Combobox para selecionar o tipo de combustível ao abastecer
         JComboBox<TipoCombustivelAbastecimento> combustiveisComboBox = new JComboBox<>(
                 TipoCombustivelAbastecimento.values());
 
@@ -313,7 +310,6 @@ public class Main {
                 double valor = Double.parseDouble(valorField.getText());
                 double quantidade = Double.parseDouble(quantidadeField.getText());
 
-                // Verificar valores negativos
                 if (valor < 0) {
                     throw new Excecao("O valor do abastecimento não pode ser negativo.");
                 }
@@ -321,12 +317,9 @@ public class Main {
                     throw new Excecao("A quantidade de combustível não pode ser negativa.");
                 }
 
-                // Verificar se o combustível selecionado é compatível
                 TipoCombustivelAbastecimento tipoAbastecimento = (TipoCombustivelAbastecimento) combustiveisComboBox
                         .getSelectedItem();
 
-                // Verificar a compatibilidade entre o combustível do veículo e o combustível
-                // abastecido
                 TipoCombustivel tipoVeiculo = veiculoSelecionado.getCombustivel();
                 if (!isCombustivelCompativel(tipoVeiculo, tipoAbastecimento)) {
                     throw new Excecao("O tipo de combustível selecionado não é compatível com o veículo.");
@@ -336,15 +329,13 @@ public class Main {
                     throw new Excecao("A quantidade de combustível excede a capacidade do tanque do veículo.");
                 }
 
-                // Obter a última quilometragem registrada (se houver)
-                int ultimaQuilometragem = 0; // Valor inicial caso não haja abastecimentos anteriores
+                int ultimaQuilometragem = 0;
                 if (!veiculoSelecionado.getAbastecimentos().isEmpty()) {
                     ultimaQuilometragem = veiculoSelecionado.getAbastecimentos()
                             .get(veiculoSelecionado.getAbastecimentos().size() - 1)
                             .getQuilometragem();
                 }
 
-                // Verificar se a quilometragem atual é menor que a última quilometragem
                 if (quilometragemAtual < ultimaQuilometragem) {
                     throw new Excecao(
                             "A quilometragem atual não pode ser menor que a última quilometragem registrada.");
@@ -362,83 +353,81 @@ public class Main {
         }
     }
 
-private static void registrarGasto() throws Excecao {
-    if (veiculos.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
-                JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+    private static void registrarGasto() throws Excecao {
+        if (veiculos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    Veiculo veiculoSelecionado = escolherVeiculo();
-    if (veiculoSelecionado == null) {
-        return;
-    }
+        Veiculo veiculoSelecionado = escolherVeiculo();
+        if (veiculoSelecionado == null) {
+            return;
+        }
 
-    JPanel panel = new JPanel();
-    panel.setLayout(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(5, 5, 5, 5);
-    gbc.fill = GridBagConstraints.HORIZONTAL;
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-    JTextField descricaoField = new JTextField(20);
-    JTextField valorField = new JTextField(10);
-    JTextField dataField = new JTextField(10);
+        JTextField descricaoField = new JTextField(20);
+        JTextField valorField = new JTextField(10);
+        JTextField dataField = new JTextField(10);
 
-    JComboBox<TipoGasto> tipoGastoComboBox = new JComboBox<>(TipoGasto.values());
+        JComboBox<TipoGasto> tipoGastoComboBox = new JComboBox<>(TipoGasto.values());
 
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    panel.add(new JLabel("Tipo de Gasto:"), gbc);
-    gbc.gridx = 1;
-    panel.add(tipoGastoComboBox, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Tipo de Gasto:"), gbc);
+        gbc.gridx = 1;
+        panel.add(tipoGastoComboBox, gbc);
 
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    panel.add(new JLabel("Descrição:"), gbc);
-    gbc.gridx = 1;
-    panel.add(descricaoField, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Descrição:"), gbc);
+        gbc.gridx = 1;
+        panel.add(descricaoField, gbc);
 
-    gbc.gridx = 0;
-    gbc.gridy = 2;
-    panel.add(new JLabel("Valor:"), gbc);
-    gbc.gridx = 1;
-    panel.add(valorField, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Valor:"), gbc);
+        gbc.gridx = 1;
+        panel.add(valorField, gbc);
 
-    gbc.gridx = 0;
-    gbc.gridy = 3;
-    panel.add(new JLabel("Data (DD-MM-YYYY):"), gbc);
-    gbc.gridx = 1;
-    panel.add(dataField, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Data (DD-MM-YYYY):"), gbc);
+        gbc.gridx = 1;
+        panel.add(dataField, gbc);
 
-    int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Gasto", JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE);
-    if (result == JOptionPane.OK_OPTION) {
-        try {
-            TipoGasto tipoGasto = (TipoGasto) tipoGastoComboBox.getSelectedItem();
-            String descricao = descricaoField.getText();
-            double valor = Double.parseDouble(valorField.getText());
+        int result = JOptionPane.showConfirmDialog(null, panel, "Registrar Gasto", JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                TipoGasto tipoGasto = (TipoGasto) tipoGastoComboBox.getSelectedItem();
+                String descricao = descricaoField.getText();
+                double valor = Double.parseDouble(valorField.getText());
 
-            // Configurar o formato da data
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            LocalDate data = LocalDate.parse(dataField.getText(), formatter);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate data = LocalDate.parse(dataField.getText(), formatter);
 
-            // Verificar valor negativo
-            if (valor < 0) {
-                throw new Excecao("O valor do gasto não pode ser negativo.");
+                if (valor < 0) {
+                    throw new Excecao("O valor do gasto não pode ser negativo.");
+                }
+
+                VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
+                veiculoController.adicionarGasto(new Gasto(tipoGasto, descricao, valor, data));
+
+                JOptionPane.showMessageDialog(null, "Gasto registrado com sucesso!", "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (NumberFormatException e) {
+                throw new Excecao("Erro ao converter valores numéricos: " + e.getMessage());
+            } catch (DateTimeParseException e) {
+                throw new Excecao("Data inválida. Use o formato DD-MM-YYYY: " + e.getMessage());
             }
-
-            VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-            veiculoController.adicionarGasto(new Gasto(tipoGasto, descricao, valor, data));
-
-            JOptionPane.showMessageDialog(null, "Gasto registrado com sucesso!", "Sucesso",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } catch (NumberFormatException e) {
-            throw new Excecao("Erro ao converter valores numéricos: " + e.getMessage());
-        } catch (DateTimeParseException e) {
-            throw new Excecao("Data inválida. Use o formato DD-MM-YYYY: " + e.getMessage());
         }
     }
-}
 
     private static void calcularConsumoMedio() throws Excecao {
         if (veiculos.isEmpty()) {
@@ -458,11 +447,28 @@ private static void registrarGasto() throws Excecao {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private static void relatorioGastoGeral() throws Excecao {
+    private static void relatorio() throws Excecao {
         if (veiculos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum veículo registrado. Registre um veículo primeiro.", "Erro",
                     JOptionPane.ERROR_MESSAGE);
             return;
+        }
+    
+        // Perguntar ao usuário se deseja um relatório geral ou específico
+        String[] opcoes = {"Geral", "Específico"};
+        int escolha = JOptionPane.showOptionDialog(
+                null,
+                "Deseja ver um relatório geral ou específico?",
+                "Escolha do Relatório",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+    
+        if (escolha == -1) {
+            return;  // Usuário cancelou a operação
         }
     
         Veiculo veiculoSelecionado = escolherVeiculo();
@@ -470,13 +476,21 @@ private static void registrarGasto() throws Excecao {
             return;
         }
     
+        if (escolha == 0) {
+            // Relatório Geral
+            relatorioGeral(veiculoSelecionado);
+        } else {
+            // Relatório Específico
+            relatorioEspecifico(veiculoSelecionado);
+        }
+    }
+
+    private static void relatorioGeral(Veiculo veiculoSelecionado) {
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
     
-        // Obtendo todos os gastos e abastecimentos
         List<Gasto> gastos = veiculoController.getGastos();
         List<Abastecimento> abastecimentos = veiculoController.getAbastecimentos();
     
-        // Agrupando e somando os valores dos gastos por tipo
         double totalImpostos = 0;
         double totalMultas = 0;
         double totalManutencao = 0;
@@ -485,78 +499,163 @@ private static void registrarGasto() throws Excecao {
     
         StringBuilder relatorio = new StringBuilder();
     
-        // Relatório de Impostos
-        relatorio.append("IMPOSTO\n");
+        // Cabeçalho do relatório
+        relatorio.append("RELATÓRIO DE GASTOS GERAIS\n");
+        relatorio.append("=============================\n");
+    
+        // Impostos
+        relatorio.append("IMPOSTOS\n");
         boolean houveImpostos = false;
         for (Gasto gasto : gastos) {
             if (gasto.getTipoGasto() == TipoGasto.IMPOSTO) {
                 houveImpostos = true;
-                relatorio.append(String.format("Tipo: %s     Valor: R$ %.2f    Data: %s\n",
-                        gasto.getDescricao(), gasto.getValor(), gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
+                relatorio.append(String.format("Descrição: %s | Valor: R$ %.2f | Data: %s\n",
+                        gasto.getDescricao(), gasto.getValor(),
+                        gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
                 totalImpostos += gasto.getValor();
             }
         }
         if (houveImpostos) {
-            relatorio.append(String.format("Total gasto: R$ %.2f\n\n", totalImpostos));
+            relatorio.append(String.format("Total em Impostos: R$ %.2f\n\n", totalImpostos));
         } else {
-            relatorio.append("Não houveram impostos.\n\n");
+            relatorio.append("Não houve impostos.\n\n");
         }
     
-        // Relatório de Multas
+        // Multas
         relatorio.append("MULTAS\n");
         boolean houveMultas = false;
         for (Gasto gasto : gastos) {
             if (gasto.getTipoGasto() == TipoGasto.MULTA) {
                 houveMultas = true;
-                relatorio.append(String.format("Tipo: %s     Valor: R$ %.2f    Data: %s\n",
-                        gasto.getDescricao(), gasto.getValor(), gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
+                relatorio.append(String.format("Descrição: %s | Valor: R$ %.2f | Data: %s\n",
+                        gasto.getDescricao(), gasto.getValor(),
+                        gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
                 totalMultas += gasto.getValor();
             }
         }
         if (houveMultas) {
-            relatorio.append(String.format("Total gasto: R$ %.2f\n\n", totalMultas));
+            relatorio.append(String.format("Total em Multas: R$ %.2f\n\n", totalMultas));
         } else {
-            relatorio.append("Não houveram multas.\n\n");
+            relatorio.append("Não houve multas.\n\n");
         }
     
-        // Relatório de Manutenção
+        // Manutenção
         relatorio.append("MANUTENÇÃO\n");
         boolean houveManutencao = false;
         for (Gasto gasto : gastos) {
             if (gasto.getTipoGasto() == TipoGasto.MANUTENCAO) {
                 houveManutencao = true;
-                relatorio.append(String.format("Tipo: %s     Valor: R$ %.2f    Data: %s\n",
-                        gasto.getDescricao(), gasto.getValor(), gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
+                relatorio.append(String.format("Descrição: %s | Valor: R$ %.2f | Data: %s\n",
+                        gasto.getDescricao(), gasto.getValor(),
+                        gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
                 totalManutencao += gasto.getValor();
             }
         }
         if (houveManutencao) {
-            relatorio.append(String.format("Total gasto: R$ %.2f\n\n", totalManutencao));
+            relatorio.append(String.format("Total em Manutenção: R$ %.2f\n\n", totalManutencao));
         } else {
-            relatorio.append("Não houveram manutenções.\n\n");
+            relatorio.append("Não houve manutenções.\n\n");
         }
     
-        // Relatório de Abastecimentos
+        // Abastecimentos
         relatorio.append("ABASTECIMENTOS\n");
         boolean houveAbastecimentos = false;
         for (Abastecimento abastecimento : abastecimentos) {
             houveAbastecimentos = true;
-            relatorio.append(String.format("Quilômetro: %d     Valor: R$ %.2f     Tipo: %s\n",
-                    abastecimento.getQuilometragem(), abastecimento.getValor(), abastecimento.getTipoCombustivelAbastecimento()));
+            relatorio.append(String.format("Quilometragem: %d | Valor: R$ %.2f | Tipo: %s\n",
+                    abastecimento.getQuilometragem(), abastecimento.getValor(),
+                    abastecimento.getTipoCombustivelAbastecimento()));
             totalAbastecimentos += abastecimento.getValor();
         }
         if (houveAbastecimentos) {
-            relatorio.append(String.format("Total gasto: R$ %.2f\n\n", totalAbastecimentos));
+            relatorio.append(String.format("Total em Abastecimentos: R$ %.2f\n\n", totalAbastecimentos));
         } else {
-            relatorio.append("Não houveram abastecimentos.\n\n");
+            relatorio.append("Não houve abastecimentos.\n\n");
         }
     
         // Total Geral
         totalGeral = totalImpostos + totalMultas + totalManutencao + totalAbastecimentos;
-        relatorio.append(String.format("Total geral: R$ %.2f", totalGeral));
+        relatorio.append("=============================\n");
+        relatorio.append(String.format("Total Geral: R$ %.2f", totalGeral));
     
-        // Mostrar o relatório
-        JOptionPane.showMessageDialog(null, relatorio.toString(), "Relatório de Gastos Gerais", JOptionPane.INFORMATION_MESSAGE);
+        // Exibir o relatório em uma janela com rolagem
+        JTextArea textArea = new JTextArea(relatorio.toString());
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        JScrollPane scrollPane = new JScrollPane(textArea);
+    
+        JOptionPane.showMessageDialog(null, scrollPane, "Relatório de Gastos Gerais", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private static void relatorioEspecifico(Veiculo veiculoSelecionado) {
+        // Opções de tipos de relatório de gastos
+        TipoRelatorioGasto[] tiposRelatorio = TipoRelatorioGasto.values();
+        TipoRelatorioGasto tipoRelatorioSelecionado = (TipoRelatorioGasto) JOptionPane.showInputDialog(
+                null,
+                "Selecione o tipo de gasto para o relatório:",
+                "Tipo de Gasto",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                tiposRelatorio,
+                tiposRelatorio[0]
+        );
+    
+        if (tipoRelatorioSelecionado == null) {
+            return;  // Usuário cancelou a operação
+        }
+    
+        VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
+    
+        List<Gasto> gastos = veiculoController.getGastos();
+        List<Abastecimento> abastecimentos = veiculoController.getAbastecimentos();
+    
+        double totalGasto = 0;
+    
+        StringBuilder relatorio = new StringBuilder();
+    
+        // Cabeçalho do relatório
+        relatorio.append("RELATÓRIO DE GASTOS - ").append(tipoRelatorioSelecionado.getDescricao()).append("\n");
+        relatorio.append("=============================\n");
+    
+        boolean houveGastos = false;
+    
+        // Abastecimento é um caso especial pois é uma lista separada
+        if (tipoRelatorioSelecionado == TipoRelatorioGasto.ABASTECIMENTO) {
+            relatorio.append("ABASTECIMENTOS\n");
+            for (Abastecimento abastecimento : abastecimentos) {
+                houveGastos = true;
+                relatorio.append(String.format("Quilometragem: %d | Valor: R$ %.2f | Tipo: %s\n",
+                        abastecimento.getQuilometragem(), abastecimento.getValor(),
+                        abastecimento.getTipoCombustivelAbastecimento()));
+                totalGasto += abastecimento.getValor();
+            }
+        } else {
+            // Outros tipos de gastos
+            TipoGasto tipoGastoCorrespondente = TipoGasto.valueOf(tipoRelatorioSelecionado.name());
+            for (Gasto gasto : gastos) {
+                if (gasto.getTipoGasto() == tipoGastoCorrespondente) {
+                    houveGastos = true;
+                    relatorio.append(String.format("Descrição: %s | Valor: R$ %.2f | Data: %s\n",
+                            gasto.getDescricao(), gasto.getValor(),
+                            gasto.getData().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))));
+                    totalGasto += gasto.getValor();
+                }
+            }
+        }
+    
+        if (!houveGastos) {
+            relatorio.append("Não houve gastos deste tipo.\n");
+        } else {
+            relatorio.append(String.format("\nTotal em %s: R$ %.2f\n", tipoRelatorioSelecionado.getDescricao(), totalGasto));
+        }
+    
+        // Exibir o relatório em uma janela com rolagem
+        JTextArea textArea = new JTextArea(relatorio.toString());
+        textArea.setEditable(false);
+        textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        JScrollPane scrollPane = new JScrollPane(textArea);
+    
+        JOptionPane.showMessageDialog(null, scrollPane, "Relatório de Gastos Específicos", JOptionPane.INFORMATION_MESSAGE);
     }
     
 

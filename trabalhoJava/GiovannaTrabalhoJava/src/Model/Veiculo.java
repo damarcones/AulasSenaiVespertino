@@ -40,8 +40,7 @@ public class Veiculo {
         DIESEL,
         ALCOOL,
         FLEX,
-        GNV,        
-        HIBRIDO    
+        GNV  
     }
 
     public String getMarca() {

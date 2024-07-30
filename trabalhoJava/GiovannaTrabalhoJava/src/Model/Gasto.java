@@ -40,6 +40,30 @@ public class Gasto {
         this.valor = valor;
     }
 
+    public enum TipoRelatorioGasto {
+        ABASTECIMENTO("Abastecimento"),
+        IMPOSTO("Imposto"),
+        MULTA("Multa"),
+        MANUTENCAO("Manutenção"),
+        OUTROS("Outros");
+    
+        private final String descricao;
+    
+        TipoRelatorioGasto(String descricao) {
+            this.descricao = descricao;
+        }
+    
+        public String getDescricao() {
+            return descricao;
+        }
+    
+        @Override
+        public String toString() {
+            return descricao;
+        }
+    }
+    
+
     public enum TipoGasto {
         IMPOSTO("Imposto"),
         MULTA("Multa"),
