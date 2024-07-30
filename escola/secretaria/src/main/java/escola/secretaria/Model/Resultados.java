@@ -12,8 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Resultados")
@@ -24,12 +22,14 @@ public class Resultados implements Serializable {
     @Column(name = "IdRES")
     private long idRes;
 
-    @OneToOne
+    
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "matricula")
     private Aluno matricula;
 
+    
     @OneToOne
-    @JoinColumn(name = "IdDisciplina")
+    @JoinColumn(name = "idDis")
     private DisciplinasModel idDis;
 
     @Column(name  = "PriNota")
@@ -40,6 +40,17 @@ public class Resultados implements Serializable {
 
     public double getPriNota() {
         return priNota;
+    }
+
+    @Column(name = "status")
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public void setPriNota(double priNota) {
@@ -115,6 +126,18 @@ public class Resultados implements Serializable {
 
     public void setIdDis(DisciplinasModel idDis) {
         this.idDis = idDis;
+    }
+
+    public void statusNota(){
+        double media = getMedia();
+        
+        if(media>=6)
+            setStatus("Aprovado");
+        else if(media>= 5 && media<=5.9)
+            setStatus("Recuperação");
+        else
+            setStatus("Repovrado");
+
     }
 
 }

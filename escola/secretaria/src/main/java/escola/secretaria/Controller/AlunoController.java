@@ -63,10 +63,16 @@ public class AlunoController {
     @PostMapping("/lancarnotas")
     public Resultados inserirNotas(@RequestBody Resultados resultados){
         resultados.resultado(resultados.getPriNota(), resultados.getSegNota(), resultados.getTerNota(), resultados.getQuaNota());
+        resultados.statusNota();
         return resultadoRepository.save(resultados);
     }
     @GetMapping("/vernotas")
     public List<Resultados> listarNotas() {
+        return resultadoRepository.findAll();
+    }
+
+    @GetMapping("/status")
+    public List<Resultados> statusNotas(){
         return resultadoRepository.findAll();
     }
     
