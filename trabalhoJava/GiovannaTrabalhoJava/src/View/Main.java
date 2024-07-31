@@ -453,9 +453,8 @@ public class Main {
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
-    
-        // Perguntar ao usuário se deseja um relatório geral ou específico
-        String[] opcoes = {"Geral", "Específico"};
+
+        String[] opcoes = { "Geral", "Específico" };
         int escolha = JOptionPane.showOptionDialog(
                 null,
                 "Deseja ver um relatório geral ou específico?",
@@ -464,46 +463,41 @@ public class Main {
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 opcoes,
-                opcoes[0]
-        );
-    
+                opcoes[0]);
+
         if (escolha == -1) {
-            return;  // Usuário cancelou a operação
+            return;
         }
-    
+
         Veiculo veiculoSelecionado = escolherVeiculo();
         if (veiculoSelecionado == null) {
             return;
         }
-    
+
         if (escolha == 0) {
-            // Relatório Geral
             relatorioGeral(veiculoSelecionado);
         } else {
-            // Relatório Específico
             relatorioEspecifico(veiculoSelecionado);
         }
     }
 
     private static void relatorioGeral(Veiculo veiculoSelecionado) {
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-    
-        List<Gasto> gastos = veiculoController.getGastos();
+
+        List<Gasto> gastos = veiculoController.getListaDeGastos();
         List<Abastecimento> abastecimentos = veiculoController.getAbastecimentos();
-    
+
         double totalImpostos = 0;
         double totalMultas = 0;
         double totalManutencao = 0;
         double totalAbastecimentos = 0;
         double totalGeral = 0;
-    
+
         StringBuilder relatorio = new StringBuilder();
-    
-        // Cabeçalho do relatório
+
         relatorio.append("RELATÓRIO DE GASTOS GERAIS\n");
         relatorio.append("=============================\n");
-    
-        // Impostos
+
         relatorio.append("IMPOSTOS\n");
         boolean houveImpostos = false;
         for (Gasto gasto : gastos) {
@@ -520,8 +514,7 @@ public class Main {
         } else {
             relatorio.append("Não houve impostos.\n\n");
         }
-    
-        // Multas
+
         relatorio.append("MULTAS\n");
         boolean houveMultas = false;
         for (Gasto gasto : gastos) {
@@ -538,8 +531,7 @@ public class Main {
         } else {
             relatorio.append("Não houve multas.\n\n");
         }
-    
-        // Manutenção
+
         relatorio.append("MANUTENÇÃO\n");
         boolean houveManutencao = false;
         for (Gasto gasto : gastos) {
@@ -556,8 +548,7 @@ public class Main {
         } else {
             relatorio.append("Não houve manutenções.\n\n");
         }
-    
-        // Abastecimentos
+
         relatorio.append("ABASTECIMENTOS\n");
         boolean houveAbastecimentos = false;
         for (Abastecimento abastecimento : abastecimentos) {
@@ -572,23 +563,20 @@ public class Main {
         } else {
             relatorio.append("Não houve abastecimentos.\n\n");
         }
-    
-        // Total Geral
+
         totalGeral = totalImpostos + totalMultas + totalManutencao + totalAbastecimentos;
         relatorio.append("=============================\n");
         relatorio.append(String.format("Total Geral: R$ %.2f", totalGeral));
-    
-        // Exibir o relatório em uma janela com rolagem
+
         JTextArea textArea = new JTextArea(relatorio.toString());
         textArea.setEditable(false);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(textArea);
-    
+
         JOptionPane.showMessageDialog(null, scrollPane, "Relatório de Gastos Gerais", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private static void relatorioEspecifico(Veiculo veiculoSelecionado) {
-        // Opções de tipos de relatório de gastos
         TipoRelatorioGasto[] tiposRelatorio = TipoRelatorioGasto.values();
         TipoRelatorioGasto tipoRelatorioSelecionado = (TipoRelatorioGasto) JOptionPane.showInputDialog(
                 null,
@@ -597,29 +585,26 @@ public class Main {
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 tiposRelatorio,
-                tiposRelatorio[0]
-        );
-    
+                tiposRelatorio[0]);
+
         if (tipoRelatorioSelecionado == null) {
-            return;  // Usuário cancelou a operação
+            return;
         }
-    
+
         VeiculoController veiculoController = new VeiculoController(veiculoSelecionado);
-    
-        List<Gasto> gastos = veiculoController.getGastos();
+
+        List<Gasto> gastos = veiculoController.getListaDeGastos();
         List<Abastecimento> abastecimentos = veiculoController.getAbastecimentos();
-    
+
         double totalGasto = 0;
-    
+
         StringBuilder relatorio = new StringBuilder();
-    
-        // Cabeçalho do relatório
+
         relatorio.append("RELATÓRIO DE GASTOS - ").append(tipoRelatorioSelecionado.getDescricao()).append("\n");
         relatorio.append("=============================\n");
-    
+
         boolean houveGastos = false;
-    
-        // Abastecimento é um caso especial pois é uma lista separada
+
         if (tipoRelatorioSelecionado == TipoRelatorioGasto.ABASTECIMENTO) {
             relatorio.append("ABASTECIMENTOS\n");
             for (Abastecimento abastecimento : abastecimentos) {
@@ -630,7 +615,7 @@ public class Main {
                 totalGasto += abastecimento.getValor();
             }
         } else {
-            // Outros tipos de gastos
+
             TipoGasto tipoGastoCorrespondente = TipoGasto.valueOf(tipoRelatorioSelecionado.name());
             for (Gasto gasto : gastos) {
                 if (gasto.getTipoGasto() == tipoGastoCorrespondente) {
@@ -642,22 +627,22 @@ public class Main {
                 }
             }
         }
-    
+
         if (!houveGastos) {
             relatorio.append("Não houve gastos deste tipo.\n");
         } else {
-            relatorio.append(String.format("\nTotal em %s: R$ %.2f\n", tipoRelatorioSelecionado.getDescricao(), totalGasto));
+            relatorio.append(
+                    String.format("\nTotal em %s: R$ %.2f\n", tipoRelatorioSelecionado.getDescricao(), totalGasto));
         }
-    
-        // Exibir o relatório em uma janela com rolagem
+
         JTextArea textArea = new JTextArea(relatorio.toString());
         textArea.setEditable(false);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         JScrollPane scrollPane = new JScrollPane(textArea);
-    
-        JOptionPane.showMessageDialog(null, scrollPane, "Relatório de Gastos Específicos", JOptionPane.INFORMATION_MESSAGE);
+
+        JOptionPane.showMessageDialog(null, scrollPane, "Relatório de Gastos Específicos",
+                JOptionPane.INFORMATION_MESSAGE);
     }
-    
 
     private static Veiculo escolherVeiculo() {
         JDialog dialog = new JDialog();

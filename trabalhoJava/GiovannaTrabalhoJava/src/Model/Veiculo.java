@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"rawtypes" })
 public class Veiculo {
     private String marca;
     private String modelo;
@@ -14,10 +13,9 @@ public class Veiculo {
     private String cor;
     private String placa;
     private String renavam;
-    private ArrayList abastecimentos;
-    private ArrayList gastos;
+    private List<Abastecimento> abastecimentos;
+    private List<Gasto> gastos;
     private TipoCombustivel combustivel;
-    public String getCombustivel;
 
     public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao,
             double capacidadeTanque, TipoCombustivel combustivel, String cor, String placa, String renavam) {
@@ -40,7 +38,7 @@ public class Veiculo {
         DIESEL,
         ALCOOL,
         FLEX,
-        GNV  
+        GNV
     }
 
     public String getMarca() {
@@ -115,17 +113,30 @@ public class Veiculo {
         this.renavam = renavam;
     }
 
-    @SuppressWarnings("unchecked")
     public List<Abastecimento> getAbastecimentos() {
         return abastecimentos;
     }
 
-    @SuppressWarnings("unchecked")
+    public void setAbastecimentos(List<Abastecimento> abastecimentos) {
+        this.abastecimentos = abastecimentos;
+    }
+
     public List<Gasto> getGastos() {
         return gastos;
     }
 
-    @SuppressWarnings("unchecked")
+    public void setGastos(List<Gasto> gastos) {
+        this.gastos = gastos;
+    }
+
+    public TipoCombustivel getCombustivel() {
+        return combustivel;
+    }
+
+    public void setCombustivel(TipoCombustivel combustivel) {
+        this.combustivel = combustivel;
+    }
+
     public void adicionarGasto(Gasto gasto) {
         gastos.add(gasto);
     }
@@ -137,22 +148,4 @@ public class Veiculo {
                 marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustivel, cor, placa,
                 renavam);
     }
-
-    public TipoCombustivel getCombustivel() {
-        return combustivel;
-    }
-
-    public void setCombustivel(TipoCombustivel combustivel) {
-        this.combustivel = combustivel;
-    }
-
-    public void setAbastecimentos(ArrayList abastecimentos) {
-        this.abastecimentos = abastecimentos;
-    }
-
-    public void setGastos(ArrayList gastos) {
-        this.gastos = gastos;
-    }
-    
-    
 }

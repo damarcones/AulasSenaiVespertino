@@ -7,7 +7,6 @@ import java.util.List;
 import Model.Abastecimento;
 import Model.Gasto;
 
-
 public class VeiculoController {
 
     private Veiculo veiculo;
@@ -31,32 +30,27 @@ public class VeiculoController {
     }
 
     public List<Abastecimento> getAbastecimentos() {
-        return getAbastecimentos();
-    }
-
-    public List<Gasto> getGastos() {
-        return getGastos();
+        return veiculo.getAbastecimentos();
     }
 
     public double calcularConsumoMedio() throws Excecao {
         List<Abastecimento> abastecimentos = veiculo.getAbastecimentos();
         int numAbastecimentos = abastecimentos.size();
-    
+
         if (numAbastecimentos < 2) {
             throw new Excecao("A média só pode ser calculada depois de dois abastecimentos.");
         }
-    
+
         Abastecimento primeiroAbastecimento = abastecimentos.get(0);
         Abastecimento ultimoAbastecimento = abastecimentos.get(numAbastecimentos - 1);
-    
+
         double totalKm = ultimoAbastecimento.getQuilometragem() - primeiroAbastecimento.getQuilometragem();
         double totalLitros = abastecimentos.stream()
-                                           .mapToDouble(Abastecimento::getQuantidade)
-                                           .sum();
-    
+                .mapToDouble(Abastecimento::getQuantidade)
+                .sum();
+
         return totalKm / totalLitros;
     }
-    
 
     public void adicionarGasto(String categoria, String descricao, double valor, LocalDate data) {
         Gasto gasto = new Gasto(null, descricao, valor, data);
@@ -74,8 +68,11 @@ public class VeiculoController {
 
         for (Abastecimento abastecimento : abastecimentos) {
             gastoTotal += abastecimento.getValor();
-    }
+        }
         return gastoTotal;
-}
+    }
 
+    public List<Gasto> getListaDeGastos() {
+        return veiculo.getGastos();
+    }
 }
