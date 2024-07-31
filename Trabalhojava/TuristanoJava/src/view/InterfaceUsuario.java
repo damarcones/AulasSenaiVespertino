@@ -193,7 +193,7 @@ public class InterfaceUsuario {
 
                 // Criando e cadastrando o veículo
                 Veiculo veiculo = new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque,
-                        combustiveis, cor, placa, renavam);
+                        combustiveis, cor, placa, renavam, anoModelo);
                 gerenciamento.cadastrarVeiculo(veiculo);
                 JOptionPane.showMessageDialog(null, "Veículo cadastrado com sucesso!");
             } catch (ExcecaoPersonalizada e) {

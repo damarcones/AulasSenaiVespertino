@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ExcecaoPersonalizada;
+
 public class Veiculo {
     private String marca;
     private String modelo;
@@ -16,8 +18,9 @@ public class Veiculo {
     private String renavam;
     private List<Despesa> despesas;
     private List<Abastecimento> abastecimentos;
+    private int quilometragemAtual; // Adiciona o atributo para a quilometragem
 
-    public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao, double capacidadeTanque, String combustiveis, String cor, String placa, String renavam) {
+    public Veiculo(String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao, double capacidadeTanque, String combustiveis, String cor, String placa, String renavam, int quilometragemAtual) {
         this.marca = marca;
         this.modelo = modelo;
         this.anoFabricacao = anoFabricacao;
@@ -30,6 +33,7 @@ public class Veiculo {
         this.renavam = renavam;
         this.despesas = new ArrayList<>();
         this.abastecimentos = new ArrayList<>();
+        this.quilometragemAtual = quilometragemAtual; // Inicializa a quilometragem
     }
 
     public String getPlaca() {
@@ -44,20 +48,25 @@ public class Veiculo {
         despesas.add(despesa);
     }
 
-    public void adicionarAbastecimento(Abastecimento abastecimento) {
+    public void adicionarAbastecimento(Abastecimento abastecimento) throws ExcecaoPersonalizada {
+        // Verifica se a quilometragem é válida antes de adicionar o abastecimento
+        if (abastecimento.getQuilometragemAtual() < quilometragemAtual) {
+            throw new ExcecaoPersonalizada("A quilometragem atual não pode ser menor que a quilometragem anterior.");
+        }
 
         abastecimentos.add(abastecimento);
         Despesa despesaAbastecimento = new Despesa("abastecimento", abastecimento.getValor(),
                 "Abastecimento: " + abastecimento.getQuantidadeCombustivel() + " litros",
                 abastecimento.getData(), "abastecimento");
         despesas.add(despesaAbastecimento);
+        // Atualiza a quilometragem após o abastecimento
+        quilometragemAtual = abastecimento.getQuilometragemAtual();
     }
 
     public List<Abastecimento> getAbastecimentos() {
         return abastecimentos;
     }
 
-   
     public List<Despesa> getDespesasPorCategoria(String categoria) {
         List<Despesa> despesasFiltradas = new ArrayList<>();
         for (Despesa despesa : despesas) {
@@ -150,5 +159,13 @@ public class Veiculo {
 
     public void setAbastecimentos(List<Abastecimento> abastecimentos) {
         this.abastecimentos = abastecimentos;
+    }
+
+    public int getQuilometragemAtual() {
+        return quilometragemAtual;
+    }
+
+    public void setQuilometragemAtual(int quilometragemAtual) {
+        this.quilometragemAtual = quilometragemAtual;
     }
 }
