@@ -76,6 +76,10 @@ public class AlunoController {
         return resultadoRepository.findAll();
     }
     
+    @GetMapping("/qualquernome")
+    public int qualquernome() {
+        return resultadoRepository.qualquernomeai();
+    }
     
     
 

@@ -26,7 +26,7 @@ import jakarta.validation.constraints.NotNull;
 public class DisciplinasModel implements Serializable{
 
     @Id
-    @Column(name = "IdDisciplina")
+    @Column(name = "disciplina")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
