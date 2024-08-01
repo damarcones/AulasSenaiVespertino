@@ -1,2 +1,2 @@
 # AulasSenaiVespertino
-Repositório destinado as aulas de POO em Java da turma o Senai Vepertino 2024.
+Repositório destinado as aulas de POO em Java da turma o Senai Vespertino de 2024.
