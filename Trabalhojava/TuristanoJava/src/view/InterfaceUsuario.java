@@ -223,6 +223,13 @@ public class InterfaceUsuario {
             double valor = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor do abastecimento:"));
             double quantidadeCombustivel = Double
                     .parseDouble(JOptionPane.showInputDialog("Digite a quantidade de combustível (em litros):"));
+            
+            // Verifica se a quantidade de combustível excede a capacidade do tanque
+            if (quantidadeCombustivel > veiculo.getCapacidadeTanque()) {
+                JOptionPane.showMessageDialog(null, "A quantidade de combustível excede a capacidade do tanque.");
+                return;
+            }
+    
             int quilometragemAtual = Integer
                     .parseInt(JOptionPane.showInputDialog("Digite a quilometragem atual do veículo:"));
     
@@ -236,6 +243,7 @@ public class InterfaceUsuario {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
+    
     
 
 
