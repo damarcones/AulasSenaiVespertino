@@ -2,14 +2,14 @@ package com.biblioteca.gerenciamento.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class UsuarioModel {
     
     @Id
+    @NotNull
     private long cpf;
-
-
     private String nome;
     private String endereco;
     private String telefone;

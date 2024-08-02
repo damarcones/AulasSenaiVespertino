@@ -6,14 +6,14 @@ import com.biblioteca.gerenciamento.Enum.StatusEnum;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class LivroModel {
 
     @Id
+    @NotNull
     private long isbn;
-
-
     private List<String> nomeAutor;
     private String titulo;
     private int qntPages;
