@@ -1,29 +1,52 @@
 package com.controle;
 
 import com.model.abastecimento.Abastecimento;
-import com.model.gasto.Gasto;
+import com.model.gastos.Imposto;
+import com.model.gastos.Manutencao;
+import com.model.gastos.Multa;
+import com.model.gastos.Outros;
 import com.model.veiculo.Veiculo;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SistemaTuristando {
     
-    private ArrayList<Gasto> listaGastos = new ArrayList<>(); // criando a instancia do array
+   
     private static ArrayList<Veiculo> listaVeiculos= new ArrayList<>(); // criando a instancia do array
     private ArrayList<Abastecimento> listaAbastecimentos = new ArrayList<>(); // criando a instancia do array
+    private ArrayList<Manutencao> listaManutencao = new ArrayList<>(); // criando a instancia do array
+    private ArrayList<Imposto> listaImposto = new ArrayList<>(); // criando a instancia do array
+    private ArrayList<Multa> listaMulta = new ArrayList<>(); // criando a instancia do array
+    private ArrayList<Outros> listaOutrosGastos = new ArrayList<>(); // criando a instancia do array
 
+    
+    
+    
+    //Metodo pra filtrar um veiculo pela placa
+        public static Veiculo encontrarVeiculoPorPlaca(String placa) {
+            for (Veiculo veiculo : listaVeiculos) {
+                try {
+                    if (veiculo.getPlaca().equalsIgnoreCase(placa)) {
+                    return veiculo;
+                }
+                else{
+                    return null;
+                }
+                } catch (NullPointerException e) {
+                    JOptionPane.showMessageDialog(null, "Valores inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+                }
+                
+            }
+            return null;
+        }
     
     //Metodo que cria a interface grafica para a inserção de informações
     public static Veiculo coletarInformacoesDoVeiculo() {
@@ -51,7 +74,7 @@ public class SistemaTuristando {
         panel.add(anoFabricacaoField);
         panel.add(new JLabel("Ano do Modelo:"));
         panel.add(anoModeloField);
-        panel.add(new JLabel("Motorização:"));
+        panel.add(new JLabel("Motorização (Cv):"));
         panel.add(motorizacaoField);
         panel.add(new JLabel("Capacidade do Tanque (litros):"));
         panel.add(capacidadeTanqueField);
@@ -125,25 +148,6 @@ public class SistemaTuristando {
         this.listaVeiculos.add(veiculo);
     }
 
-
-    //Metodo pra filtrar um veiculo pela placa
-    public static Veiculo encontrarVeiculoPorPlaca(String placa) {
-        for (Veiculo veiculo : listaVeiculos) {
-            try {
-                if (veiculo.getPlaca().equals(placa)) {
-                return veiculo;
-            }
-            else{
-                throw new IllegalArgumentException("Placa de veículo não encontrada. Confirme os dados e tente novamente.");
-            }
-            } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(null, "Valores inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        }
-        return null;
-    }
-    
     //Metodo para listar todos os veiculos cadastrados
     public void listarVeiculos() {
         if (listaVeiculos.isEmpty()) {
@@ -247,76 +251,188 @@ public class SistemaTuristando {
         //this.registrarGasto(new Gasto(abastecimento.getVeiculo(), "Abastecimento", "Abastecimento do Veículo", abastecimento.getValorTotal()));
     }
 
-    public static Gasto coletarInformacoesDoGasto(String placa){
+    public static String coletarInformacoesDoGasto(String placa){
         // Criação do painel
         JPanel panel = new JPanel(new GridLayout(0, 2, 0, 0));
-        panel.setPreferredSize(new Dimension(300, 400));
+        panel.setPreferredSize(new Dimension(100, 130));
 
         // Criação dos componentes de entrada
-        JComboBox<String> tipoGastoBox = new JComboBox<>(new String[]{"Manutenção ", "Imposto", "Multa", "Outros"});
-        JTextArea descricaoGastoArea = new JTextArea(5, 20); // Define 5 linhas e 20 colunas
-        descricaoGastoArea.setLineWrap(true); // Habilita quebra de linha automática
-        descricaoGastoArea.setWrapStyleWord(true); // Quebra de linha apenas entre palavras
-        JScrollPane descricaoGastoScrollPane = new JScrollPane(descricaoGastoArea); // Adiciona JScrollPane ao JTextArea
-        JTextField valorGastoField = new JTextField(10);
-        // Adição dos componentes ao painel
+        JComboBox<String> tipoGastoBox = new JComboBox<>(new String[]{"Manutenção", "Imposto", "Multa", "Outros"});
         panel.add(new JLabel("Tipo Gasto:"));
         panel.add(tipoGastoBox);
-        panel.add(new JLabel("Descrição Gasto:"));
-        panel.add(descricaoGastoScrollPane);
-        panel.add(new JLabel("Valor Gasto: R$"));
-        panel.add(valorGastoField);
-
+        
         // Exibir o painel em um JOptionPane
         int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
             try {
-                //verificar se os dados foram preenchidos
-                if (tipoGastoBox.getSelectedItem() == null || descricaoGastoArea.getText().trim().isEmpty() || valorGastoField.getText().isEmpty()) {
+                // Verificar se os dados foram preenchidos
+                if (tipoGastoBox.getSelectedItem() == null) {
                     throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
                 }
-
-               // Coletar as informações inseridas
+    
+                // Coletar as informações inseridas
                 String tipoGasto = (String) tipoGastoBox.getSelectedItem();
-                String descricaoGasto = descricaoGastoArea.getText();
-                double valorGasto = Double.parseDouble(valorGastoField.getText());
-
-                //valor negativo
-                if (valorGasto <= 0) {
-                    throw new IllegalArgumentException("Valor deve ser maior que zero. Confirme os dados e tente novamente.");
-                }
-
-                // retornar um Veiculo com os dados 
-                return new Gasto(LocalDate.now(), placa, tipoGasto, descricaoGasto, valorGasto);
-                
+    
+                // Retornar o tipo de gasto selecionado
+                return tipoGasto;
+    
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
-            } catch (IllegalArgumentException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Alerta", JOptionPane.ERROR_MESSAGE);
             }
         }
         return null;
+        
     }
 
-    public void registrarGasto(Gasto gasto){
-        this.listaGastos.add(gasto);
-    }
+    
+    public void registrarManutencao(Manutencao manutencao){
+        this.listaManutencao.add(manutencao);
+    }  
 
-    //Metodo para listar todos os abastecimentos cadastrados
-    public void listarGastos() {
-        if (listaGastos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-           ArrayList<Gasto> gastos = new ArrayList<>();
-            
-           for (Gasto gasto : listaGastos) {
-            gastos.add(gasto);
-            }
-            JOptionPane.showMessageDialog(null, gastos, "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
+    public void listarManutencao(String placa) {
+        // Verifica se a lista esta vazia
+        if (listaManutencao.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
-    } 
+        boolean encontrouGastos = false;
+        double AuxManutencao=0.0;
+        // StringBuilder para armazenar o relatório
+        StringBuilder relatorio = new StringBuilder();
 
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaManutencao.isEmpty()) {
+            relatorio.append("\nManutenções:\n");
+            for (Manutencao manutencao : listaManutencao) {
+                if (manutencao.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(manutencao.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxManutencao += manutencao.getValor();
+                }
+            }
+        }
+        relatorio.append("Total: R$ " + AuxManutencao);
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+    public void registrarImposto(Imposto imposto){
+        this.listaImposto.add(imposto);
+    }
+
+    public void listarImposto(String placa) {
+        // Verifica se a lista esta vazia
+        if (listaImposto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        boolean encontrouGastos = false;
+        double AuxImposto=0.0;
+        // StringBuilder para armazenar o relatório
+        StringBuilder relatorio = new StringBuilder();
+
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaImposto.isEmpty()) {
+            relatorio.append("\nManutenções:\n");
+            for (Imposto imposto : listaImposto) {
+                if (imposto.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(imposto.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxImposto += imposto.getValor();
+                }
+            }
+        }
+        relatorio.append("Total: R$ " + AuxImposto);
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+    public void registrarMulta(Multa multa){
+        this.listaMulta.add(multa);
+    }
+
+    public void listarMulta(String placa) {
+        // Verifica se a lista esta vazia
+        if (listaMulta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        boolean encontrouGastos = false;
+        double AuxMulta=0.0;
+        // StringBuilder para armazenar o relatório
+        StringBuilder relatorio = new StringBuilder();
+
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaMulta.isEmpty()) {
+            relatorio.append("\nManutenções:\n");
+            for (Multa multa : listaMulta) {
+                if (multa.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(multa.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxMulta += multa.getValor();
+                }
+            }
+        }
+        relatorio.append("Total: R$ " + AuxMulta);
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+    public void registrarOutrosGastos(Outros outros){
+        this.listaOutrosGastos.add(outros);
+    }
+
+    public void listarOutrosGastos(String placa) {
+        // Verifica se a lista esta vazia
+        if (listaOutrosGastos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        boolean encontrouGastos = false;
+        double AuxOutrosGastos=0.0;
+        // StringBuilder para armazenar o relatório
+        StringBuilder relatorio = new StringBuilder();
+
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaOutrosGastos.isEmpty()) {
+            relatorio.append("\nOutros Gastos:\n");
+            for (Outros OutrosGastos : listaOutrosGastos) {
+                if (OutrosGastos.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(OutrosGastos.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxOutrosGastos += OutrosGastos.getValor();
+                }
+            }
+        }
+        relatorio.append("Total: R$ " + AuxOutrosGastos);
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
 
     //Metodo calcular o consumo de um unico veiculo atraves da placa como parametro.
     public void calcularConsumoMedio(String placa) {
@@ -358,25 +474,123 @@ public class SistemaTuristando {
         }
     }
 
-    //Metodo que exibe o relatorio geral(não categoria) do sistema
-    public void gerarRelatorio() {
-        JFrame frame = new JFrame("Gerar Relatório");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setVisible(true);
-        frame.setLocationRelativeTo(null);
-        
-        
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(0, 1, 10, 10));
-
-        JButton relatButton = new JButton("Relatório Geral");
-        JButton listarGastosButton = new JButton("Relatório Por Categoria");
 
 
+    public void listarGastosPorCategoria(String placa) {
+        double AuxImposto=0.0;
+        double AuxManutencao=0.0;
+        double AuxMultas=0.0;
+        double AuxAbastecimento=0.0;
+
+        // Verifica se as listas estão vazias
+        if (listaImposto.isEmpty() && listaManutencao.isEmpty() && listaMulta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    
+        // StringBuilder para armazenar o relatório
+        StringBuilder relatorio = new StringBuilder();
+    
+        // Adiciona os impostos ao relatório, filtrando pela placa
+        boolean encontrouGastos = false;
+        if (!listaImposto.isEmpty()) {
+            relatorio.append("Impostos:\n");
+            for (Imposto imposto : listaImposto) {
+                if (imposto.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(imposto.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxImposto += imposto.getValor();
+                }
+            }
+            relatorio.append("Total: R$ " + AuxImposto); // Adiciona uma linha em branco entre as categorias
+        }
+    
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaManutencao.isEmpty()) {
+            relatorio.append("\nManutenções:\n");
+            for (Manutencao manutencao : listaManutencao) {
+                if (manutencao.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(manutencao.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxManutencao += manutencao.getValor();
+                }
+            }
+            
+        }
+
+        relatorio.append("Total: R$ " + AuxManutencao);
+    
+        // Adiciona as multas ao relatório, filtrando pela placa
+        if (!listaMulta.isEmpty()) {
+            relatorio.append("\nMultas:\n");
+            for (Multa multa : listaMulta) {
+                if (multa.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(multa.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxMultas += multa.getValor();
+                }
+            }
+            relatorio.append("Total: R$ " +AuxMultas); // Adiciona uma linha em branco entre as categorias
+        }
+
+        // Adiciona os abastecimentos ao relatório, filtrando pela placa
+        if (!listaMulta.isEmpty()) {
+            relatorio.append("\nAbastecimentos:\n");
+            for (Abastecimento abastecimento : listaAbastecimentos) {
+                if (abastecimento.getPlaca().equalsIgnoreCase(placa)) {
+                    relatorio.append(abastecimento.toString()).append("\n");
+                    encontrouGastos = true;
+                    AuxAbastecimento += abastecimento.getValorTotal();
+                }
+            }
+            relatorio.append("Total: R$ " +AuxMultas); // Adiciona uma linha em branco entre as categorias
+        }
+
+        //Total Geralzão
+        relatorio.append("Valor total de todas as despesas R$ " + AuxImposto+AuxManutencao+AuxMultas+AuxAbastecimento);
         
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+
+    public static String coletarInformacoesDoRelatorio(String placa){
+        // Criação do painel
+        JPanel panel = new JPanel(new GridLayout(0, 2, 0, 0));
+        panel.setPreferredSize(new Dimension(100, 130));
+
+        // Criação dos componentes de entrada
+        JComboBox<String> tipoCategoriaBox = new JComboBox<>(new String[]{"Manutenção", "Imposto", "Multa", "Outros"});
+        panel.add(new JLabel("Categoria:"));
+        panel.add(tipoCategoriaBox);
+        
+        // Exibir o painel em um JOptionPane
+        int result = JOptionPane.showConfirmDialog(null, panel, "Informações do Veículo", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                // Verificar se os dados foram preenchidos
+                if (tipoCategoriaBox.getSelectedItem() == null) {
+                    throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
+                }
+    
+                // Coletar as informações inseridas
+                String tipoGasto = (String) tipoCategoriaBox.getSelectedItem();
+    
+                // Retornar o tipo de gasto selecionado
+                return tipoGasto;
+    
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return null;
         
     }
-
     
 }
