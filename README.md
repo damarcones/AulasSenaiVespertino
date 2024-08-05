@@ -32,6 +32,6 @@ Para garantir que as informações sejam salvas de maneira correta, você criar�
 
 - Deverá ser realizado um `Fork` dessa branch em seu repositório pessoal;
 - A raiz do projeto deve ser nomeada com seu nome + "TrabalhoJava" (Ex: DamarconesTrabalhoJava);
-- O trabalho deve ser entregue até o dia 29/07/2024, com o último commit podendo ser realizado até às 13:50h do dia limite para entrega;
-- A entrega será realizada com a criação de um  `Pull Request` para a branch `TrabalhoJava`, que deverá ser realizado até dia 29/07/2024;
+- O trabalho deve ser entregue até o dia ~29/07/2024~ 05/08/2024, com o último commit podendo ser realizado até às 13:50h do dia limite para entrega;
+- A entrega será realizada com a criação de um  `Pull Request` para a branch `TrabalhoJava`, que deverá ser realizado até dia ~29/07/2024~ 05/08/2024;
 - É recomendável que o trabalho seja adicionado ao seu GitHub periodicamente, não havendo apenas 1 commit para todo o seu trabalho.

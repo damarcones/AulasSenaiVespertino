@@ -8,7 +8,7 @@ public class Veiculo {
     private String modelo;
     private int anoFabricacao;
     private int anoModelo;
-    private String motorizacao;
+    private int motorizacao;
     private double capacidadeTanque;
     private String combustiveisAceitos; 
     private String cor;
@@ -18,7 +18,7 @@ public class Veiculo {
     
    
     //Método Construtor
-    public Veiculo( String marca, String modelo, int anoFabricacao, int anoModelo, String motorizacao,
+    public Veiculo( String marca, String modelo, int anoFabricacao, int anoModelo, int motorizacao,
                     double capacidadeTanque,String combustiveisAceitos, String cor, String placa, String renavam) 
         {
             this.id = proximoId++; //auto incrementa o id
@@ -86,12 +86,12 @@ public class Veiculo {
     }
 
 
-    public String getMotorizacao() {
+    public int getMotorizacao() {
         return motorizacao;
     }
 
 
-    public void setMotorizacao(String motorizacao) {
+    public void setMotorizacao(int motorizacao) {
         this.motorizacao = motorizacao;
     }
 
@@ -146,23 +146,5 @@ public class Veiculo {
     }
 
     
-
-    @Override
-    public String toString() {
-        return String.format(
-                "<html>ID: %s"+
-                " Marca: %s" +
-                " Modelo: %s" +
-                " Ano de Fabricação: %d" +
-                " Ano do Modelo: %d" +
-                " Motorização: %s" +
-                " Capacidade do Tanque: %.2f litros" +
-                " Combustíveis Aceitos: %s" +
-                " Cor: %s" +
-                " Placa: %s" +
-                " RENAVAM: %s <br></html>",
-                id, marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam
-        );
-    }
 
 }

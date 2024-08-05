@@ -15,6 +15,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class SistemaTuristando {
@@ -70,9 +72,9 @@ public class SistemaTuristando {
         panel.add(marcaField);
         panel.add(new JLabel("Modelo:"));
         panel.add(modeloField);
-        panel.add(new JLabel("Ano de Fabricação:"));
+        panel.add(new JLabel("Ano de Fabricação: (yyyy)"));
         panel.add(anoFabricacaoField);
-        panel.add(new JLabel("Ano do Modelo:"));
+        panel.add(new JLabel("Ano do Modelo: (yyyy)"));
         panel.add(anoModeloField);
         panel.add(new JLabel("Motorização (Cv):"));
         panel.add(motorizacaoField);
@@ -113,7 +115,7 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Data Fabricação e Modelo deve ser menor ou igual ao ano atual. Confirme os dados e tente novamente.");
                 }
                
-                String motorizacao = motorizacaoField.getText();
+                int motorizacao = Integer.parseInt(motorizacaoField.getText()) ;
                 
                 double capacidadeTanque = Double.parseDouble(capacidadeTanqueField.getText());
                 if ( capacidadeTanque < 0 ) {
@@ -153,14 +155,28 @@ public class SistemaTuristando {
         if (listaVeiculos.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhum veículo cadastrado.", "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-           ArrayList<Veiculo> veiculos = new ArrayList<>();
-            
-           for (Veiculo veiculo : listaVeiculos) {
-            veiculos.add(veiculo);
-            }
-            JOptionPane.showMessageDialog(null, veiculos, "Listar Veículos", JOptionPane.INFORMATION_MESSAGE);
+        StringBuilder listaVeiculosStringB = new StringBuilder("Veículos cadastrados:\n");
+        
+        //  Iterando sobre a lista de veículos e construindo a lista de veículos
+        for (Veiculo veiculo : listaVeiculos) {
+            listaVeiculosStringB.append("\nId: ").append(veiculo.getId())
+                                .append(", Placa: ").append(veiculo.getPlaca())
+                                .append(", Modelo: ").append(veiculo.getModelo())
+                                .append(", Marca: ").append(veiculo.getMarca())
+                                .append("\n");
+             }
+
+        //     Criando um JTextArea para exibir a lista de veículos com scroll
+             JTextArea textArea = new JTextArea(listaVeiculosStringB.toString());
+             textArea.setEditable(false);
+             textArea.setPreferredSize(new Dimension(500, 400)); // Define o tamanho da área de texto
+
+        //   Exibindo a lista de veículos em uma caixa de diálogo com rolagem
+             JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Lista de Veículos", JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
+    
     
     
 
@@ -172,7 +188,7 @@ public class SistemaTuristando {
         JTextField placaField = new JTextField(placa);
         placaField.setEditable(false);
         JTextField quilometragemField = new JTextField(10);
-        JComboBox<String> tipoCombustivelBox = new JComboBox<>(new String[]{"Gasolina", "Álcool", "Diesel", "Flex", "GNV"});
+        JComboBox<String> tipoCombustivelBox = new JComboBox<>(new String[]{"Gasolina", "Álcool", "Diesel", "GNV"});
         JTextField quantidadeField = new JTextField(10);
         JTextField valorField = new JTextField(10);
 
@@ -198,29 +214,33 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
                 }
 
-                Veiculo v = encontrarVeiculoPorPlaca(placaField.getText());
-                String veiculo = placaField.getText();
+                Veiculo veiculo = encontrarVeiculoPorPlaca(placaField.getText());
+                String placaVeiculo = placaField.getText();
                 double quilometragem = Double.parseDouble(quilometragemField.getText());
                 double quantidade = Double.parseDouble(quantidadeField.getText());
                 double valor = Double.parseDouble(valorField.getText());
 
-                if (v.getCapacidadeTanque() < quantidade) {
+                if (veiculo.getCapacidadeTanque() < quantidade) {
                     throw new IllegalArgumentException("Quantidade em litros superior ao suportado por este veiculo. Confirme os dados e tente novamente.");
                 }
 
                 String tipoCombustivel = (String) tipoCombustivelBox.getSelectedItem();
                 //Verificação de combustivel para veiculos flex
-                if (!(v.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && v.getCombustiveisAceitos().equals("Flex"))) {
-                    throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
-                }
-
+                
+                //tipoCombustivel armazena qualquer coisa menos "Flex", logo primeiro parametro retorna F,
+                //Caso tipo combustivel for Gasolina ou Alcool, vai retornar V. Logo (F V)
+                
+                if (!(veiculo.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && veiculo.getCombustiveisAceitos().equals("Flex"))) {
+                     throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
+                 }
+                
                 //valor negativo
-                if (valor <= 0) {
+                if (valor < 0) {
                     throw new IllegalArgumentException("Valor deve ser maior que zero. Confirme os dados e tente novamente.");
                 }
 
                 // Retornar um Abastecimento com os dados
-                return new Abastecimento(LocalDate.now(), veiculo, quilometragem, tipoCombustivel, quantidade, valor);
+                return new Abastecimento(LocalDate.now(), placaVeiculo, quilometragem, tipoCombustivel, quantidade, valor);
                 
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
