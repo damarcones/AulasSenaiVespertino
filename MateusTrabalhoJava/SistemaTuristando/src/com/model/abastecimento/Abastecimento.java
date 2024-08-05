@@ -83,15 +83,14 @@ public class Abastecimento {
 
     @Override
     public String toString() {
-        return  String.format(
-                "<html>ID: %s" + 
-                " Data: %s"+    
-                " Placa: %s"+ 
-                " Quilometragem: %.1f" + 
-                " TipoCombustivel: %s" + 
-                " Quantidade Combustivel(litros): %.2f" + 
-                " Valor Total: R$ %.2f<br></html>",
-                id, data, placa, quilometragem, tipoCombustivel, quantidadeCombustivel, valorTotal
-            );
+                return 
+                "ID: " + getId() +
+                ", Data: "+  getData() +  
+                ", Quilometragem: " +  getQuilometragem() +
+                ", TipoCombustivel: " + getTipoCombustivel() +
+                ", Quantidade Combustivel(litros): " +  + getQuantidadeCombustivel() +
+                ", Valor Total: R$" + getValorTotal();
+                
+        
         }      
 }

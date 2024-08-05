@@ -81,10 +81,10 @@ public class Manutencao extends Gasto{
     @Override
     public String toString() {
         return "Placa: " + getPlaca() + 
-               "KmAtual: " + getKmAtual() + 
-               "Descrição: " +getTipo() +   
-               "Data: " + getData()+ 
-               "Valor: " + getValor();
+               ", KmAtual: " + getKmAtual() + 
+               ", Descrição: " +getTipo() +   
+               ", Data: " + getData()+ 
+               ", Valor: " + getValor();
     }  
     
     

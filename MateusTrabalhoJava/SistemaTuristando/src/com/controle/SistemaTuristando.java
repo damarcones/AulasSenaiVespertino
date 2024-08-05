@@ -50,7 +50,7 @@ public class SistemaTuristando {
             return null;
         }
     
-    //Metodo que cria a interface grafica para a inserção de informações
+    //Metodo que cria a interface grafica para a inserção de informações para o cadastro do veiculo
     public static Veiculo coletarInformacoesDoVeiculo() {
         // Criação do painel
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
@@ -134,7 +134,7 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Número renavam deve ser de 16 caracteres. Confirme os dados e tente novamente.");
                     }
 
-                // retornar um Veiculo com os dados 
+                // retornar um objeto Veiculo com os dados 
                 return new Veiculo(marca, modelo, anoFabricacao, anoModelo, motorizacao, capacidadeTanque, combustiveisAceitos, cor, placa, renavam);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -176,10 +176,8 @@ public class SistemaTuristando {
         }
     }
 
-    
-    
-    
 
+    //Metodo para registar um abastecimento recebendo a placa do veiculo
     public static Abastecimento registrarAbastecimento(String placa) {
         // Criação do painel
         JPanel panel = new JPanel(new GridLayout(0, 2, 10, 10));
@@ -214,6 +212,7 @@ public class SistemaTuristando {
                     throw new IllegalArgumentException("Campos incompletos. Confirme os dados e tente novamente.");
                 }
 
+                //recebe e armazerna os dados
                 Veiculo veiculo = encontrarVeiculoPorPlaca(placaField.getText());
                 String placaVeiculo = placaField.getText();
                 double quilometragem = Double.parseDouble(quilometragemField.getText());
@@ -225,11 +224,8 @@ public class SistemaTuristando {
                 }
 
                 String tipoCombustivel = (String) tipoCombustivelBox.getSelectedItem();
-                //Verificação de combustivel para veiculos flex
                 
-                //tipoCombustivel armazena qualquer coisa menos "Flex", logo primeiro parametro retorna F,
-                //Caso tipo combustivel for Gasolina ou Alcool, vai retornar V. Logo (F V)
-                
+                //tratando abastecimento para combustiveis aceitos
                 if (!(veiculo.getCombustiveisAceitos().contains(tipoCombustivel) || (tipoCombustivel.equals("Gasolina") || tipoCombustivel.equals("Álcool")) && veiculo.getCombustiveisAceitos().equals("Flex"))) {
                      throw new IllegalArgumentException("O tipo de combustível selecionado não é aceito neste veículo. Confirme os dados e tente novamente.");
                  }
@@ -251,26 +247,87 @@ public class SistemaTuristando {
         return null;
     }    
 
-    //Metodo para listar todos os abastecimentos cadastrados
-    public void listarAbastecimentos() {
-        if (listaAbastecimentos.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum abastecimento cadastrado.", "Listar Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-           ArrayList<Abastecimento> abastecimentos = new ArrayList<>();
-            
-           for (Abastecimento abastecimento : listaAbastecimentos) {
-            abastecimentos.add(abastecimento);
-            }
-            JOptionPane.showMessageDialog(null, abastecimentos, "Listar Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } 
-    
     //Metodo que adiociona todos os Abastecimentos a uma lista
-    public void registrarAbastecimento(Abastecimento abastecimento){
+    public void adicionarAbastecimento(Abastecimento abastecimento){
         this.listaAbastecimentos.add(abastecimento);
-        //this.registrarGasto(new Gasto(abastecimento.getVeiculo(), "Abastecimento", "Abastecimento do Veículo", abastecimento.getValorTotal()));
     }
 
+    //Metodo para listar todos os abastecimentos cadastrados    
+    public void listarAbastecimentos() {
+        if (listaAbastecimentos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum Abastecimento cadastrado.", "Listar Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } 
+        StringBuilder listaAbastecimentosStringB = new StringBuilder("Abastecimentos cadastrados:\n");
+            
+        //  Iterando sobre a lista de veículos e construindo a lista de veículos
+        for (Abastecimento abastecimento : listaAbastecimentos) {
+            listaAbastecimentosStringB.append("\nId: ").append(abastecimento.getId())
+                .append(", Placa: ").append(abastecimento.getPlaca())
+                .append(", Quantidade de Combustíveis: ").append(abastecimento.getQuantidadeCombustivel())
+                .append(", Marca: ").append(abastecimento.getQuilometragem())
+                .append(", Valor: R$").append(abastecimento.getValorTotal())
+                .append("\n");
+                }
+
+            //Criando um JTextArea para exibir a lista de abastecimentos com scroll
+             JTextArea textArea = new JTextArea(listaAbastecimentosStringB.toString());
+             textArea.setEditable(false);
+             textArea.setPreferredSize(new Dimension(550, 400)); // Define o tamanho da área de texto
+
+            //Exibindo a lista de veículos em uma caixa de diálogo com rolagem
+             JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Lista de Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
+    
+    
+    }
+    
+    //sobrecarga
+    public void listarAbastecimentos(String placa) {
+        // Verifica se a lista esta vazia
+        if (listaAbastecimentos.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        boolean encontrouGastos = false;
+        double AuxAbastecimento=0.0;
+        // StringBuilder para armazenar o relatório
+        StringBuilder listaAbastecimentosStringB = new StringBuilder();
+
+        // Adiciona as manutenções ao relatório, filtrando pela placa
+        if (!listaAbastecimentos.isEmpty()) {
+            listaAbastecimentosStringB.append("\nAbastecimentos:\n");
+            for (Abastecimento abastecimento : listaAbastecimentos) {
+                if (abastecimento.getPlaca().equalsIgnoreCase(placa)) {
+                    listaAbastecimentosStringB.append("\nId: ").append(abastecimento.getId())
+                                              .append(", Data: ").append(abastecimento.getData())
+                                              .append(", Quilometragem: ").append(abastecimento.getQuilometragem())
+                                              .append(", Combustivel: ").append(abastecimento.getTipoCombustivel())
+                                              .append("\n, Quantidade: ").append(abastecimento.getQuantidadeCombustivel())
+                                              .append(", Valor Total: R$").append(abastecimento.getValorTotal())
+                                              .append("\n");
+                    encontrouGastos = true;
+                    AuxAbastecimento += abastecimento.getValorTotal();
+                }
+            }
+        }
+        listaAbastecimentosStringB.append("Total: R$ " + AuxAbastecimento);
+
+        // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
+        if (encontrouGastos) {
+            JTextArea textArea = new JTextArea(listaAbastecimentosStringB.toString());
+             textArea.setEditable(false);
+             textArea.setPreferredSize(new Dimension(600, 450));
+
+             JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Lista de Abastecimentos", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    }
+
+
+    //Metodo para verificar qual a categoria do Gasto, vai retornar uma String simples com a categoria selecionada
     public static String coletarInformacoesDoGasto(String placa){
         // Criação do painel
         JPanel panel = new JPanel(new GridLayout(0, 2, 0, 0));
@@ -306,9 +363,11 @@ public class SistemaTuristando {
     }
 
     
-    public void registrarManutencao(Manutencao manutencao){
+    //Metodo que adicionar um Gasto do tipo Manutenção a lista
+    public void adicionarManutencao(Manutencao manutencao){
         this.listaManutencao.add(manutencao);
     }  
+
 
     public void listarManutencao(String placa) {
         // Verifica se a lista esta vazia
@@ -322,16 +381,16 @@ public class SistemaTuristando {
         StringBuilder relatorio = new StringBuilder();
 
         // Adiciona as manutenções ao relatório, filtrando pela placa
-        if (!listaManutencao.isEmpty()) {
-            relatorio.append("\nManutenções:\n");
-            for (Manutencao manutencao : listaManutencao) {
-                if (manutencao.getPlaca().equalsIgnoreCase(placa)) {
+        
+        relatorio.append("\nManutenções:\n");
+        for (Manutencao manutencao : listaManutencao) {
+            if (manutencao.getPlaca().equalsIgnoreCase(placa)) {
                     relatorio.append(manutencao.toString()).append("\n");
                     encontrouGastos = true;
                     AuxManutencao += manutencao.getValor();
-                }
             }
         }
+        
         relatorio.append("Total: R$ " + AuxManutencao);
 
         // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
@@ -397,7 +456,7 @@ public class SistemaTuristando {
 
         // Adiciona as manutenções ao relatório, filtrando pela placa
         if (!listaMulta.isEmpty()) {
-            relatorio.append("\nManutenções:\n");
+            relatorio.append("\nMultas:\n");
             for (Multa multa : listaMulta) {
                 if (multa.getPlaca().equalsIgnoreCase(placa)) {
                     relatorio.append(multa.toString()).append("\n");
@@ -466,7 +525,7 @@ public class SistemaTuristando {
             try {
                 for (Abastecimento abastecimento : listaAbastecimentos) {
                 //verifica de o abastecimente é do carro em questão
-                if (abastecimento.getPlaca().equals(placa)) {
+                if (abastecimento.getPlaca().equalsIgnoreCase(placa)) {
                     //caso for, vai calcular a distancia percorrida desde o abastecimento anterior e se n tiver, vai armazenar numa variavel auxiliar
                     if (abastecimentoAnterior != null) {
                         double quilometrosPercorridos = abastecimento.getQuilometragem() - abastecimentoAnterior.getQuilometragem();
@@ -496,85 +555,104 @@ public class SistemaTuristando {
 
 
 
-    public void listarGastosPorCategoria(String placa) {
+    public void listarGastos(String placa) {
         double AuxImposto=0.0;
         double AuxManutencao=0.0;
         double AuxMultas=0.0;
         double AuxAbastecimento=0.0;
 
         // Verifica se as listas estão vazias
-        if (listaImposto.isEmpty() && listaManutencao.isEmpty() && listaMulta.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+        if (listaImposto.isEmpty() && listaAbastecimentos.isEmpty() && listaManutencao.isEmpty() && listaMulta.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nenhum gasto cadastrado.", "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
     
         // StringBuilder para armazenar o relatório
-        StringBuilder relatorio = new StringBuilder();
+        StringBuilder relatorioSB = new StringBuilder();
     
         // Adiciona os impostos ao relatório, filtrando pela placa
         boolean encontrouGastos = false;
         if (!listaImposto.isEmpty()) {
-            relatorio.append("Impostos:\n");
+            relatorioSB.append("\nImpostos:\n");
             for (Imposto imposto : listaImposto) {
                 if (imposto.getPlaca().equalsIgnoreCase(placa)) {
-                    relatorio.append(imposto.toString()).append("\n");
+                    relatorioSB.append(imposto.toString()).append("\n");
                     encontrouGastos = true;
                     AuxImposto += imposto.getValor();
                 }
             }
-            relatorio.append("Total: R$ " + AuxImposto); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("Total: R$ " + AuxImposto); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("\n");
         }
     
         // Adiciona as manutenções ao relatório, filtrando pela placa
         if (!listaManutencao.isEmpty()) {
-            relatorio.append("\nManutenções:\n");
+            relatorioSB.append("\nManutenções:\n");
             for (Manutencao manutencao : listaManutencao) {
                 if (manutencao.getPlaca().equalsIgnoreCase(placa)) {
-                    relatorio.append(manutencao.toString()).append("\n");
+                    relatorioSB.append(manutencao.toString()).append("\n");
                     encontrouGastos = true;
                     AuxManutencao += manutencao.getValor();
                 }
             }
-            
+            relatorioSB.append("Total: R$ " + AuxManutencao);
+            relatorioSB.append("\n");
         }
 
-        relatorio.append("Total: R$ " + AuxManutencao);
+
+        
     
         // Adiciona as multas ao relatório, filtrando pela placa
         if (!listaMulta.isEmpty()) {
-            relatorio.append("\nMultas:\n");
+            relatorioSB.append("\nMultas:\n");
             for (Multa multa : listaMulta) {
                 if (multa.getPlaca().equalsIgnoreCase(placa)) {
-                    relatorio.append(multa.toString()).append("\n");
+                    relatorioSB.append(multa.toString()).append("\n");
                     encontrouGastos = true;
                     AuxMultas += multa.getValor();
                 }
             }
-            relatorio.append("Total: R$ " +AuxMultas); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("Total: R$ " +AuxMultas); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("\n");
         }
 
         // Adiciona os abastecimentos ao relatório, filtrando pela placa
-        if (!listaMulta.isEmpty()) {
-            relatorio.append("\nAbastecimentos:\n");
+        if (!listaAbastecimentos.isEmpty()) {
+            relatorioSB.append("\nAbastecimentos:");
             for (Abastecimento abastecimento : listaAbastecimentos) {
                 if (abastecimento.getPlaca().equalsIgnoreCase(placa)) {
-                    relatorio.append(abastecimento.toString()).append("\n");
+                                   relatorioSB.append("\nId: ").append(abastecimento.getId())
+                                              .append(", Data: ").append(abastecimento.getData())
+                                              .append(", Quilometragem: ").append(abastecimento.getQuilometragem())
+                                              .append(", Combustivel: ").append(abastecimento.getTipoCombustivel())
+                                              .append("\n, Quantidade: ").append(abastecimento.getQuantidadeCombustivel())
+                                              .append(", Valor Total: R$").append(abastecimento.getValorTotal())
+                                              .append("\n");
                     encontrouGastos = true;
                     AuxAbastecimento += abastecimento.getValorTotal();
                 }
             }
-            relatorio.append("Total: R$ " +AuxMultas); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("Total: R$ " +AuxAbastecimento); // Adiciona uma linha em branco entre as categorias
+            relatorioSB.append("\n");
         }
 
         //Total Geralzão
-        relatorio.append("Valor total de todas as despesas R$ " + AuxImposto+AuxManutencao+AuxMultas+AuxAbastecimento);
+        double totalGeral =  AuxImposto + AuxManutencao + AuxMultas + AuxAbastecimento;
+        relatorioSB.append("\nValor total de todas as despesas R$ " + totalGeral);
         
 
         // Exibe o relatório ou uma mensagem caso não haja gastos para a placa especificada
         if (encontrouGastos) {
-            JOptionPane.showMessageDialog(null, relatorio.toString(), "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+
+            //     Criando um JTextArea para exibir a lista de gastos com scroll
+            JTextArea textArea = new JTextArea(relatorioSB.toString());
+            textArea.setEditable(false);
+            textArea.setPreferredSize(new Dimension(500, 400)); // Define o tamanho da área de texto
+
+       //   Exibindo a lista de gastos em uma caixa de diálogo com rolagem
+            JOptionPane.showMessageDialog(null, new JScrollPane(textArea), "Listar Gastos", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos por Categoria", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Nenhum gasto encontrado para o veículo com placa: " + placa, "Listar Gastos ", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -585,7 +663,7 @@ public class SistemaTuristando {
         panel.setPreferredSize(new Dimension(100, 130));
 
         // Criação dos componentes de entrada
-        JComboBox<String> tipoCategoriaBox = new JComboBox<>(new String[]{"Manutenção", "Imposto", "Multa", "Outros"});
+        JComboBox<String> tipoCategoriaBox = new JComboBox<>(new String[]{"Manutenção", "Imposto", "Multa","Abastecimento", "Outros"});
         panel.add(new JLabel("Categoria:"));
         panel.add(tipoCategoriaBox);
         

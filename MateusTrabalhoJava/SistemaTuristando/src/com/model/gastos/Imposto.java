@@ -67,9 +67,9 @@ public class Imposto extends Gasto{
                 @Override
                 public String toString() {
                     return "Placa: " + getPlaca() + 
-                           "Descrição: " +getTipo() +   
-                           "Data: " + getData()+ 
-                           "Valor: " + getValor();
+                           ", Descrição: " +getTipo() +   
+                           ", Data: " + getData()+ 
+                           ", Valor: " + getValor();
                 } 
 
                 

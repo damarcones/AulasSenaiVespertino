@@ -31,17 +31,18 @@ public class MainPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 1, 10, 10));
 
+        //criando os botoea
         JButton listarVeiculosButton = new JButton("Listar Veículos");
         JButton listarAbastecimentosButton = new JButton("Listar Abastecimentos");
         JButton adicionarVeiculoButton = new JButton("Adicionar Veículo");
         JButton registrarGastoButton = new JButton("Registrar Gasto");
         JButton registrarAbastecimentoButton = new JButton("Registrar Abastecimento");
         JButton calcularConsumoButton = new JButton("Calcular Consumo Médio");
-        JButton gerarRelatorioButton = new JButton("Gerar Relatório");
+        JButton gerarRelatorioButton = new JButton("Gerar Relatório Geral de Gastos");
         JButton gerarRelatorioPorCategoriaButton = new JButton("Gerar Relatório Por Categoria");
 
 
-        // Adiciona os botões ao painel
+        // adiciona os botões ao painel
         panel.add(listarVeiculosButton);//f
         panel.add(listarAbastecimentosButton);//f
         panel.add(adicionarVeiculoButton);//f
@@ -71,7 +72,7 @@ public class MainPanel {
          frame.setVisible(true);
 
 
-        //retorna as funcoes ao clicar nos botoes
+        
         adicionarVeiculoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,12 +111,13 @@ public class MainPanel {
                             abastecimento = SistemaTuristando.registrarAbastecimento(placa);
                             if (abastecimento != null) {
                                 JOptionPane.showMessageDialog(null, new JLabel(abastecimento.toString()), "Informações do Abastecimento", JOptionPane.INFORMATION_MESSAGE);
-                                sistema.registrarAbastecimento(abastecimento);
+                                sistema.adicionarAbastecimento(abastecimento);
                             }                        
                         }               
                  }   
             }
         });
+
 
         listarAbastecimentosButton.addActionListener(new ActionListener() {
             @Override
@@ -124,6 +126,7 @@ public class MainPanel {
             }
         });
 
+        //Metodo de calcular o consumo médio do veiculo por meio da placa
         calcularConsumoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -147,6 +150,7 @@ public class MainPanel {
             }                                  
         });
 
+        //Metodo de registrar gasto por meio da placa do veiculo
         registrarGastoButton.addActionListener(new ActionListener() {
             @SuppressWarnings("static-access")
             @Override
@@ -177,7 +181,7 @@ public class MainPanel {
                                     manutencao =  Manutencao.coletarDadosManutencao(placa);
                                         if (manutencao != null) {
                                             JOptionPane.showMessageDialog(null, new JLabel(manutencao.toString()), "Informações da Manutenção", JOptionPane.INFORMATION_MESSAGE);
-                                           sistema.registrarManutencao(manutencao);
+                                           sistema.adicionarManutencao(manutencao);
                                         }                                       
                                       
                                     }else if(tipogasto.equals("Imposto")){
@@ -197,8 +201,7 @@ public class MainPanel {
                                         if (outros != null) {
                                             JOptionPane.showMessageDialog(null, new JLabel(outros.toString()), "Informações do Gasto", JOptionPane.INFORMATION_MESSAGE);
                                            sistema.registrarOutrosGastos(outros);
-                                        }
-                                         
+                                        }     
                                     }
                             }else{
                                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -213,6 +216,7 @@ public class MainPanel {
             }
         });
 
+        //Metodo de gerar relatorio geral por meio da placa do veiculo
         gerarRelatorioButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -227,7 +231,7 @@ public class MainPanel {
 
                         String placa = (String) placaField.getText();
                         if(sistema.encontrarVeiculoPorPlaca(placa) != null){
-                            sistema.listarGastosPorCategoria(placa);                       
+                            sistema.listarGastos(placa);                       
                         }else {
                             JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
                         }            
@@ -235,6 +239,7 @@ public class MainPanel {
             }
         });
 
+        //Metodo de gerar relatorio por categoria por meio da placa do veiculo
         gerarRelatorioPorCategoriaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -261,9 +266,8 @@ public class MainPanel {
                                 }
                                 else if(tipoCategoria.equals("Multa")){
                                     sistema.listarMulta(placa);
-                                }
-                                else if(tipoCategoria.equals("Multa")){
-                                    sistema.listarMulta(placa);
+                                }else if(tipoCategoria.equals("Abastecimento")){
+                                    sistema.listarAbastecimentos(placa);
                                 }else if(tipoCategoria.equals("Outros")){
                                     sistema.listarOutrosGastos(placa);
                                 }
@@ -272,14 +276,13 @@ public class MainPanel {
 
                             }else{
                                 JOptionPane.showMessageDialog(null, "Valores numéricos inválidos. Confirme os dados e tente novamente.", "Alerta", JOptionPane.ERROR_MESSAGE);
-                            }
-
-
-
-                                                 
-                        }           
+                            }                     
+                        }else {
+                            JOptionPane.showMessageDialog(null,"Placa não encontrada. Confirme os dados e tente novamente", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        }            
                 } 
             }
+            
         });
         
     }

@@ -88,10 +88,10 @@ public class Multa extends Gasto{
      @Override
                 public String toString() {
                     return "Placa: " + getPlaca() + 
-                           "Descrição: " +getTipo() +
-                           "Pontuação: " + getPontuacao() +  
-                           "Data: " + getData()+ 
-                           "Valor: " + getValor();
+                           ", Descrição: " +getTipo() +
+                           ", Pontuação: " + getPontuacao() +  
+                           ", Data: " + getData()+ 
+                           ", Valor: " + getValor();
                 }
 
 }
