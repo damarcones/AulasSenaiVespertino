@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  docker:
+    image: docker
+    build:
+      context: .
+      dockerfile: ./Dockerfile
