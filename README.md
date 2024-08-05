@@ -1,3 +1,5 @@
+Branch utilizada unicamente para acompanhar o progresso do primeiro [Projeto prático de Java](https://github.com/damarcones/AulasSenaiVespertino/tree/TrabalhoJava).
+
 # Trabalho Prático de Java
 
 Essa branch é destinada para o trabalho prático de ``` Java ``` da turma ```  QUA.209.071 - Desenvolvedor JAVA ``` Vespertina do Senai Taguatinga de 2024. 

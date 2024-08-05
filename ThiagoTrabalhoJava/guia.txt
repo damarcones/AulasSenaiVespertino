@@ -1,0 +1,61 @@
+Objetivos:
+    - contabilizar os gastos gerados pelos carro da empresa
+    Quais são os tipos de gastos ?
+         - Abastecimeno
+         - manutenção
+         - impostos
+         - multas
+         - Outros
+
+Exigências:
+    - calculo do consumo de combustivel dos veiculos
+
+    calculo de outros gastos:
+    @ manutenção
+        - troca de oleo;
+        - alinhamento;
+        - balanciamento;
+        - outros.
+    
+    @ imposto
+        - IPVA;
+        - licenciamento;
+        - outros.
+    
+    @ outros
+        - pedagios;
+        - balsas;
+        - outros.
+
+OBS:  
+    Sempre que solicitado, o programa exibirá um relatório com 
+    todos os eventos lançados no programa, sendo possível selecionar 
+    um relatório por categoria de despesa ou um relatório geral.
+
+REQUISITOS MINIMOS:
+    - o tipo de combustivel abastecido deve ser compativel com o tipo 
+    de combustivel do veiculo;
+
+    - não será possível inserir informações em branco ;
+
+    - não será possível inserir valores negativos;
+
+    - não será possivel inserir informações em veiculos inexistentes no cadastro;
+
+    - o calculo de consumo de combustivel só poderá ser realizado 
+    quando houver no minimo dois abastecimentos completos cadastrados
+
+
+Referências:
+    - https://brunoagt.wordpress.com/category/java-javax-swing/
+    - https://pt.stackoverflow.com/questions/29404/joptionpane-exemplo
+    - https://brunoagt.wordpress.com/2011/02/27/system-collection-utilizando-a-colecao-linkedlistt/
+    - https://www.devmedia.com.br/java-collections-set-list-e-iterator/29637
+    - https://docs.oracle.com/javase/8/docs/api/java/util/List.html
+    - https://www.alura.com.br/conteudo/java-listas-colecoes-dados
+    - https://vocepergunta.com/library/artigo/read/417044-para-que-serve-uma-interface-em-java#:~:text=A%20interface%20%C3%A9%20um%20recurso%20muito%20utilizado%20em,implementados%20em%20cada%20classe%20de%20uma%20maneira%20diferente.
+    - https://www.devmedia.com.br/entendendo-interfaces-em-java/25502
+    - https://www.devmedia.com.br/entendendo-e-aplicando-heranca-em-java/24544
+    - https://web.mit.edu/6.005/www/sp14/psets/ps4/java-6-tutorial/components.html
+    - https://docs.oracle.com/javase/tutorial/uiswing/layout/border.html
+    - https://www.youtube.com/watch?v=XRGmwLUJKvs
