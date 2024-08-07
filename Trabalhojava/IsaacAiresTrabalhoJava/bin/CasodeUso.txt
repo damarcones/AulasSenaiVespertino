@@ -1,0 +1,32 @@
+Marca: Toyota
+Modelo: Corolla
+Ano de Fabricação: 2020
+Ano do Modelo: 2021
+Motorização: 2.0
+Capacidade do Tanque: 50 litros
+Combustíveis: Gasolina
+Cor: Preto
+Placa: ABC1234
+Renavam: 123456789
+
+
+Registrar Abastecimento
+
+Valor: R$ 200,00
+Quantidade de Combustível: 40 litros
+Quilometragem Atual: 10.000 km
+
+
+
+Registrar Despesa
+
+Tipo: Manutenção
+Valor: R$ 300,00
+Descrição: Troca de óleo
+
+
+Calcular Consumo Médio
+
+Valor: R$ 180,00
+Quantidade de Combustível: 36 litros
+Quilometragem Atual: 9.500 km
