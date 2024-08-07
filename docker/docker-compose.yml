@@ -1,8 +1,10 @@
-version: '3.4'
-
 services:
-  docker:
-    image: ubuntu
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+  angular-app:
+    build: .
+    container_name: angular-app
+    ports:
+      - 4200:4200
+    volumes:
+      - ./:/angular-app
+    environment:
+      - STYLE=css
