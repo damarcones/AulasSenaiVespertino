@@ -1,0 +1,19 @@
+
+
+<form name = "cadAbs">
+    <h1>Insira os dados do Abastecimento</h1>
+  
+    <label for="placa">Placa</label>
+    <input type="text" id = "placaid" placeholder=" Placa do Veículo" required="required" name="placa" #placa/>
+  
+    <label for="abs">Valor R$</label>
+    <input type="text" id = "absid" placeholder=" Valor do Abastecimento" required="required" name="abs"/>
+  
+    <label for="km">Quilometragem</label>
+    <input type="text"  id = "kmid" placeholder=" Km atual" required="required" name="km"/>
+  
+    <input type="submit"  (click)="displayMessage(placa.value)" value="Enviar"/>  
+  </form>
+
+<a href="/" ><button type="button" >Voltar ao Menu Principal</button></a>
+

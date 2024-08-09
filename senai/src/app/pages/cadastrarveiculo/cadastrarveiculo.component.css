@@ -1,0 +1,41 @@
+
+body{
+    padding: 0;
+    margin: 10px;
+  }
+  
+  form {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 15px;
+    max-width: 600px;
+    background-color: skyblue;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    color: rgb(29, 87, 67);
+  }
+  
+  input, textarea {
+    width: 100px;
+    padding: 10px;
+    color: black;
+    margin-left: 20px;
+    margin-right: 10px;
+  }
+  
+  input:hover, input:focus{
+    border-color: yellow;
+    box-shadow: 5px 0px 10px coral;
+    background-color: chocolate;
+    color: black;
+    font-weight: bold;
+  }
+  
+  
+  textarea {
+    width: 900px;
+    height: 120px;
+    max-width: 400px;
+  }

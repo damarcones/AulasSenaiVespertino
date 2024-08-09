@@ -16,10 +16,7 @@ export class AppComponent implements OnInit{
   }
   title = 'senai';
 
-  displayMessage(msg: String) { 
-    alert('O carro com a placa ' + msg + ' foi cadastrado!'); }
-
-
+  
   soma(a: String, b: String){
     let numA = Number(a);
     let numB = Number(b);
