@@ -1,1 +1,28 @@
-<p>cadastrardespesa works!</p>
+<form name = "cadDespesa">
+    <h1>Insira os dados da Despesa</h1>
+  
+    <input type="text" id = "placaid" placeholder=" Placa do Veículo" required="required" name="placa"/>
+    <label for="placa">Placa</label>
+  
+    <select id="tipoid" name="tipo" #tipo>
+        <option value = "imposto" > Imposto </option>
+        <option value = "manutencao" > Manutenção </option>
+        <option value = "Multas" > Multa </option>
+        <option value = "outros" > Outro </option>
+        
+    </select>
+    <label for="tipodespesa">Tipo da Despesa</label>
+
+    <input type="text" id = "nomeid" placeholder=" Nome da Despesa" required="required" name="nome" #nome/>
+    <label for="nome">Nome da Despesa</label>
+  
+    <input type="number" min="0" value="0" step="0.01" id = "valorid" placeholder=" Ano do Modelo do Veículo" required="required" name="anomodelo"/>
+    <label for="valor">Valor da Despesa</label>
+  
+    <input type="submit"  (click)="displayMessage(tipo.value, nome.value)" value="Salvar"/>  
+  </form>
+
+  
+  <hr>
+  <a href="/" ><button type="button" >Voltar ao Menu Principal</button></a>
+  
