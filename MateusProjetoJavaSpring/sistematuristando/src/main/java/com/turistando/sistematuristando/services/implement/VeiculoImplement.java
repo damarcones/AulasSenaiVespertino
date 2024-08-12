@@ -32,12 +32,12 @@ public class VeiculoImplement implements IVeiculoServices{
     }
 
     @Override
-    public void deletar(Integer id) {
+    public void deletar(int id) {
         repoVeiculo.deleteById(id);
     }
 
     @Override
-    public Veiculos listarPorId(Integer id) {
+    public Veiculos listarPorId(int id) {
         return repoVeiculo.findById(id).orElse(null);
     }
 

@@ -31,12 +31,12 @@ public class AbastecimentoImplement implements IAbastecimentoServices{
     }
 
     @Override
-    public void deletar(Integer id) {
+    public void deletar(int id) {
         repoAbast.deleteById(id);
     }
 
     @Override
-    public Abastecimentos listarPorId(Integer id) {
+    public Abastecimentos listarPorId(int id) {
         return repoAbast.findById(id).orElse(null);
     }
 

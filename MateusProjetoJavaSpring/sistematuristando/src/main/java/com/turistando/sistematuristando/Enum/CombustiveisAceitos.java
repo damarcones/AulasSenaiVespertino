@@ -5,14 +5,17 @@ public enum CombustiveisAceitos {
     GASOLINA("Gasolina"),
     ALCOOL("Álcool"),
     FLEX("Flex"),
-    DIESEL("diesel"),
-    GNV("Gnv");
+    DIESEL("Diesel"),
+    GNV("GNV");
 
-    private String combustiveisAceitos;
+    private final String combustiveisAceitos;
 
-    private CombustiveisAceitos(String combustiveisAceitos) {
+    CombustiveisAceitos(String combustiveisAceitos) {
         this.combustiveisAceitos = combustiveisAceitos;
     }
 
-    
+    public String getCombustiveisAceitos() {
+        return combustiveisAceitos;
+    }
 }
+

@@ -10,6 +10,6 @@ public interface IVeiculoServices {
     List<Veiculos> listar();
     Veiculos registrar(Veiculos veiculo);
     Veiculos atualizar(Veiculos veiculo);
-    void deletar(Integer id);
-    Veiculos listarPorId(Integer id);
+    void deletar(int id);
+    Veiculos listarPorId(int id);
 }

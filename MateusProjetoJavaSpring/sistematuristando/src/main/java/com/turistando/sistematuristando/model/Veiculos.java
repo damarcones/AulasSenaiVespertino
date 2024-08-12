@@ -17,7 +17,7 @@ public class Veiculos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idVeiculo;
+    private long idVeiculo;
 
     @Column(name= "Marca", length=100, nullable=false)
     private String marca;
@@ -26,13 +26,13 @@ public class Veiculos {
     private String modelo;
 
     @Column(name= "AnoFabricacao", nullable=false)
-    private Integer anoFabricacao;
+    private int anoFabricacao;
 
     @Column(name= "AnoModelo", nullable=false)
-    private Integer anoModelo;
+    private int anoModelo;
 
     @Column(name= "Motorizacao",  nullable=false)
-    private Integer motorizacao;
+    private int motorizacao;
 
     @Column(name= "CapacidadeTanque", nullable=false)
     private double capacidadeTanque;
@@ -44,12 +44,100 @@ public class Veiculos {
     @Column(name= "Cor", nullable=false)
     private String cor;
 
-    @Column(name= "Placa", length=7, nullable=false)
+    @Column(name= "Placa", nullable=false)
     private String placa;
 
-    @Column(name= "Renavam", length=11, nullable=false)
-    private int renavam;
+    @Column(name= "Renavam", nullable=false)
+    private long renavam;
 
+    public long getIdVeiculo() {
+        return idVeiculo;
+    }
 
+    public void setIdVeiculo(long idVeiculo) {
+        this.idVeiculo = idVeiculo;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getAnoFabricacao() {
+        return anoFabricacao;
+    }
+
+    public void setAnoFabricacao(int anoFabricacao) {
+        this.anoFabricacao = anoFabricacao;
+    }
+
+    public int getAnoModelo() {
+        return anoModelo;
+    }
+
+    public void setAnoModelo(int anoModelo) {
+        this.anoModelo = anoModelo;
+    }
+
+    public int getMotorizacao() {
+        return motorizacao;
+    }
+
+    public void setMotorizacao(int motorizacao) {
+        this.motorizacao = motorizacao;
+    }
+
+    public double getCapacidadeTanque() {
+        return capacidadeTanque;
+    }
+
+    public void setCapacidadeTanque(double capacidadeTanque) {
+        this.capacidadeTanque = capacidadeTanque;
+    }
+
+    public CombustiveisAceitos getCombustiveisAceitos() {
+        return combustiveisAceitos;
+    }
+
+    public void setCombustiveisAceitos(CombustiveisAceitos combustiveisAceitos) {
+        this.combustiveisAceitos = combustiveisAceitos;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public void setCor(String cor) {
+        this.cor = cor;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
+
+    public long getRenavam() {
+        return renavam;
+    }
+
+    public void setRenavam(long renavam) {
+        this.renavam = renavam;
+    } 
+
+    
     
 }
