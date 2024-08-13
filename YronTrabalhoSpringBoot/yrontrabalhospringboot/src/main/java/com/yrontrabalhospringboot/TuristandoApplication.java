@@ -1,4 +1,4 @@
-package com.turistando.turistando;
+package com.yrontrabalhospringboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

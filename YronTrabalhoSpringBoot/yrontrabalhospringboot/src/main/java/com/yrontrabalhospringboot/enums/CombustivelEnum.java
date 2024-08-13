@@ -1,4 +1,4 @@
-package com.turistando.turistando.enums;
+package com.yrontrabalhospringboot.enums;
 
 public enum CombustivelEnum {
     Gasolina,

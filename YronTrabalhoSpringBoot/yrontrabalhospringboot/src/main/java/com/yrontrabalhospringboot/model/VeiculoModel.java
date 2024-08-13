@@ -1,6 +1,8 @@
-package com.turistando.turistando.model;
+package com.yrontrabalhospringboot.model;
 
-import com.turistando.turistando.enums.CombustivelEnum;
+
+
+import com.yrontrabalhospringboot.enums.CombustivelEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

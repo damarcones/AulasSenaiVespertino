@@ -1,8 +1,8 @@
-package com.turistando.turistando.repository;
+package com.yrontrabalhospringboot.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.turistando.turistando.model.VeiculoModel;
+import com.yrontrabalhospringboot.model.VeiculoModel;
 
 
 

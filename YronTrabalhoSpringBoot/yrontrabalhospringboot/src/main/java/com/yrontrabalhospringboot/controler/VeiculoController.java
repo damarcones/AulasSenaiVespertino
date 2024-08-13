@@ -1,17 +1,25 @@
-package com.turistando.turistando.controler;
+package com.yrontrabalhospringboot.controler;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.turistando.turistando.model.VeiculoModel;
-import com.turistando.turistando.repository.VeiculoRepository;
+import com.yrontrabalhospringboot.model.VeiculoModel;
+import com.yrontrabalhospringboot.repository.VeiculoRepository;
+
 
 
 @RestController
 public class VeiculoController {
+
+    @GetMapping("/teste")
+    public String getMethodName() {
+        return "OLA";
+    }
+    
 
     @Autowired
     private VeiculoRepository veiculoRepository;
