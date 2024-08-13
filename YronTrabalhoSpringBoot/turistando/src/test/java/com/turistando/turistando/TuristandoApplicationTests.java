@@ -1,10 +1,10 @@
-package com.yrontrabalhospringboot.yrontrabalhospringboot;
+package com.turistando.turistando;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class YrontrabalhospringbootApplicationTests {
+class TuristandoApplicationTests {
 
 	@Test
 	void contextLoads() {

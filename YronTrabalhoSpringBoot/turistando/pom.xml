@@ -8,10 +8,10 @@
 		<version>3.3.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.yrontrabalhospringboot</groupId>
-	<artifactId>yrontrabalhospringboot</artifactId>
+	<groupId>com.turistando</groupId>
+	<artifactId>turistando</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gerenciamento</name>
+	<name>turistando</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -69,6 +69,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
