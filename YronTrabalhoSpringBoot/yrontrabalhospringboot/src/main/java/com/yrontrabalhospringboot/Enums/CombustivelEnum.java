@@ -1,4 +1,4 @@
-package com.yrontrabalhospringboot.enums;
+package com.yrontrabalhospringboot.Enums;
 
 public enum CombustivelEnum {
     Gasolina,
@@ -6,5 +6,8 @@ public enum CombustivelEnum {
     Diesel,
     GNV,
     Flex;
-    
+
+
 }
+
+

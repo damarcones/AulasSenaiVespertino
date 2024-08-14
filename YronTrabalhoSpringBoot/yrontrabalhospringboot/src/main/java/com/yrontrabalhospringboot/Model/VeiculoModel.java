@@ -1,6 +1,6 @@
-package com.yrontrabalhospringboot.model;
+package com.yrontrabalhospringboot.Model;
 
-import com.yrontrabalhospringboot.enums.CombustivelEnum;
+import com.yrontrabalhospringboot.Enums.CombustivelEnum;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,19 +17,14 @@ public class VeiculoModel {
     private String marca;
 
     private String modelo;
-
     private int anoModelo;
-
     private int anoFabricacao;
-
     private String cor;
-
     private long renavam;
-
-    private double motorizacao;
+    private double motorizacao; 
 
     private double capacidadeTanque;
-
+    //@Enumerated(EnumType.STRING)
     private CombustivelEnum combustivel;
 
     public String getPlaca() {
