@@ -6,4 +6,5 @@ public enum CombustivelEnum {
     Diesel,
     GNV,
     Flex;
+    
 }
