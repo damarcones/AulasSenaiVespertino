@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.turistando.sistematuristando.model.Abastecimentos;
+import com.turistando.sistematuristando.model.Abastecimento;
 import com.turistando.sistematuristando.services.IAbastecimentoServices;
 
 
@@ -22,14 +22,14 @@ public class AbastecimentoController {
     private IAbastecimentoServices serviceAbast;
 
     @GetMapping()
-    public ResponseEntity<List<Abastecimentos>> listar() {
-        List<Abastecimentos> obj = serviceAbast.listar();
+    public ResponseEntity<List<Abastecimento>> listar() {
+        List<Abastecimento> obj = serviceAbast.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @PostMapping("/registrarAbastecimento")
-    public ResponseEntity<Abastecimentos> registrar(Abastecimentos abastecimento){
-        Abastecimentos obj = serviceAbast.registrar(abastecimento);
+    public ResponseEntity<Abastecimento> registrar(Abastecimento abastecimento){
+        Abastecimento obj = serviceAbast.registrar(abastecimento);
         return  new ResponseEntity<>(obj, HttpStatus.OK);
     }
 

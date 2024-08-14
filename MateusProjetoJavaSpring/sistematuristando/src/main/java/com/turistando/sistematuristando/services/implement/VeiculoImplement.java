@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.turistando.sistematuristando.model.Veiculos;
+import com.turistando.sistematuristando.model.Veiculo;
 import com.turistando.sistematuristando.repository.IVeiculoRepository;
 import com.turistando.sistematuristando.services.IVeiculoServices;
 
@@ -17,17 +17,17 @@ public class VeiculoImplement implements IVeiculoServices{
     IVeiculoRepository repoVeiculo;
 
     @Override
-    public List<Veiculos> listar() {
+    public List<Veiculo> listar() {
         return repoVeiculo.findAll();
     }
 
     @Override
-    public Veiculos registrar(Veiculos veiculo) {
+    public Veiculo registrar(Veiculo veiculo) {
        return repoVeiculo.save(veiculo);
     }
 
     @Override
-    public Veiculos atualizar(Veiculos veiculo) {
+    public Veiculo atualizar(Veiculo veiculo) {
         return repoVeiculo.save(veiculo);
     }
 
@@ -37,7 +37,7 @@ public class VeiculoImplement implements IVeiculoServices{
     }
 
     @Override
-    public Veiculos listarPorId(int id) {
+    public Veiculo listarPorId(int id) {
         return repoVeiculo.findById(id).orElse(null);
     }
 

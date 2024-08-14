@@ -2,14 +2,14 @@ package com.turistando.sistematuristando.services;
 
 import java.util.List;
 
-import com.turistando.sistematuristando.model.Veiculos;
+import com.turistando.sistematuristando.model.Veiculo;
 
 
 public interface IVeiculoServices {
 
-    List<Veiculos> listar();
-    Veiculos registrar(Veiculos veiculo);
-    Veiculos atualizar(Veiculos veiculo);
+    List<Veiculo> listar();
+    Veiculo registrar(Veiculo veiculo);
+    Veiculo atualizar(Veiculo veiculo);
     void deletar(int id);
-    Veiculos listarPorId(int id);
+    Veiculo listarPorId(int id);
 }

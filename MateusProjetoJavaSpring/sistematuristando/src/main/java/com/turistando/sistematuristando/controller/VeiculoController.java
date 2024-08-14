@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.turistando.sistematuristando.model.Veiculos;
+import com.turistando.sistematuristando.model.Veiculo;
 import com.turistando.sistematuristando.services.IVeiculoServices;
 
 
@@ -28,25 +28,25 @@ public class VeiculoController {
     private IVeiculoServices serviceVeiculo;
 
    @GetMapping()
-    public List<Veiculos> listar() {
+    public List<Veiculo> listar() {
         return serviceVeiculo.listar();
     }
 
     @PostMapping()
-    public ResponseEntity<Veiculos> registrar(@RequestBody Veiculos veiculos){
-        Veiculos obj = serviceVeiculo.registrar(veiculos);
+    public ResponseEntity<Veiculo> registrar(@RequestBody Veiculo veiculos){
+        Veiculo obj = serviceVeiculo.registrar(veiculos);
         return  new ResponseEntity<>(obj, HttpStatus.OK);
     }
     
     @PutMapping()
-    public ResponseEntity<Veiculos> atualizar(@RequestBody Veiculos veiculos){
-        Veiculos obj = serviceVeiculo.atualizar(veiculos);
+    public ResponseEntity<Veiculo> atualizar(@RequestBody Veiculo veiculos){
+        Veiculo obj = serviceVeiculo.atualizar(veiculos);
         return  new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable("id") int id) throws Exception{
-        Veiculos obj = serviceVeiculo.listarPorId(id);
+        Veiculo obj = serviceVeiculo.listarPorId(id);
         if (obj == null) {
             throw new Exception("Id não encontrado");
         }
@@ -55,8 +55,8 @@ public class VeiculoController {
    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Veiculos> listarPorId(@PathVariable("id") int id) throws Exception{
-        Veiculos obj = serviceVeiculo.listarPorId(id);
+    public ResponseEntity<Veiculo> listarPorId(@PathVariable("id") int id) throws Exception{
+        Veiculo obj = serviceVeiculo.listarPorId(id);
         if (obj == null) {
             throw new Exception("Id não encontrado");
         }
