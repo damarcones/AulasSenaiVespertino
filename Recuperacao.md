@@ -11,5 +11,5 @@ A recuperação consiste em escrever um texto explicando como desenvolver a solu
 - Deverá ser realizado um `Fork` dessa branch em seu repositório pessoal;
 - O arquivo deve ser nomeado com seu nome + "TrabalhoJavaRecuperacao" (Ex: DamarconesTrabalhoJavaRecuperacao.pdf);
 - O arquivo a ser entregue deve estar no formato PDF;
-- O trabalho deve ser entregue até o dia ~00/00/0000~;
-- A entrega será realizada com a criação de um  `Pull Request` para a branch `TrabalhoJava`, que deverá ser realizado até dia ~00/00/0000~;
+- O trabalho deve ser entregue até o dia 21/08/2024 até às 23:50h;
+- A entrega será realizada com a criação de um  `Pull Request` para a branch `TrabalhoJava`, que deverá ser realizado até dia 22/08/2024 até às 23:50h;
