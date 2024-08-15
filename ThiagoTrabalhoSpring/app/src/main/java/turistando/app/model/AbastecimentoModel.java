@@ -20,7 +20,7 @@ public class AbastecimentoModel {
     private abastecimentoEnum tipoabastecido;
 
     @OneToOne
-    private VeiculoModel placa;
+    private VeiculoModel placaveiculo;
 
     public int getIdAbastecimento() {
         return idAbastecimento;
@@ -55,11 +55,11 @@ public class AbastecimentoModel {
     }
 
     public VeiculoModel getVeiculoModel() {
-        return placa;
+        return placaveiculo;
     }
 
     public void setVeiculoModel(VeiculoModel veiculoModel) {
-        this.placa = veiculoModel;
+        this.placaveiculo = veiculoModel;
     }
 
 }
