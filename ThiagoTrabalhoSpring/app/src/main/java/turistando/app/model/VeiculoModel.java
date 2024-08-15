@@ -1,14 +1,24 @@
 package turistando.app.model;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import turistando.app.controller.Enum.combustivelEnum;
 
-@Entidy
+@Entity
+@Table(name="veiculo")
 public class VeiculoModel {
 
     @Id
+    private String placa;
+
     private String marca;
-    
     private String modelo;
     private int anoModelo;
     private int anoFabricacao;
@@ -16,7 +26,26 @@ public class VeiculoModel {
     private long renavam;
     private double motorizacao;
     private double capacidadeTanque;
+    @Enumerated(EnumType.STRING)
     private combustivelEnum combustivel;
+    @OneToMany(mappedBy="placaveiculo",cascade= CascadeType.ALL, orphanRemoval=true)
+    private List<AbastecimentoModel> abastecimentos;
+
+    public List<AbastecimentoModel> getAbastecimentos() {
+        return abastecimentos;
+    }
+
+    public void setAbastecimentos(List<AbastecimentoModel> abastecimentos) {
+        this.abastecimentos = abastecimentos;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
     public String getMarca() {
         return marca;
@@ -89,5 +118,4 @@ public class VeiculoModel {
     public void setCombustivel(combustivelEnum combustivel) {
         this.combustivel = combustivel;
     }
-
 }

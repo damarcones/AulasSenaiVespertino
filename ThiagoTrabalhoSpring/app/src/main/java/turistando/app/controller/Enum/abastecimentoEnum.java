@@ -1,10 +1,9 @@
 package turistando.app.controller.Enum;
 
-public enum combustivelEnum {
+public enum abastecimentoEnum {
     Gasolina,
     Alcool,
     Diesel,
     GNV,
-    Etanol,
-    Flex;
+    Etanol;
 }

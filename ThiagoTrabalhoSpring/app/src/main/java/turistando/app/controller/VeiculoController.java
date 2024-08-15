@@ -39,4 +39,5 @@ public class VeiculoController {
     public void apagarveiculo(@PathVariable String id) {
         veiculoRepository.deleteById(id);
     }
+
 }
