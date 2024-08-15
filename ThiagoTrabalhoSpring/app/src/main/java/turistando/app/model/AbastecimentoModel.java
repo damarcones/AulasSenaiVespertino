@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import turistando.app.controller.Enum.abastecimentoEnum;
 
@@ -20,9 +19,8 @@ public class AbastecimentoModel {
     private double valorabastecimento;
     private abastecimentoEnum tipoabastecido;
 
-    @ManyToOne
-    @JoinColumn(name = "placa_id")
-    private VeiculoModel placaveiculo;
+    @OneToOne
+    private VeiculoModel placa;
 
     public int getIdAbastecimento() {
         return idAbastecimento;
@@ -57,11 +55,11 @@ public class AbastecimentoModel {
     }
 
     public VeiculoModel getVeiculoModel() {
-        return placaveiculo;
+        return placa;
     }
 
     public void setVeiculoModel(VeiculoModel veiculoModel) {
-        this.placaveiculo = veiculoModel;
+        this.placa = veiculoModel;
     }
 
 }
