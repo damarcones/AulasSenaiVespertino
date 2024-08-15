@@ -22,7 +22,7 @@ public class VeiculoController {
 
     @GetMapping("/teste")
     public String getMethodName() {
-        return "OLA";
+        return "FUNCIONA";
     }
     
     @Autowired
