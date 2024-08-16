@@ -10,26 +10,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.turistando.sistematuristando.model.Abastecimento;
-import com.turistando.sistematuristando.services.IAbastecimentoServices;
-
+import com.turistando.sistematuristando.model.AbastecimentoModel;
+import com.turistando.sistematuristando.services.AbastecimentoService;
 
 @RestController
 @RequestMapping("/abastecimentos")
 public class AbastecimentoController {
 
     @Autowired
-    private IAbastecimentoServices serviceAbast;
+    private AbastecimentoService serviceAbast;
 
     @GetMapping()
-    public ResponseEntity<List<Abastecimento>> listar() {
-        List<Abastecimento> obj = serviceAbast.listar();
+    public ResponseEntity<List<AbastecimentoModel>> listar() {
+        List<AbastecimentoModel> obj = serviceAbast.listar();
         return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @PostMapping("/registrarAbastecimento")
-    public ResponseEntity<Abastecimento> registrar(Abastecimento abastecimento){
-        Abastecimento obj = serviceAbast.registrar(abastecimento);
+    public ResponseEntity<AbastecimentoModel> registrar(AbastecimentoModel abastecimento){
+        AbastecimentoModel obj = serviceAbast.registrar(abastecimento);
         return  new ResponseEntity<>(obj, HttpStatus.OK);
     }
 

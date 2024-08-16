@@ -1,4 +1,4 @@
-package com.turistando.sistematuristando;
+package com.turistando.sistematuristando.services;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,4 +10,4 @@ public class SistematuristandoApplication {
 		SpringApplication.run(SistematuristandoApplication.class, args);
 	}
  
-} 
+}

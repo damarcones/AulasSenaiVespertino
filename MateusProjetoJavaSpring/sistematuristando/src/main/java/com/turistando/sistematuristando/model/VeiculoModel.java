@@ -10,8 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -19,39 +17,35 @@ import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name="Veiculos")
-public class Veiculo {
+public class VeiculoModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "Placa", nullable=false)
     private String placa;
 
-
-    //FK;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
-    private List<Gasto> gasto;
+    private List<GastoModel> gasto;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
-    private List<Abastecimento> abastecimento;
+    private List<AbastecimentoModel> abastecimento;
 
-    @Column(name= "Marca", length=100, nullable=false)
+    @Column(name="Marca", length=100, nullable=false)
     private String marca;
 
-    @Column(name= "Modelo", length=100, nullable=false)
+    @Column(name="Modelo", length=100, nullable=false)
     private String modelo;
 
-    @Column(name= "AnoFabricacao", nullable=false)
-    @Min(value = 1900, message = "O valor de ano de fabricação deve ser maior ou igual a 1900")
+    @Column(name="AnoFabricacao", nullable=false)
+    @Min(value =1900, message = "O valor de ano de fabricação deve ser maior ou igual a 1900")
     private int anoFabricacao;
 
-    @Column(name= "AnoModelo", nullable=false )
+    @Column(name="AnoModelo", nullable=false )
     @Min(value = 1900, message = "O valor de ano modelo deve ser maior ou igual a 1900")
     private int anoModelo;
 
-    @Column(name= "Motorizacao",  nullable=false)
-    private int motorizacao;
+    @Column(name="Motorizacao",  nullable=false)
+    private double motorizacao;
 
-    @Column(name= "CapacidadeTanque", nullable=false)
+    @Column(name="CapacidadeTanque", nullable=false)
     @Min(value = 1, message = "O valor de capacidadeTanque deve ser maior ou igual a 1")
     private double capacidadeTanque;
 
@@ -100,7 +94,7 @@ public class Veiculo {
         this.anoModelo = anoModelo;
     }
 
-    public int getMotorizacao() {
+    public double getMotorizacao() {
         return motorizacao;
     }
 
@@ -114,6 +108,19 @@ public class Veiculo {
 
     public void setCapacidadeTanque(double capacidadeTanque) {
         this.capacidadeTanque = capacidadeTanque;
+    }
+
+    
+    public List<GastoModel> getGasto() {
+        return gasto;
+    }
+
+    public void setGasto(List<GastoModel> gasto) {
+        this.gasto = gasto;
+    }
+
+    public void setMotorizacao(double motorizacao) {
+        this.motorizacao = motorizacao;
     }
 
     public CombustiveisAceitos getCombustiveisAceitos() {
@@ -148,22 +155,21 @@ public class Veiculo {
         this.renavam = renavam;
     } 
 
-    public List<Gasto> getDespesa() {
+    public List<GastoModel> getDespesa() {
         return gasto;
     }
 
-    public void setDespesa(List<Gasto> gasto) {
+    public void setDespesa(List<GastoModel> gasto) {
         this.gasto = gasto;
     }
 
-    public List<Abastecimento> getAbastecimento() {
+    public List<AbastecimentoModel> getAbastecimento() {
         return abastecimento;
     }
 
-    public void setAbastecimento(List<Abastecimento> abastecimento) {
+    public void setAbastecimento(List<AbastecimentoModel> abastecimento) {
         this.abastecimento = abastecimento;
     }
-
     
     
 }

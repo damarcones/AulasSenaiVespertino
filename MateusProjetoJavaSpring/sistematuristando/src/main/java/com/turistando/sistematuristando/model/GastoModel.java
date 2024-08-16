@@ -14,19 +14,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 
 
 @Entity
-public class Gasto {
+@Table(name="Gastos")
+public class GastoModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Veiculo")
-    private Veiculo veiculo;
+    @ManyToOne(cascade=CascadeType.ALL) 
+    @JoinColumn(name="Veiculo", referencedColumnName="placa",nullable=false) 
+    private VeiculoModel veiculo;
 
     @Enumerated(EnumType.STRING)
     @Column(name= "Tipo", nullable=false)
@@ -84,13 +86,13 @@ public class Gasto {
         this.descricao = descricao;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
-    }
+    // public VeiculoModel getVeiculo() {
+    //     return veiculo;
+    // }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
+    // public void setVeiculo(VeiculoModel veiculo) {
+    //     this.veiculo = veiculo;
+    // }
 
     
 }

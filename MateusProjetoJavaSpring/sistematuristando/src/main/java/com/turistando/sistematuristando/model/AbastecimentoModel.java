@@ -14,32 +14,34 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Abastecimento {
+@Table(name="Abastecimentos")
+public class AbastecimentoModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAbastecimento;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Veiculo")
-    private Veiculo veiculo;
+    @ManyToOne(cascade=CascadeType.ALL) 
+    @JoinColumn(name="Veiculo", referencedColumnName="placa",nullable=false) 
+    private VeiculoModel veiculo;
 
-    @Column(name= "Data", nullable=false)
+    @Column(name="Data", nullable=false)
     private LocalDate data;
 
-    @Column(name= "Quilometragem", nullable=false)
+    @Column(name="Quilometragem", nullable=false)
     private double quilometragem;
     
-    @Column(name= "TipoCombustivel", nullable=false)
+    @Column(name="TipoCombustivel", nullable=false)
     @Enumerated(EnumType.STRING)
     private TipoCombsutiveis tipoCombustivel; 
     
-    @Column(name= "QuantidadeCombustivel", nullable=false)
+    @Column(name="QuantidadeCombustivel", nullable=false)
     private double quantidadeCombustivel;
 
-    @Column(name= "ValorTotal", nullable=false)
+    @Column(name="ValorTotal", nullable=false)
     private double valorTotal;
 
 
@@ -54,13 +56,13 @@ public class Abastecimento {
         this.idAbastecimento = idAbastecimento;
     }
 
-    public Veiculo getVeiculo() {
-        return veiculo;
-    }
+    // public VeiculoModel getVeiculo() {
+    //     return veiculo;
+    // }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
+    // public void setVeiculo(VeiculoModel veiculo) {
+    //     this.veiculo = veiculo;
+    // }
 
     public LocalDate getData() {
         return data;
