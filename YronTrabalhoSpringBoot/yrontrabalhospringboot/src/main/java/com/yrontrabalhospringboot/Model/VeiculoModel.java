@@ -14,33 +14,15 @@ public class VeiculoModel {
     @Id
     @Column( nullable = false )
     private String placa;
-    
-    @Column( nullable = false )
     private String marca;
-
-    @Column( nullable = false)
     private String modelo;
-
-    @Column( nullable = false)
     private int anoModelo;
-
-    @Column ( nullable =  false)
     private int anoFabricacao;
-
-    @Column ( nullable = false)
     private String cor;
-
     @GeneratedValue ( strategy = GenerationType.AUTO)
     private long renavam;
-
-    @Column ( nullable = false)
     private double motorizacao; 
-
-    @Column ( nullable = false)
     private double capacidadeTanque;
-    //@Enumerated(EnumType.STRING)
-
-    
     private CombustivelEnum combustivel;
 
     public String getPlaca() {
