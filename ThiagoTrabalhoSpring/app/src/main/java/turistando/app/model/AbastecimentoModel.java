@@ -3,6 +3,8 @@ package turistando.app.model;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,7 @@ public class AbastecimentoModel  implements Serializable{
     private int idAbastecimento;
     private double litroAbastecido;
     private double valorabastecimento;
+    @Enumerated(EnumType.STRING)
     private abastecimentoEnum tipoabastecido;
 
     @OneToOne
