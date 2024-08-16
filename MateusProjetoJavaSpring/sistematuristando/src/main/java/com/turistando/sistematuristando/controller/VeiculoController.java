@@ -19,7 +19,6 @@ import com.turistando.sistematuristando.model.Veiculo;
 import com.turistando.sistematuristando.services.IVeiculoServices;
 
 
-
 @RestController
 @RequestMapping("/veiculos")
 public class VeiculoController {
@@ -45,7 +44,7 @@ public class VeiculoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<Void> deletar(@PathVariable("id") String id) throws Exception{
         Veiculo obj = serviceVeiculo.listarPorId(id);
         if (obj == null) {
             throw new Exception("Id não encontrado");
@@ -55,7 +54,7 @@ public class VeiculoController {
    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Veiculo> listarPorId(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<Veiculo> listarPorId(@PathVariable("id") String id) throws Exception{
         Veiculo obj = serviceVeiculo.listarPorId(id);
         if (obj == null) {
             throw new Exception("Id não encontrado");

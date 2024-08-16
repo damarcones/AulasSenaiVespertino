@@ -15,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name="Veiculos")
@@ -25,8 +26,13 @@ public class Veiculo {
     @Column(name= "Placa", nullable=false)
     private String placa;
 
+
+    //FK;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
-    private List<Despesa> despesa;
+    private List<Gasto> gasto;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
+    private List<Abastecimento> abastecimento;
 
     @Column(name= "Marca", length=100, nullable=false)
     private String marca;
@@ -35,15 +41,18 @@ public class Veiculo {
     private String modelo;
 
     @Column(name= "AnoFabricacao", nullable=false)
+    @Min(value = 1900, message = "O valor de ano de fabricação deve ser maior ou igual a 1900")
     private int anoFabricacao;
 
-    @Column(name= "AnoModelo", nullable=false)
+    @Column(name= "AnoModelo", nullable=false )
+    @Min(value = 1900, message = "O valor de ano modelo deve ser maior ou igual a 1900")
     private int anoModelo;
 
     @Column(name= "Motorizacao",  nullable=false)
     private int motorizacao;
 
     @Column(name= "CapacidadeTanque", nullable=false)
+    @Min(value = 1, message = "O valor de capacidadeTanque deve ser maior ou igual a 1")
     private double capacidadeTanque;
 
     @Column(name= "CombustiveisAceitos", nullable=false)
@@ -54,11 +63,11 @@ public class Veiculo {
     private String cor;
 
     @Column(name= "Renavam", nullable=false)
+    @Min(value = 1, message = "O valor de renavam deve ser maior  a 1")
     private long renavam;
 
 
    //Metodos Getters and Setters;
-
     public String getMarca() {
         return marca;
     }
@@ -139,12 +148,22 @@ public class Veiculo {
         this.renavam = renavam;
     } 
 
-    public List<Despesa> getDespesa() {
-        return despesa;
+    public List<Gasto> getDespesa() {
+        return gasto;
     }
 
-    public void setDespesa(List<Despesa> despesa) {
-        this.despesa = despesa;
+    public void setDespesa(List<Gasto> gasto) {
+        this.gasto = gasto;
     }
+
+    public List<Abastecimento> getAbastecimento() {
+        return abastecimento;
+    }
+
+    public void setAbastecimento(List<Abastecimento> abastecimento) {
+        this.abastecimento = abastecimento;
+    }
+
+    
     
 }
