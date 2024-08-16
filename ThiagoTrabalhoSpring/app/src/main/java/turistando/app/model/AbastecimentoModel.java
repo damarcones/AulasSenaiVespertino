@@ -1,5 +1,7 @@
 package turistando.app.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +12,7 @@ import turistando.app.controller.Enum.abastecimentoEnum;
 
 @Entity
 @Table(name="abastecimento")
-public class AbastecimentoModel {
+public class AbastecimentoModel  implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +23,7 @@ public class AbastecimentoModel {
 
     @OneToOne
     private VeiculoModel placaveiculo;
+    
 
     public int getIdAbastecimento() {
         return idAbastecimento;

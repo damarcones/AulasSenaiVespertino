@@ -1,11 +1,9 @@
 package turistando.app.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import turistando.app.controller.Enum.combustivelEnum;
 
@@ -26,16 +24,17 @@ public class VeiculoModel {
     private double capacidadeTanque;
     @Enumerated(EnumType.STRING)
     private combustivelEnum combustivel;
-    @OneToOne(mappedBy="placaveiculo",cascade= CascadeType.ALL, orphanRemoval=true)
-    private AbastecimentoModel abastecimentos;
 
-    public AbastecimentoModel getAbastecimentos() {
-        return abastecimentos;
-    }
+    // @OneToOne(mappedBy="placaveiculo",cascade= CascadeType.ALL, orphanRemoval=true)
+    // private AbastecimentoModel abastecimentos;
 
-    public void setAbastecimentos(AbastecimentoModel abastecimentos) {
-        this.abastecimentos = abastecimentos;
-    }
+    // public AbastecimentoModel getAbastecimentos() {
+    //     return abastecimentos;
+    // }
+
+    // public void setAbastecimentos(AbastecimentoModel abastecimentos) {
+    //     this.abastecimentos = abastecimentos;
+    // }
 
     public String getPlaca() {
         return placa;
