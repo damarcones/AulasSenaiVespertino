@@ -13,10 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import turistando.app.model.AbastecimentoModel;
 import turistando.app.repository.AbastecimentoRepository;
 
-
-
-
-
 @RestController
 public class AbastecimentoController {
     

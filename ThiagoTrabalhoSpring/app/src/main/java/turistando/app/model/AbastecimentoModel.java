@@ -3,14 +3,11 @@ package turistando.app.model;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import turistando.app.controller.Enum.abastecimentoEnum;
 
 @Entity
 @Table(name="abastecimento")
@@ -21,8 +18,8 @@ public class AbastecimentoModel  implements Serializable{
     private int idAbastecimento;
     private double litroAbastecido;
     private double valorabastecimento;
-    @Enumerated(EnumType.STRING)
-    private abastecimentoEnum tipoabastecido;
+    // @Enumerated(EnumType.STRING)
+    private String tipoabastecido;
 
     @OneToOne
     private VeiculoModel placaveiculo;
@@ -52,12 +49,12 @@ public class AbastecimentoModel  implements Serializable{
         this.valorabastecimento = valorabastecimento;
     }
 
-    public abastecimentoEnum getTipoabastecido() {
+    public String getTipoabastecido() {
         return tipoabastecido;
     }
 
-    public void setTipoabastecido(abastecimentoEnum tipoabastecido) {
-        this.tipoabastecido = tipoabastecido;
+    public void setTipoabastecido(VeiculoModel tipo) {
+        this.tipoabastecido = tipo.getCombustivel().toString();
     }
 
     public VeiculoModel getVeiculoModel() {
