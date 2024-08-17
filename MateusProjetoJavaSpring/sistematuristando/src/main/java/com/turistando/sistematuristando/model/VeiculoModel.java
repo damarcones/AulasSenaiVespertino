@@ -2,6 +2,7 @@ package com.turistando.sistematuristando.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turistando.sistematuristando.Enum.CombustiveisAceitos;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +24,7 @@ public class VeiculoModel {
     private String placa;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<GastoModel> gasto;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "veiculo", cascade = CascadeType.ALL)
@@ -94,33 +96,12 @@ public class VeiculoModel {
         this.anoModelo = anoModelo;
     }
 
-    public double getMotorizacao() {
-        return motorizacao;
-    }
-
-    public void setMotorizacao(int motorizacao) {
-        this.motorizacao = motorizacao;
-    }
-
     public double getCapacidadeTanque() {
         return capacidadeTanque;
     }
 
     public void setCapacidadeTanque(double capacidadeTanque) {
         this.capacidadeTanque = capacidadeTanque;
-    }
-
-    
-    public List<GastoModel> getGasto() {
-        return gasto;
-    }
-
-    public void setGasto(List<GastoModel> gasto) {
-        this.gasto = gasto;
-    }
-
-    public void setMotorizacao(double motorizacao) {
-        this.motorizacao = motorizacao;
     }
 
     public CombustiveisAceitos getCombustiveisAceitos() {
@@ -155,21 +136,27 @@ public class VeiculoModel {
         this.renavam = renavam;
     } 
 
-    public List<GastoModel> getDespesa() {
+
+    
+    public double getMotorizacao() {
+        return motorizacao;
+    }
+
+    public void setMotorizacao(double motorizacao) {
+        this.motorizacao = motorizacao;
+    }
+
+    public List<GastoModel> getGasto() {
         return gasto;
     }
 
-    public void setDespesa(List<GastoModel> gasto) {
+    public void setGasto(List<GastoModel> gasto) {
         this.gasto = gasto;
     }
 
-    public List<AbastecimentoModel> getAbastecimento() {
-        return abastecimento;
-    }
+    
+    
 
-    public void setAbastecimento(List<AbastecimentoModel> abastecimento) {
-        this.abastecimento = abastecimento;
-    }
     
     
 }

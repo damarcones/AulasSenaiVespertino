@@ -1,6 +1,7 @@
 package com.turistando.sistematuristando.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,48 +16,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turistando.sistematuristando.model.GastoModel;
-import com.turistando.sistematuristando.services.GastoService;
+import com.turistando.sistematuristando.model.VeiculoModel;
+import com.turistando.sistematuristando.repository.IGastoRepository;
+import com.turistando.sistematuristando.repository.IVeiculoRepository;
 
 @RestController
 @RequestMapping("/gastos")
 public class GastoController {
 
     @Autowired
-    private GastoService serviceGasto;
+    private IGastoRepository repoGasto;
+
+    @Autowired
+    private IVeiculoRepository repoVeiculo;
 
    @GetMapping()
     public List<GastoModel> listar() {
-        return serviceGasto.listar();
+        return repoGasto.findAll();
     }
 
     @PostMapping()
     public ResponseEntity<GastoModel> registrar(@RequestBody GastoModel gasto){
-        GastoModel obj = serviceGasto.registrar(gasto);
-        return  new ResponseEntity<>(obj, HttpStatus.OK);
+        
+        Optional<VeiculoModel> veiculoOpt = repoVeiculo.findById(gasto.getVeiculo().getPlaca());
+
+        if (veiculoOpt.isPresent()) {
+        gasto.setVeiculo(veiculoOpt.get());
+        GastoModel obj = repoGasto.save(gasto);
+        return new ResponseEntity<>(obj, HttpStatus.CREATED);
+        } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
     }
     
     @PutMapping()
     public ResponseEntity<GastoModel> atualizar(@RequestBody GastoModel gasto){
-        GastoModel obj = serviceGasto.atualizar(gasto);
+        GastoModel obj = repoGasto.save(gasto);
         return  new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable("id") int id) throws Exception{
-        GastoModel obj = serviceGasto.listarPorId(id);
-        if (obj == null) {
-            throw new Exception("Id não encontrado");
+        Optional<GastoModel> obj = repoGasto.findById(id);
+        if (obj.isPresent()) {
+            repoGasto.deleteById(id);
+            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        serviceGasto.deletar(id);
-        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
 
     @GetMapping("/{id}")
     public ResponseEntity<GastoModel> listarPorId(@PathVariable("id") int id) throws Exception{
-        GastoModel obj = serviceGasto.listarPorId(id);
-        if (obj == null) {
-            throw new Exception("Id não encontrado");
+        Optional<GastoModel> obj = repoGasto.findById(id);
+        if (obj.isPresent()) {
+            return new ResponseEntity<>(obj.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 }

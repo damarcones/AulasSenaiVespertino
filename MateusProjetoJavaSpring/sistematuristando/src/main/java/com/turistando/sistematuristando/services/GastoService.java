@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turistando.sistematuristando.model.GastoModel;
-import com.turistando.sistematuristando.model.VeiculoModel;
 import com.turistando.sistematuristando.repository.IGastoRepository;
 
 @Service

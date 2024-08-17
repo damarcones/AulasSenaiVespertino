@@ -24,7 +24,7 @@ public class AbastecimentoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAbastecimento;
 
-    @ManyToOne(cascade=CascadeType.ALL) 
+    @ManyToOne(cascade=CascadeType.PERSIST) 
     @JoinColumn(name="Veiculo", referencedColumnName="placa",nullable=false) 
     private VeiculoModel veiculo;
 

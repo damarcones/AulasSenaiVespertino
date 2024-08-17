@@ -26,8 +26,8 @@ public class GastoModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade=CascadeType.ALL) 
-    @JoinColumn(name="Veiculo", referencedColumnName="placa",nullable=false) 
+    @ManyToOne(cascade=CascadeType.PERSIST) 
+    @JoinColumn(name="veiculo", referencedColumnName="placa",nullable=false) 
     private VeiculoModel veiculo;
 
     @Enumerated(EnumType.STRING)
@@ -86,13 +86,13 @@ public class GastoModel {
         this.descricao = descricao;
     }
 
-    // public VeiculoModel getVeiculo() {
-    //     return veiculo;
-    // }
+    public VeiculoModel getVeiculo() {
+        return veiculo;
+    }
 
-    // public void setVeiculo(VeiculoModel veiculo) {
-    //     this.veiculo = veiculo;
-    // }
+    public void setVeiculo(VeiculoModel veiculo) {
+        this.veiculo = veiculo;
+    }
 
     
 }

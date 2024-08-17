@@ -12,7 +12,7 @@ import com.turistando.sistematuristando.repository.IAbastecimentoRepository;
 public class AbastecimentoService{
 
     @Autowired
-    IAbastecimentoRepository repoAbast;
+    public IAbastecimentoRepository repoAbast;
 
     
     public List<AbastecimentoModel> listar() {
