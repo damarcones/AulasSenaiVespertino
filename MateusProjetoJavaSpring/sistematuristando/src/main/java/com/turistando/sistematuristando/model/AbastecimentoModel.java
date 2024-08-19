@@ -2,7 +2,7 @@ package com.turistando.sistematuristando.model;
 
 import java.time.LocalDate;
 
-import com.turistando.sistematuristando.Enum.TipoCombsutiveis;
+import com.turistando.sistematuristando.Enum.TipoCombustiveis;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 
 @Entity
 @Table(name="Abastecimentos")
@@ -32,16 +33,19 @@ public class AbastecimentoModel {
     private LocalDate data;
 
     @Column(name="Quilometragem", nullable=false)
+    @Min(value = 1, message = "O valor deve ser maior ou igual a 1")
     private double quilometragem;
     
     @Column(name="TipoCombustivel", nullable=false)
     @Enumerated(EnumType.STRING)
-    private TipoCombsutiveis tipoCombustivel; 
+    private TipoCombustiveis tipoCombustivel; 
     
     @Column(name="QuantidadeCombustivel", nullable=false)
+    @Min(value = 1, message = "O valor deve ser maior ou igual a 1")
     private double quantidadeCombustivel;
 
     @Column(name="ValorTotal", nullable=false)
+    @Min(value = 1, message = "O valor deve ser maior ou igual a 1")
     private double valorTotal;
 
 
@@ -56,13 +60,13 @@ public class AbastecimentoModel {
         this.idAbastecimento = idAbastecimento;
     }
 
-    // public VeiculoModel getVeiculo() {
-    //     return veiculo;
-    // }
+    public VeiculoModel getVeiculo() {
+        return veiculo;
+    }
 
-    // public void setVeiculo(VeiculoModel veiculo) {
-    //     this.veiculo = veiculo;
-    // }
+    public void setVeiculo(VeiculoModel veiculo) {
+        this.veiculo = veiculo;
+    }
 
     public LocalDate getData() {
         return data;
@@ -80,11 +84,11 @@ public class AbastecimentoModel {
         this.quilometragem = quilometragem;
     }
 
-    public TipoCombsutiveis getTipoCombustivel() {
+    public TipoCombustiveis getTipoCombustivel() {
         return tipoCombustivel;
     }
 
-    public void setTipoCombustivel(TipoCombsutiveis tipoCombustivel) {
+    public void setTipoCombustivel(TipoCombustiveis tipoCombustivel) {
         this.tipoCombustivel = tipoCombustivel;
     }
 

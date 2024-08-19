@@ -31,8 +31,9 @@ public class GastoController {
     private IVeiculoRepository repoVeiculo;
 
    @GetMapping()
-    public List<GastoModel> listar() {
-        return repoGasto.findAll();
+    public ResponseEntity<List<GastoModel>> listar() {
+        List<GastoModel> obj = repoGasto.findAll();
+        return new ResponseEntity<>(obj, HttpStatus.OK);
     }
 
     @PostMapping()
@@ -41,11 +42,11 @@ public class GastoController {
         Optional<VeiculoModel> veiculoOpt = repoVeiculo.findById(gasto.getVeiculo().getPlaca());
 
         if (veiculoOpt.isPresent()) {
-        gasto.setVeiculo(veiculoOpt.get());
-        GastoModel obj = repoGasto.save(gasto);
-        return new ResponseEntity<>(obj, HttpStatus.CREATED);
+            gasto.setVeiculo(veiculoOpt.get());
+            GastoModel obj = repoGasto.save(gasto);
+            return new ResponseEntity<>(obj, HttpStatus.CREATED);
         } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
         
     }
@@ -57,13 +58,13 @@ public class GastoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<String> deletar(@PathVariable("id") int id) throws Exception{
         Optional<GastoModel> obj = repoGasto.findById(id);
         if (obj.isPresent()) {
             repoGasto.deleteById(id);
-            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.ok("Abastecimento deletado com sucesso!");
         }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
    }
 
@@ -71,9 +72,9 @@ public class GastoController {
     public ResponseEntity<GastoModel> listarPorId(@PathVariable("id") int id) throws Exception{
         Optional<GastoModel> obj = repoGasto.findById(id);
         if (obj.isPresent()) {
-            return new ResponseEntity<>(obj.get(), HttpStatus.OK);
+            return ResponseEntity.ok(obj.get());
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }

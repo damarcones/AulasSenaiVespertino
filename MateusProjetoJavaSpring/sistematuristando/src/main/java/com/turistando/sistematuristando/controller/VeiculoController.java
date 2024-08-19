@@ -14,19 +14,34 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turistando.sistematuristando.model.VeiculoModel;
 import com.turistando.sistematuristando.repository.IVeiculoRepository;
+import com.turistando.sistematuristando.services.VeiculoServices;
+
 
 
 @RestController
 @RequestMapping("/veiculos")
 public class VeiculoController {
-   
 
     @Autowired
     private IVeiculoRepository repoVeiculo;
+
+    @Autowired
+    private VeiculoServices veiculoService;
+
+    @GetMapping("/consumo-medio")
+    public ResponseEntity<String> calcularConsumoMedio(@RequestParam String placa) {
+        try {
+            double consumoMedio = veiculoService.calcularConsumoMedio(placa);
+            return ResponseEntity.ok("O consumo médio do veículo é: " + String.format("%.2f", consumoMedio) + " km/l");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
    @GetMapping()
     public List<VeiculoModel> listar() {
@@ -42,18 +57,18 @@ public class VeiculoController {
     @PutMapping()
     public ResponseEntity<VeiculoModel> atualizar(@RequestBody VeiculoModel veiculos){
         VeiculoModel obj = repoVeiculo.save(veiculos);
-        return  new ResponseEntity<>(obj, HttpStatus.OK);
+        return  ResponseEntity.ok(obj);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable("id") String id) throws Exception{
+    public ResponseEntity<String> deletar(@PathVariable("id") String id) throws Exception{
         Optional<VeiculoModel> obj = repoVeiculo.findById(id);
 
         if (obj.isPresent()) {
             repoVeiculo.deleteById(id);
-            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.ok("Abastecimento deletado com sucesso!");
         }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
         
    }
@@ -62,9 +77,9 @@ public class VeiculoController {
     Optional<VeiculoModel> obj = repoVeiculo.findById(id);
 
     if (obj.isPresent()) {
-        return new ResponseEntity<>(obj.get(), HttpStatus.OK);
+        return ResponseEntity.ok(obj.get());
     } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 }
 
