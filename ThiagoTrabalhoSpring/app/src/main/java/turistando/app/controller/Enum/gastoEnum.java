@@ -4,6 +4,6 @@ public enum gastoEnum {
     Multa,
     Imposto,
     Pedágio,
-    Manutenção,
+    Manutencao,
     Outros;
 }

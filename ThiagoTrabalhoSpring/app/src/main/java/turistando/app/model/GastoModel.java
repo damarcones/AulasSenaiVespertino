@@ -14,7 +14,7 @@ public class GastoModel {
 
     @Id
     @Enumerated(EnumType.STRING)
-    private gastoEnum tipoGasto;
+    private gastoEnum tipogasto;
     private String descricao;
     private double valor;
 
@@ -30,11 +30,11 @@ public class GastoModel {
     }
 
     public gastoEnum getTipoGasto() {
-        return tipoGasto;
+        return tipogasto;
     }
 
     public void setTipoGasto(gastoEnum tipoGasto) {
-        this.tipoGasto = tipoGasto;
+        this.tipogasto = tipoGasto;
     }
 
     public String getDescricao() {
