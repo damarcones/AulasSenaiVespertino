@@ -23,6 +23,7 @@ public class GastoController {
         public GastoModel cadastrargasto (@RequestBody GastoModel gasto) {
             return gastoRepository.save(gasto);
         }
+        // bug que mostra o historico de cadastro de todos os veiculos e não somente do veiculo selecionado pela placa.
         @GetMapping("/Mostrargastoveiculo/{id}")
         public List<GastoModel>listargastoveiculo () {
             return gastoRepository.findAll();
