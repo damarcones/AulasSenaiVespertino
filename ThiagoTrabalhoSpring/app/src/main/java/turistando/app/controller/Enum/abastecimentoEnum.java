@@ -5,5 +5,5 @@ public enum abastecimentoEnum {
     Alcool,
     Diesel,
     GNV,
-    Etanol;
+    Etanol, combustivel;
 }
