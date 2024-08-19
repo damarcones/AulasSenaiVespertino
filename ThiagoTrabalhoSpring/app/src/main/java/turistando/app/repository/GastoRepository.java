@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import turistando.app.model.GastoModel;
 
-public interface GastoRepository extends JpaRepository<GastoModel, Enum> {
+public interface GastoRepository extends JpaRepository<GastoModel, Integer> {
 
 }

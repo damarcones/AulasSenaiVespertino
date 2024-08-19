@@ -3,27 +3,29 @@ package turistando.app.model;
 import java.io.Serializable;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import turistando.app.controller.Enum.combustivelEnum;
 
 @Entity
 @Table(name="abastecimento")
-public class AbastecimentoModel  implements Serializable{
+public class AbastecimentoModel implements Serializable{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAbastecimento;
     private double litroAbastecido;
     private double valorabastecimento;
-    // @Enumerated(EnumType.STRING)
-    private String tipoabastecido;
+    @Enumerated(EnumType.STRING)
+    private combustivelEnum tipoabastecido;
 
     @OneToOne
     private VeiculoModel placaveiculo;
-    
 
     public int getIdAbastecimento() {
         return idAbastecimento;
@@ -49,20 +51,20 @@ public class AbastecimentoModel  implements Serializable{
         this.valorabastecimento = valorabastecimento;
     }
 
-    public String getTipoabastecido() {
+    public combustivelEnum getTipoabastecido() {
         return tipoabastecido;
     }
 
-    public void setTipoabastecido(VeiculoModel tipo) {
-        this.tipoabastecido = tipo.getCombustivel().toString();
+    public void setTipoabastecido(combustivelEnum tipoabastecido) {
+        this.tipoabastecido = tipoabastecido;
     }
 
-    public VeiculoModel getVeiculoModel() {
+    public VeiculoModel getPlacaveiculo() {
         return placaveiculo;
     }
 
-    public void setVeiculoModel(VeiculoModel veiculoModel) {
-        this.placaveiculo = veiculoModel;
+    public void setPlacaveiculo(VeiculoModel placaveiculo) {
+        this.placaveiculo = placaveiculo;
     }
-
+    
 }
