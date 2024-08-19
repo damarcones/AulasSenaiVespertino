@@ -8,17 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.turistando.sistematuristando.model.AbastecimentoModel;
 import com.turistando.sistematuristando.model.VeiculoModel;
-import com.turistando.sistematuristando.repository.IAbastecimentoRepository;
-import com.turistando.sistematuristando.repository.IVeiculoRepository;
+import com.turistando.sistematuristando.repository.AbastecimentoRepository;
+import com.turistando.sistematuristando.repository.VeiculoRepository;
 
 @Service
 public class VeiculoServices {
 
     @Autowired
-    private IAbastecimentoRepository abastecimentoRepository;
+    private AbastecimentoRepository abastecimentoRepository;
 
     @Autowired
-    private IVeiculoRepository veiculoRepository;
+    private VeiculoRepository veiculoRepository;
 
     public double calcularConsumoMedio(String placa) throws Exception {
         

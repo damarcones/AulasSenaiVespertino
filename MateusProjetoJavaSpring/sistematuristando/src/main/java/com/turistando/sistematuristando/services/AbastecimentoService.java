@@ -7,17 +7,17 @@ import com.turistando.sistematuristando.Enum.CombustiveisAceitos;
 import com.turistando.sistematuristando.Enum.TipoCombustiveis;
 import com.turistando.sistematuristando.model.AbastecimentoModel;
 import com.turistando.sistematuristando.model.VeiculoModel;
-import com.turistando.sistematuristando.repository.IAbastecimentoRepository;
-import com.turistando.sistematuristando.repository.IVeiculoRepository;
+import com.turistando.sistematuristando.repository.AbastecimentoRepository;
+import com.turistando.sistematuristando.repository.VeiculoRepository;
 
 @Service
 public class AbastecimentoService {
 
     @Autowired
-    private IAbastecimentoRepository abastecimentoRepository;
+    private AbastecimentoRepository abastecimentoRepository;
 
     @Autowired
-    private IVeiculoRepository veiculoRepository;
+    private VeiculoRepository veiculoRepository;
 
     public AbastecimentoModel registrarAbastecimento(AbastecimentoModel abastecimento) throws Exception {
         
@@ -26,14 +26,13 @@ public class AbastecimentoService {
             throw new Exception("Veículo não informado ou inválido.");
         }
 
+
         VeiculoModel veiculo = veiculoRepository.findById(abastecimento.getVeiculo().getPlaca())    
         .orElse(null);
          
         if (veiculo == null) {
          throw  new Exception("Veículo não encontrado");
         }    
-
-        
 
         //verifica tipo combustivel;
         if (!isCombustivelAceito(veiculo, abastecimento)) {

@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.turistando.sistematuristando.model.GastoModel;
 import com.turistando.sistematuristando.model.VeiculoModel;
-import com.turistando.sistematuristando.repository.IGastoRepository;
-import com.turistando.sistematuristando.repository.IVeiculoRepository;
+import com.turistando.sistematuristando.repository.GastoRepository;
+import com.turistando.sistematuristando.repository.VeiculoRepository;
 
 @RestController
 @RequestMapping("/gastos")
 public class GastoController {
 
     @Autowired
-    private IGastoRepository repoGasto;
+    private GastoRepository repoGasto;
 
     @Autowired
-    private IVeiculoRepository repoVeiculo;
+    private VeiculoRepository repoVeiculo;
 
    @GetMapping()
     public ResponseEntity<List<GastoModel>> listar() {

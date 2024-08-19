@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turistando.sistematuristando.model.AbastecimentoModel;
-import com.turistando.sistematuristando.repository.IAbastecimentoRepository;
+import com.turistando.sistematuristando.repository.AbastecimentoRepository;
 import com.turistando.sistematuristando.services.AbastecimentoService;
 
 @RestController
@@ -23,7 +23,7 @@ import com.turistando.sistematuristando.services.AbastecimentoService;
 public class AbastecimentoController {
 
     @Autowired
-    private IAbastecimentoRepository repoAbast;
+    private AbastecimentoRepository repoAbast;
     
     @Autowired
     private AbastecimentoService abastecimentoService;

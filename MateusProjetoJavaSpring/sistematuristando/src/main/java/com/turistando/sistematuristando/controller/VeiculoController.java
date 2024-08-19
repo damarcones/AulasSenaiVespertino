@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turistando.sistematuristando.model.VeiculoModel;
-import com.turistando.sistematuristando.repository.IVeiculoRepository;
+import com.turistando.sistematuristando.repository.VeiculoRepository;
 import com.turistando.sistematuristando.services.VeiculoServices;
 
 
@@ -28,7 +28,7 @@ import com.turistando.sistematuristando.services.VeiculoServices;
 public class VeiculoController {
 
     @Autowired
-    private IVeiculoRepository repoVeiculo;
+    private VeiculoRepository repoVeiculo;
 
     @Autowired
     private VeiculoServices veiculoService;
