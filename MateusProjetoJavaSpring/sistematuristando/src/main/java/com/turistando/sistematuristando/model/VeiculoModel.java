@@ -135,8 +135,6 @@ public class VeiculoModel {
     public void setRenavam(long renavam) {
         this.renavam = renavam;
     } 
-
-
     
     public double getMotorizacao() {
         return motorizacao;
@@ -153,10 +151,5 @@ public class VeiculoModel {
     public void setGasto(List<GastoModel> gasto) {
         this.gasto = gasto;
     }
-
-    
-    
-
-    
     
 }

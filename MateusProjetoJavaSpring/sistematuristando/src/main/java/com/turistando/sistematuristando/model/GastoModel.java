@@ -94,5 +94,4 @@ public class GastoModel {
         this.veiculo = veiculo;
     }
 
-    
 }

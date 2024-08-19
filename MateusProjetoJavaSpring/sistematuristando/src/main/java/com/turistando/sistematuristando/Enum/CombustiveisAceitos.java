@@ -18,7 +18,6 @@ public enum CombustiveisAceitos {
         return combustiveisAceitos;
     }
 
-
     // método accepts dentro da enum faz a verificação de compatibilidade de combustível;
     public boolean accepts(TipoCombustiveis tipoCombustivel) {
         if (this == FLEX) {

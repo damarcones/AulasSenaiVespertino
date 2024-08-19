@@ -48,8 +48,6 @@ public class AbastecimentoModel {
     @Min(value = 1, message = "O valor deve ser maior ou igual a 1")
     private double valorTotal;
 
-
-
     //get e set;
 
     public Integer getIdAbastecimento() {

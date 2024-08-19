@@ -66,7 +66,7 @@ public class VeiculoController {
 
         if (obj.isPresent()) {
             repoVeiculo.deleteById(id);
-            return ResponseEntity.ok("Abastecimento deletado com sucesso!");
+            return ResponseEntity.ok("Veículo encontrado e deletado com sucesso!");
         }else {
             return ResponseEntity.notFound().build();
         }
@@ -76,12 +76,11 @@ public class VeiculoController {
    @GetMapping("/{id}")public ResponseEntity<VeiculoModel> listarPorId(@PathVariable("id") String id) {
     Optional<VeiculoModel> obj = repoVeiculo.findById(id);
 
-    if (obj.isPresent()) {
-        return ResponseEntity.ok(obj.get());
-    } else {
-        return ResponseEntity.notFound().build();
+        if (obj.isPresent()) {
+            return ResponseEntity.ok(obj.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
-
 
 }

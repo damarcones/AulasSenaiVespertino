@@ -57,9 +57,10 @@ public class AbastecimentoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable("id") int id) throws Exception{
         Optional<AbastecimentoModel> obj = repoAbast.findById(id);
+        
         if (obj.isPresent()) {
             repoAbast.deleteById(id);
-            return ResponseEntity.ok("Abastecimento deletado com sucesso!");
+            return ResponseEntity.ok("Abastecimento encontrado e deletado com sucesso!");
         }else {
             return ResponseEntity.notFound().build();
         }

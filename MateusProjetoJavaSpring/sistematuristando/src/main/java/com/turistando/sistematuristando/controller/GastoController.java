@@ -62,7 +62,7 @@ public class GastoController {
         Optional<GastoModel> obj = repoGasto.findById(id);
         if (obj.isPresent()) {
             repoGasto.deleteById(id);
-            return ResponseEntity.ok("Abastecimento deletado com sucesso!");
+            return ResponseEntity.ok("Gasto encontrado e deletado com sucesso!");
         }else {
             return ResponseEntity.notFound().build();
         }

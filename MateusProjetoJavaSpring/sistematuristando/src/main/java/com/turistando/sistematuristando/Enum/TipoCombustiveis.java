@@ -4,7 +4,7 @@ public enum TipoCombustiveis {
 
     GASOLINA("Gasolina"),
     ALCOOL("Álcool"),
-    DIESEL("Siesel"),
+    DIESEL("Diesel"),
     GNV("Gnv");
 
     private final String tipoCombsutiveis;
@@ -17,5 +17,4 @@ public enum TipoCombustiveis {
         return tipoCombsutiveis;
     }
 
-    
 }
