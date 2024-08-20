@@ -29,6 +29,7 @@ public class VeiculoController {
 
     @PostMapping("/cadastrarveiculo")
     public VeiculoModel cadastrarVeiculo(@RequestBody VeiculoModel veiculo) {
+        if (veiculo == null) throw new OrderNotFoundException(id);
         return veiculoRepository.save(veiculo);
     }
 

@@ -10,7 +10,7 @@ public class VeiculoModel {
 
     @Id
     private String placa;
-    
+     
     private String marca;
     private String modelo;
     private int anoModelo;
