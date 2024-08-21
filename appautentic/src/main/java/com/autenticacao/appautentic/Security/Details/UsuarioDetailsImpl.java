@@ -1,4 +1,4 @@
-package com.autenticacao.appautentic.Details;
+package com.autenticacao.appautentic.Security.Details;
 
 import java.util.Collection;
 import java.util.stream.Collector;
@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.autenticacao.appautentic.Model.UsuarioModel;
 
 import lombok.Getter;
