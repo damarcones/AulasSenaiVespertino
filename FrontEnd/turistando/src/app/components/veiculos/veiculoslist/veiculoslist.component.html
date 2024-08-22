@@ -1,1 +1,46 @@
-<p>veiculoslist works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-striped border border-primary">
+            <thead>
+              <tr>
+                <th>Placa</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Ano Fabricação</th>
+                <th>Ano Modelo</th>
+                <th>Motorização</th>
+                <th>Capacidade Tanque</th>
+                <th>Combustíveis Aceitos</th>
+                <th>Cor</th>
+                <th>Renavam</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (veiculo of lista; track $index) {
+              <tr class="table-active">
+                <th>{{veiculo.placa}}</th>
+                <td>{{veiculo.marca}}</td>
+                <td>{{veiculo.modelo}}</td>
+                <td>{{veiculo.anoFabricacao}}</td>
+                <td>{{veiculo.anoModelo}}</td>
+                <td>{{veiculo.motorizacao}}</td>
+                <td>{{veiculo.capacidadeTanque}}</td>
+                <td>{{veiculo.combustiveisAceitos}}</td>
+                <td>{{veiculo.cor}}</td>
+                <td>{{veiculo.renavam}}</td>
+                <button type="button" class="btn btn-outline-info btn-sm btn-rounded p-1" mdbRipple (click)="editar()">Editar </button>
+                <button type="button" class="btn btn-outline-danger btn-sm btn-rounded p-1" mdbRipple (click)="deletar()">Deletar </button>
+              </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,6 +9,7 @@ export const routes: Routes = [
 
   {path: "", redirectTo: "principal", pathMatch:'full'},
   {path: "principal", component: PrincipalComponent, children: [
+    
     {path:"veiculos", component: VeiculoslistComponent},
     {path:"veiculos/new", component: VeiculosdetailsComponent},
     {path:"veiculos/edit/:id", component: VeiculosdetailsComponent},
