@@ -44,4 +44,10 @@ public class VeiculoController {
         veiculoService.excluirVeiculo(placa);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/consumo-medio/{placa}")
+    public ResponseEntity<Double> calcularConsumoMedio(@PathVariable String placa) {
+        double consumoMedio = veiculoService.calcularConsumoMedio(placa);
+        return ResponseEntity.ok(consumoMedio);
+    }
 }

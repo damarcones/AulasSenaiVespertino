@@ -24,6 +24,10 @@ public class DespesasService {
     }
 
     public List<DespesasModel> listarDespesasPorVeiculo(String placa) {
-        return despesasRepository.findByVeiculoPlaca(placa);
+        return despesasRepository.findByVeiculoPlacaOrderByDataDespesa(placa);
+    }
+
+    public void deletarDespesa(Long id) {
+        despesasRepository.deleteById(id);
     }
 }

@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 public class AbastecimentoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; 
+    private Long id; //chave primária 
 
     private double valor;
     private double quantidadeCombustivel;

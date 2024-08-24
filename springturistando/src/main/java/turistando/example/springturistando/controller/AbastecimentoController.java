@@ -28,7 +28,7 @@ public class AbastecimentoController {
         return new ResponseEntity<>(novoAbastecimento, HttpStatus.CREATED);
     }
 
-    @GetMapping("/listarabastecimentoplaca/{placa}")
+    @GetMapping("/listarabastecimento/{placa}")
     public ResponseEntity<List<AbastecimentoModel>> listarAbastecimentosPorVeiculo(@PathVariable String placa) {
         return ResponseEntity.ok(abastecimentoService.listarAbastecimentosPorVeiculo(placa));
     }

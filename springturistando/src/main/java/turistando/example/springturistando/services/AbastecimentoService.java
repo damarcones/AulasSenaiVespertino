@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import turistando.example.springturistando.model.AbastecimentoModel;
 import turistando.example.springturistando.model.VeiculoModel;
 import turistando.example.springturistando.repositories.AbastecimentoRepository;
+import turistando.example.springturistando.repositories.VeiculoRepository;
 
 @Service
 public class AbastecimentoService {
@@ -16,10 +17,11 @@ public class AbastecimentoService {
     private AbastecimentoRepository abastecimentoRepository;
 
     @Autowired
-    private VeiculoService veiculoService;
+    private VeiculoRepository veiculoRepository;
 
     public AbastecimentoModel salvarAbastecimento(String placa, AbastecimentoModel abastecimento) {
-        VeiculoModel veiculo = veiculoService.buscarVeiculoPorPlaca(placa);
+        VeiculoModel veiculo = veiculoRepository.findById(placa)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
         abastecimento.setVeiculo(veiculo);
         return abastecimentoRepository.save(abastecimento);
     }

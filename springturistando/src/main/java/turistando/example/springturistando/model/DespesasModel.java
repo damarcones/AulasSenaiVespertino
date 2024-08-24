@@ -3,33 +3,30 @@ package turistando.example.springturistando.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import turistando.example.springturistando.Enum.TipoDespesa;
 
 @Entity
 @Table(name = "Despesas")
 public class DespesasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Enumerated(EnumType.STRING)
-    private TipoDespesa tipoDespesa;
+    private Long id; //chave primária
 
     private double valor;
-    private String descricao;
+    private String tipo; 
+    private String descricao; 
     private LocalDate dataDespesa;
 
     @ManyToOne
     @JoinColumn(name = "veiculo_placa")
     private VeiculoModel veiculo;
+
+    // Getters e setters
 
     public Long getId() {
         return id;
@@ -39,20 +36,20 @@ public class DespesasModel {
         this.id = id;
     }
 
-    public TipoDespesa getTipoDespesa() {
-        return tipoDespesa;
-    }
-
-    public void setTipoDespesa(TipoDespesa tipoDespesa) {
-        this.tipoDespesa = tipoDespesa;
-    }
-
     public double getValor() {
         return valor;
     }
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDescricao() {
@@ -78,5 +75,4 @@ public class DespesasModel {
     public void setVeiculo(VeiculoModel veiculo) {
         this.veiculo = veiculo;
     }
-
 }
