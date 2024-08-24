@@ -1,1 +1,72 @@
-<p>veiculosdetails works!</p>
+<br>
+<div class="container d-flex align-items-center justify-content-center">
+  <div class="row">
+    <div class="col-lg-12 ">
+        <div class="card">
+          <div class="card-body">
+              <h3>Cadastro de Veículo</h3>
+              <br>
+              <mdb-form-control>
+                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.placa" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Placa">Placa</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.marca" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Marca">Marca</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.modelo" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Modelo">Modelo</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="number" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.anoFabricacao" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Ano Fabricação">Ano Fabricação</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="number" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.anoModelo" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Ano Modelo">Ano Modelo</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.capacidadeTanque" required="required">
+                <label mdbLabel class="form-label" for="placa" aria-label="Capacidade Tanque (litros)">Capacidade Tanque (litros)</label>
+              </mdb-form-control>
+              <br />
+              <div class="container">
+                <p>Combustível Aceito</p>
+                <select class="form-select mb-4" [(ngModel)]="veiculo.combustiveisAceitos" aria-label="Combustível Aceito" required="required">
+                  <option value="GASOLINA">Gasolina</option>
+                  <option value="ALCOOL">Álcool</option>
+                  <option value="FLEX">Flex</option>
+                  <option value="DIESEL">Diesel</option>
+                  <option value="GNV">GNV</option>
+                </select>
+              </div>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="motorizacao" class="form-control" [(ngModel)]="veiculo.motorizacao" required="required">
+                <label mdbLabel class="form-label" for="motorizacao" aria-label="Motorização">Motorização (ex: 1.6)</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="text" id="cor" class="form-control" [(ngModel)]="veiculo.cor" required="required">
+                <label mdbLabel class="form-label" for="cor" aria-label="Cor">Cor</label>
+              </mdb-form-control>
+              <br />
+              <mdb-form-control>
+                <input mdbInput type="number" id="renavam" class="form-control" [(ngModel)]="veiculo.renavam" required="required">
+                <label mdbLabel class="form-label" for="renavam" min="1" aria-label="Renavam">Renavem</label>
+              </mdb-form-control>
+              <br />
+              <button type="submit" class="btn btn-primary" msbRipple (click)="save()">CADASTRAR</button>
+              <br />
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+

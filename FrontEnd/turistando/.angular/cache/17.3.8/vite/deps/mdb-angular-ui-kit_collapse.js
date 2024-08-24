@@ -15,9 +15,9 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵdirectiveInject
-} from "./chunk-QRX6N6QN.js";
+} from "./chunk-7VA6EE2T.js";
 
-// node_modules/mdb-angular-ui-kit/fesm2022/mdb-angular-ui-kit-collapse.mjs
+// ../node_modules/mdb-angular-ui-kit/fesm2022/mdb-angular-ui-kit-collapse.mjs
 var TRANSITION_TIME = 350;
 var MdbCollapseDirective = class _MdbCollapseDirective {
   _elementRef;
