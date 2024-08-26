@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +23,18 @@ public class AbastecimentoController {
         return abastecimentoRepository.save(abastecimento);
     }
 
-    @GetMapping("/mostrarabastecimentos")
+    @GetMapping("/mostrarabastecimentosgeral")
     public List<AbastecimentoModel> mostrarabastecimentos() {
         return abastecimentoRepository.findAll();
     }
 
+    // @DeleteMapping("/apagarabastecimento/{id}")
+    // public void apagarabastecimento(@PathVariable String id) {
+    //     abastecimentoRepository.deleteById(id);
+    // }
+
+    @GetMapping("/abastecimentoveiculo/{id}")
+    public List<AbastecimentoModel> veiculoabastecimento(@PathVariable String id, @RequestBody AbastecimentoModel placaveiculo) {
+        return abastecimentoRepository.findByPlacaveiculo(placaveiculo);
+    }
 }

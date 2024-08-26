@@ -8,8 +8,9 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import turistando.app.Exceptions.ValidaQuilometragem;
 import turistando.app.controller.Enum.combustivelEnum;
 
 @Entity
@@ -21,10 +22,12 @@ public class AbastecimentoModel implements Serializable {
     private int idAbastecimento;
     private double litroAbastecido;
     private double valorabastecimento;
+    private double quilometragem;
+
     @Enumerated(EnumType.STRING)
     private combustivelEnum tipoabastecido;
 
-    @OneToOne
+    @ManyToOne
     private VeiculoModel placaveiculo;
 
     public int getIdAbastecimento() {
@@ -36,7 +39,7 @@ public class AbastecimentoModel implements Serializable {
     }
 
     public double getLitroAbastecido() {
-        return litroAbastecido;
+        return placaveiculo.getCapacidadeTanque();
     }
 
     public void setLitroAbastecido(double litroAbastecido) {
@@ -67,7 +70,7 @@ public class AbastecimentoModel implements Serializable {
         }
         this.tipoabastecido = tipoabastecido;
     }
-    
+
     public double getValorabastecimento() {
         return valorabastecimento;
     }
@@ -76,6 +79,16 @@ public class AbastecimentoModel implements Serializable {
         this.valorabastecimento = valorabastecimento;
     }
 
+    public double getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(double quilometragem) throws ValidaQuilometragem {
+     if(this.quilometragem > quilometragem){
+        throw new ValidaQuilometragem();
+     }
+        this.quilometragem = quilometragem;
+    }
 
     public VeiculoModel getPlacaveiculo() {
         return placaveiculo;

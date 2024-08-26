@@ -1,0 +1,8 @@
+- Crud veiculo (Cadastra, Mostra, Modifica, Apaga) 4/4
+- Crud abastecimento (Cadastra, Mostra, Modifica, Apaga) 2/4
+- Crud despesa (Cadastra, Mostra, Modifica, Apaga)
+- Exceção de km
+- Lista de abastecimento por placa de veiculo
+- Exceção de combustivel
+- Exceção de Capacidade do tanque
+- implementação de abastecimento em gastos
