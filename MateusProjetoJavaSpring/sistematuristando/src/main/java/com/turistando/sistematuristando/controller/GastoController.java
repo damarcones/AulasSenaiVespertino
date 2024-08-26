@@ -69,7 +69,7 @@ public class GastoController {
    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GastoModel> listarPorId(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<GastoModel> listarPorPlaca(@PathVariable("id") int id) throws Exception{
         Optional<GastoModel> obj = repoGasto.findById(id);
         if (obj.isPresent()) {
             return ResponseEntity.ok(obj.get());

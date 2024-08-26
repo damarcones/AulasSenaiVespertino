@@ -1,5 +1,8 @@
 package com.turistando.sistematuristando.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +61,24 @@ public class AbastecimentoService {
     return combustivelVeiculo.accepts(combustivelAbastecimento);
     
     }
+
+
+    public List<AbastecimentoModel> getAbastecimentoPorPlaca(String placa) throws Exception{
+        Optional<VeiculoModel> obj = veiculoRepository.findById(placa);
+        if(!(obj.isPresent())){
+            throw new Exception("Veículo não localizado no banco de dados."); 
+        }
+        
+        List<AbastecimentoModel> abastecimentos = abastecimentoRepository.findByVeiculoPlaca(placa);
+
+        if (!abastecimentos.isEmpty()) {
+            return abastecimentos;
+        }else{
+            throw new Exception("Nenhum Abastecimento localizado no banco de dados.");
+        }
+
+    }
+
 
 
 
