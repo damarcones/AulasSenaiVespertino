@@ -52,21 +52,11 @@ public class AbastecimentoModel implements Serializable {
 
     public void setTipoabastecido(combustivelEnum tipoabastecido) {
         switch (tipoabastecido) {
-            case Gasolina:
-                valorabastecimento = litroAbastecido * 5.40;
-                break;
-            case Alcool:
-                valorabastecimento = litroAbastecido * 3.80;
-                break;
-            case Diesel:
-                valorabastecimento = litroAbastecido * 4.90;
-                break;
-            case Etanol:
-                valorabastecimento = litroAbastecido * 3.80;
-                break;
-            case GNV:
-                valorabastecimento = litroAbastecido * 3.50;
-                break;
+            case Gasolina -> valorabastecimento = litroAbastecido * 5.40;
+            case Alcool -> valorabastecimento = litroAbastecido * 3.80;
+            case Diesel -> valorabastecimento = litroAbastecido * 4.90;
+            case Etanol -> valorabastecimento = litroAbastecido * 3.80;
+            case GNV -> valorabastecimento = litroAbastecido * 3.50;
         }
         this.tipoabastecido = tipoabastecido;
     }
