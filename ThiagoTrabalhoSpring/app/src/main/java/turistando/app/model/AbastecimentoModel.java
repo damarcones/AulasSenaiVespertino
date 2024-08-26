@@ -13,9 +13,9 @@ import jakarta.persistence.Table;
 import turistando.app.controller.Enum.combustivelEnum;
 
 @Entity
-@Table(name="abastecimento")
-public class AbastecimentoModel implements Serializable{
-    
+@Table(name = "abastecimento")
+public class AbastecimentoModel implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAbastecimento;
@@ -43,6 +43,31 @@ public class AbastecimentoModel implements Serializable{
         this.litroAbastecido = litroAbastecido;
     }
 
+    public combustivelEnum getTipoabastecido() {
+        return tipoabastecido;
+    }
+
+    public void setTipoabastecido(combustivelEnum tipoabastecido) {
+        switch (tipoabastecido) {
+            case Gasolina:
+                valorabastecimento = litroAbastecido * 5.40;
+                break;
+            case Alcool:
+                valorabastecimento = litroAbastecido * 3.80;
+                break;
+            case Diesel:
+                valorabastecimento = litroAbastecido * 4.90;
+                break;
+            case Etanol:
+                valorabastecimento = litroAbastecido * 3.80;
+                break;
+            case GNV:
+                valorabastecimento = litroAbastecido * 3.50;
+                break;
+        }
+        this.tipoabastecido = tipoabastecido;
+    }
+    
     public double getValorabastecimento() {
         return valorabastecimento;
     }
@@ -51,13 +76,6 @@ public class AbastecimentoModel implements Serializable{
         this.valorabastecimento = valorabastecimento;
     }
 
-    public combustivelEnum getTipoabastecido() {
-        return tipoabastecido;
-    }
-
-    public void setTipoabastecido(combustivelEnum tipoabastecido) {
-        this.tipoabastecido = tipoabastecido;
-    }
 
     public VeiculoModel getPlacaveiculo() {
         return placaveiculo;
@@ -66,5 +84,5 @@ public class AbastecimentoModel implements Serializable{
     public void setPlacaveiculo(VeiculoModel placaveiculo) {
         this.placaveiculo = placaveiculo;
     }
-    
+
 }
