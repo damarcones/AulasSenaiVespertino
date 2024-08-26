@@ -24,7 +24,7 @@ import com.turistando.sistematuristando.services.VeiculoServices;
 
 
 @RestController
-@RequestMapping("/veiculos")
+@RequestMapping("api/veiculos")
 public class VeiculoController {
 
     @Autowired

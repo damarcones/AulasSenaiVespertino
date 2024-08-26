@@ -6,7 +6,7 @@
         <div class="card-body">
           <h3>Listagem de Veículos</h3>
           <div class="direita">
-            <button type="button" class="btn btn-info btn-sm text-dark mb-2" mdbRipple routerLink="/principal/veiculos/new">Novo</button>
+            <button type="button" class="btn btn-info btn-sm text-dark mb-2" mdbRipple routerLink="/principal/Veiculos/new">Novo</button>
           </div>
           <br>
           <table class="table table-white border border-dark ">
@@ -17,25 +17,29 @@
                 <th class="border border-dark">Modelo</th>
                 <th class="border border-dark">Ano Fabricação/Ano Modelo</th>
                 <th class="border border-dark">Motorização</th>
+                <th class="border border-dark">Tanque</th>
+                <th class="border border-dark">Cobustivel</th>
                 <th class="border border-dark">Cor</th>
                 <th class="border border-dark">Renavam</th>
                 <th class="border border-dark">Ações</th>
               </tr>
             </thead>
             <tbody>
-              @for (veiculo of lista; track $index) {
+              @for (item of veiculos; track $index) {
               <tr class="table-dark centralizar" >
-                <td >{{veiculo.placa}}</td>
-                <td>{{veiculo.marca}}</td>
-                <td>{{veiculo.modelo}}</td>
-                <td>{{veiculo.anoFabricacao}}/{{veiculo.anoModelo}}</td>
-                <td>{{veiculo.motorizacao}}</td>
-                <td>{{veiculo.cor}}</td>
-                <td>{{veiculo.renavam}}</td>
+                <td >{{item.placa}}</td>
+                <td>{{item.marca}}</td>
+                <td>{{item.modelo}}</td>
+                <td>{{item.anoFabricacao}}/{{item.anoModelo}}</td>
+                <td>{{item.motorizacao}}</td>
+                <td>{{item.capacidadeTanque}}</td>
+                <td>{{item.combustiveisAceitos}}</td>
+                <td>{{item.cor}}</td>
+                <td>{{item.renavam}}</td>
                 <td>
-                  <button type="button" class="btn btn-info btn-sm text-dark mb-2 direita" mdbRipple routerLink="/principal/veiculos/edit/{{veiculo.placa}}">Editar </button>
+                  <button type="button" class="btn btn-info btn-sm text-dark mb-2 direita" mdbRipple routerLink="/principal/IVeiculos/edit/{{veiculo.placa}}">Editar </button>
                   <br>
-                  <button type="button" class="btn btn-danger btn-sm text-dark direita" mdbRipple (click)="deleteByid(veiculo)">Deletar </button>
+                  <!-- <button type="button" class="btn btn-danger btn-sm text-dark direita" mdbRipple (click)="deleteByid(veiculo.placa)">Deletar </button> -->
                 </td>
               </tr>
             }
@@ -46,3 +50,7 @@
     </div>
   </div>
 </div>
+
+<app-model [isOpen]="isModelOpen" (closeModel)="closeModel()">
+  <!-- <app-employee-form (onCloseModel)="closeModel()" [data]="employee"></app-employee-form> -->
+</app-model>

@@ -6,64 +6,97 @@
           <div class="card-body">
               <h3>Cadastro de Veículo</h3>
               <br>
-              <mdb-form-control>
-                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.placa" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Placa">Placa</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.marca" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Marca">Marca</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="text" id="placa" class="form-control" [(ngModel)]="veiculo.modelo" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Modelo">Modelo</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="number" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.anoFabricacao" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Ano Fabricação">Ano Fabricação</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="number" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.anoModelo" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Ano Modelo">Ano Modelo</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="text" id="placa" class="form-control" min="1" [(ngModel)]="veiculo.capacidadeTanque" required="required">
-                <label mdbLabel class="form-label" for="placa" aria-label="Capacidade Tanque (litros)">Capacidade Tanque (litros)</label>
-              </mdb-form-control>
-              <br />
-              <div class="container">
-                <p>Combustível Aceito</p>
-                <select class="form-select mb-4" [(ngModel)]="veiculo.combustiveisAceitos" aria-label="Combustível Aceito" required="required">
-                  <option value="GASOLINA">Gasolina</option>
-                  <option value="ALCOOL">Álcool</option>
-                  <option value="FLEX">Flex</option>
-                  <option value="DIESEL">Diesel</option>
-                  <option value="GNV">GNV</option>
-                </select>
-              </div>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="text" id="motorizacao" class="form-control" [(ngModel)]="veiculo.motorizacao" required="required">
-                <label mdbLabel class="form-label" for="motorizacao" aria-label="Motorização">Motorização (ex: 1.6)</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="text" id="cor" class="form-control" [(ngModel)]="veiculo.cor" required="required">
-                <label mdbLabel class="form-label" for="cor" aria-label="Cor">Cor</label>
-              </mdb-form-control>
-              <br />
-              <mdb-form-control>
-                <input mdbInput type="number" id="renavam" class="form-control" [(ngModel)]="veiculo.renavam" required="required">
-                <label mdbLabel class="form-label" for="renavam" min="1" aria-label="Renavam">Renavem</label>
-              </mdb-form-control>
-              <br />
-              <button type="submit" class="btn btn-primary" msbRipple (click)="save()">CADASTRAR</button>
-              <br />
+              <form [formGroup]="veiculoForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div>
+                      <input mdbInput type="text" id="placa" class="form-control" formControlName="placa">
+                      <label mdbLabel class="form-label" for="placa" aria-label="Placa">Placa</label>
+                      @if (veiculoForm.get('placa')?.hasError('required') && veiculoForm.get('placa')?.touched) {
+                        <div class="form-error">placa is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="text" id="marca" class="form-control" formControlName="marca">
+                      <label mdbLabel class="form-label" for="marca" aria-label="Marca">Marca</label>
+                      @if (veiculoForm.get('marca')?.hasError('required') && veiculoForm.get('marca')?.touched) {
+                        <div class="form-error">marca is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="text" id="modelo" class="form-control" formControlName="modelo">
+                      <label mdbLabel class="form-label" for="modelo" aria-label="Modelo">Modelo</label>
+                      @if (veiculoForm.get('modelo')?.hasError('required') && veiculoForm.get('modelo')?.touched) {
+                        <div class="form-error">modelo is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="number" id="anoFabricacao" class="form-control" min="1" formControlName="anoFabricacao">
+                      <label mdbLabel class="form-label" for="anoFabricacao" aria-label="Ano Fabricação">Ano Fabricação</label>
+                      @if (veiculoForm.get('anoFabricacao')?.hasError('required') && veiculoForm.get('anoFabricacao')?.touched) {
+                        <div class="form-error">Ano Fabricação is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="number" id="anoModelo" class="form-control" min="1" formControlName="anoModelo">
+                      <label mdbLabel class="form-label" for="anoModelo" aria-label="Ano Modelo">Ano Modelo</label>
+                      @if (veiculoForm.get('anoModelo')?.hasError('required') && veiculoForm.get('anoModelo')?.touched) {
+                        <div class="form-error">Ano Modelo is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="text" id="capacidadeTanque" class="form-control" min="1" formControlName="capacidadeTanque">
+                      <label mdbLabel class="form-label" for="capacidadeTanque" aria-label="Capacidade Tanque (litros)">Capacidade Tanque (litros)</label>
+                      @if (veiculoForm.get('capacidadeTanque')?.hasError('required') && veiculoForm.get('capacidadeTanque')?.touched) {
+                        <div class="form-error">Capacidade Tanque is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div class="container">
+                      <p>Combustível Aceito</p>
+                      <select class="form-select mb-4" formControlName="combustiveisAceitos" aria-label="Combustível Aceito">
+                        <option value="GASOLINA">Gasolina</option>
+                        <option value="ALCOOL">Álcool</option>
+                        <option value="FLEX">Flex</option>
+                        <option value="DIESEL">Diesel</option>
+                        <option value="GNV">GNV</option>
+                      </select>
+                      @if (veiculoForm.get('combustiveisAceitos')?.hasError('required') && veiculoForm.get('combustiveisAceitos')?.touched) {
+                        <div class="form-error">Combustível Aceito is required</div>
+                        }
+
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="text" id="motorizacao" class="form-control" formControlName="motorizacao">
+                      <label mdbLabel class="form-label" for="motorizacao" aria-label="Motorização">Motorização (ex: 1.6)</label>
+                      @if (veiculoForm.get('motorizacao')?.hasError('required') && veiculoForm.get('motorizacao')?.touched) {
+                        <div class="form-error">Motorização is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="text" id="cor" class="form-control" formControlName="cor">
+                      <label mdbLabel class="form-label" for="cor" aria-label="Cor">Cor</label>
+                      @if (veiculoForm.get('cor')?.hasError('required') && veiculoForm.get('cor')?.touched) {
+                        <div class="form-error">Cor is required</div>
+                        }
+                    </div>
+                    <br />
+                    <div>
+                      <input mdbInput type="number" id="renavam" class="form-control" formControlName="renavam">
+                      <label mdbLabel class="form-label" for="renavam" min="1" aria-label="Renavam">Renavem</label>
+                      @if (veiculoForm.get('renavam')?.hasError('required') && veiculoForm.get('renavam')?.touched) {
+                        <div class="form-error">Renavem is required</div>
+                        }
+                    </div>
+                    <br />
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">CADASTRAR</button>
+                    <br />
+              </form>
           </div>
         </div>
     </div>

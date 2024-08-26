@@ -1,7 +1,7 @@
-import { Veiculo } from './veiculo';
+import { IVeiculo } from './IVeiculo';
 
 describe('Veiculo', () => {
   it('should create an instance', () => {
-    expect(new Veiculo()).toBeTruthy();
+    expect(new IVeiculo()).toBeTruthy();
   });
 });

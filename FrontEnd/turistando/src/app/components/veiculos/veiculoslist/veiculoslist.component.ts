@@ -1,34 +1,62 @@
 import { Component } from '@angular/core';
-import { Veiculo } from '../../../models/veiculo';
+import { IVeiculo } from '../../../models/veiculo';
 import { Combustiveis } from '../../../models/Combustiveis';
 import { RouterLink } from '@angular/router';
+import { VeiculoService } from '../../../services/veiculo.service';
+import { ToastrService } from 'ngx-toastr';
+import { ModelComponent } from '../../iu/model/model.component';
 
 @Component({
   selector: 'app-veiculoslist',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ModelComponent],
   templateUrl: './veiculoslist.component.html',
   styleUrl: './veiculoslist.component.css'
 })
 export class VeiculoslistComponent {
 
-  lista: Veiculo[] = [];
+  isModelOpen = false ;
+  veiculos: IVeiculo[] = [];
+  veiculo!: IVeiculo;
 
-  
-  constructor(){
-    this.lista.push(new Veiculo('REM5E77', 'HONDA', 'CIVIC', 2022, 2022, 1.8, 45.0, Combustiveis.FLEX, 'BRANCO', 12345679865));
-    this.lista.push(new Veiculo('REM5E97', 'HONDA', 'FIT', 2022, 2022, 1.8, 45.0, Combustiveis.FLEX, 'BRANCO', 12345679885));
-    this.lista.push(new Veiculo('REM5E87', 'HONDA', 'CITY', 2022, 2022, 1.8, 45.0, Combustiveis.FLEX, 'BRANCO', 12345679875));
+
+
+  constructor(private veiculoService: VeiculoService, private toastr: ToastrService) { }
+
+  ngOnInit(): void {
+    this.getAllVeiculos();
   }
 
-  editar(){
-
+  getAllVeiculos() {
+    this.veiculoService.getAllVeiculos().subscribe({
+      next: (response) => {
+        if (response.data) {
+          this.veiculos = response.data;
+        }
+      },
+    });
   }
 
-  deleteByid(veiculo: Veiculo){
-    if (confirm("Tem certeza que deseja deletar este Veículo ?")) {
-      let indice = this.lista.findIndex(x => {return x.placa == x.placa})
-      this.lista.splice(indice, 1);
-    }
+  loadVeiculo(veiculo: IVeiculo) {
+    this.veiculo = veiculo;
+    this.openModel();
+  }
+
+  deleteVeiculo(id: string) {
+    this.veiculoService.deleteVeiculo(id).subscribe({
+      next: (response) => {
+        this.toastr.success(response.message);
+        this.getAllVeiculos();
+      },
+    });
+  }
+
+  openModel() {
+    this.isModelOpen = true;
+  }
+
+  closeModel() {
+    this.isModelOpen = false;
+    this.getAllVeiculos();
   }
 }
