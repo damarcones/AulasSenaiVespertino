@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sun.source.doctree.ReturnTree;
 import com.turistando.sistematuristando.model.AbastecimentoModel;
 import com.turistando.sistematuristando.model.VeiculoModel;
 import com.turistando.sistematuristando.repository.AbastecimentoRepository;
@@ -26,21 +25,35 @@ public class VeiculoServices {
 
         //Tratamento de valores null e invalido;
 
-        // if(veiculo.getAnoFabricacao() < 1){
-        //     throw new Exception("Campo ano de fabricação não pode ser null ou negativo");
-        // }
-        // if(veiculo.getAnoModelo() < 1 ){
-        //     throw new Exception("Campo ano de modelo não pode ser null ou negativo");
-        // }
+        if(veiculo.getAnoFabricacao() < 1){
+            throw new Exception("Campo ano de fabricação não pode ser null ou negativo");
+        }
+        if(veiculo.getAnoModelo() < 1 ){
+            throw new Exception("Campo ano de modelo não pode ser null ou negativo");
+        }
         if(veiculo.getMarca() == null){
             throw new Exception("Campo marca não pode ser null ou vazio");
         }
-        // if(veiculo.getModelo() == null ){
-        //     throw new Exception("Campo marca não pode ser null ou vazio");
-        // }
-        // if(veiculo.getCapacidadeTanque() < 1){
-        //     throw new Exception("Campo capacidade do tanque não pode ser negativa");
-        // }
+        if(veiculo.getModelo() == null ){
+            throw new Exception("Campo modelo não pode ser null ou vazio");
+        }
+        if(veiculo.getCapacidadeTanque() < 1){
+            throw new Exception("Campo capacidade do tanque não pode ser negativa");
+        }
+        if(veiculo.getMotorizacao() < 1){
+            throw new Exception("Campo motorização não pode ser negativa");
+        }
+        if(veiculo.getRenavam() > 16 || veiculo.getRenavam() < 0 ){
+            throw new Exception("Campo renavem deve ter 16 caracteres numéricos");
+        }
+        if(veiculo.getCor() == null ){
+            throw new Exception("Campo cor não pode ser null ou vazio");
+        }
+
+        if (!(veiculo.getPlaca().length() == 7)) {
+            throw new Exception("Campo placa deve ter 7 caracteres");
+        }
+
         
 
         return veiculoRepository.save(veiculo);
