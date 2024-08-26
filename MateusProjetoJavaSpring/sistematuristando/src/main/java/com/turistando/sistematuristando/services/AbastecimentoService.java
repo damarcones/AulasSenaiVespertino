@@ -35,7 +35,7 @@ public class AbastecimentoService {
          
         if (veiculo == null) {
          throw  new Exception("Veículo não encontrado");
-        }    
+        } 
 
         //verifica tipo combustivel;
         if (!isCombustivelAceito(veiculo, abastecimento)) {
