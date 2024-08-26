@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="Veiculos")
@@ -31,6 +32,7 @@ public class VeiculoModel {
     private List<AbastecimentoModel> abastecimento;
 
     @Column(name="Marca", length=100, nullable=false)
+    @NotBlank(message="valoe de marca não pode ser null ou vazio")
     private String marca;
 
     @Column(name="Modelo", length=100, nullable=false)
@@ -38,7 +40,7 @@ public class VeiculoModel {
 
     @Column(name="AnoFabricacao", nullable=false)
     @Min(value =1900, message = "O valor de ano de fabricação deve ser maior ou igual a 1900")
-    private int anoFabricacao;
+    private int anoFabricacao; 
 
     @Column(name="AnoModelo", nullable=false )
     @Min(value = 1900, message = "O valor de ano modelo deve ser maior ou igual a 1900")
