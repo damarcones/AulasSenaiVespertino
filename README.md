@@ -1,4 +1,4 @@
-Claro! Aqui está um exemplo de README para o seu projeto:
+Aqui está o README atualizado com o exemplo de JSON para registrar abastecimento:
 
 ---
 
@@ -13,6 +13,9 @@ O **Turistando** é um sistema para gerenciar e controlar os gastos com veículo
 - [Instalação e Configuração](#instalação-e-configuração)
 - [Casos de Uso](#casos-de-uso)
 - [Endpoints da API](#endpoints-da-api)
+- [Exemplo de Cadastro de Veículo](#exemplo-de-cadastro-de-veículo)
+- [Exemplo de Registro de Despesa](#exemplo-de-registro-de-despesa)
+- [Exemplo de Registro de Abastecimento](#exemplo-de-registro-de-abastecimento)
 - [Como Contribuir](#como-contribuir)
 
 ## Descrição do Projeto
@@ -63,21 +66,6 @@ O projeto utiliza as seguintes dependências:
         <version>1.18.24</version>
         <scope>provided</scope>
     </dependency>
-
-    <!-- Gson (opcional) -->
-    <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>2.10.1</version>
-    </dependency>
-
-    <!-- org.json (opcional) -->
-    <dependency>
-        <groupId>org.json</groupId>
-        <artifactId>json</artifactId>
-        <version>20210307</version>
-    </dependency>
-</dependencies>
 ```
 
 ## Instalação e Configuração
@@ -85,7 +73,7 @@ O projeto utiliza as seguintes dependências:
 1. **Clone o repositório:**
 
     ```bash
-    git clone https://github.com/seu-usuario/turistando.git
+    git clone https://github.com/Isaac-code-maker/AulasSenaiVespertino/TrabalhoSpringBoot
     ```
 
 2. **Navegue até o diretório do projeto:**
@@ -99,15 +87,16 @@ O projeto utiliza as seguintes dependências:
     Crie um banco de dados chamado `turistando` no MySQL e configure as credenciais no arquivo `application.properties`:
 
     ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/turistando
-    spring.datasource.username=seu_usuario
-    spring.datasource.password=sua_senha
-    ```
+    spring.application.name=springturistando
 
-4. **Compile e execute o projeto:**
+    spring.jpa.hibernate.ddl-auto=update
+    spring.datasource.url=jdbc:mysql://localhost:3306/BancoTuristando?createDatabaseIfNotExist=true
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    spring.datasource.username=root
+    spring.datasource.password=
 
-    ```bash
-    ./mvnw spring-boot:run
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+    spring.jpa.show-sql=true
     ```
 
 ## Casos de Uso
@@ -127,10 +116,6 @@ O projeto utiliza as seguintes dependências:
 - **Descrição:** Registra uma despesa associada a um veículo.
 - **Requisitos:** Placa do veículo, valor, tipo de despesa e descrição.
 
-### 4. Cálculo de Consumo Médio
-
-- **Descrição:** Calcula o consumo médio de combustível de um veículo com base nos abastecimentos registrados.
-- **Requisitos:** Placa do veículo.
 
 ### 5. Geração de Relatórios
 
@@ -143,55 +128,90 @@ O projeto utiliza as seguintes dependências:
 
 - **Cadastrar Veículo**
   - **Método:** POST
-  - **URL:** `/veiculos`
+  - **URL:** `http://localhost:8080/veiculos/cadastrarveiculo`
   - **Descrição:** Cadastra um novo veículo.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "placa": "DEF-5678",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "anoFabricacao": 2019,
+        "anoModelo": 2020,
+        "motorizacao": "2.0L",
+        "capacidadeTanque": 45.0,
+        "combustiveis": "Gasolina",
+        "cor": "Preto",
+        "renavam": "23456789012"
+    }
+    ```
 
 - **Listar Veículos**
   - **Método:** GET
-  - **URL:** `/veiculos`
+  - **URL:** `http://localhost:8080/veiculos/listarveiculos`
   - **Descrição:** Retorna a lista de todos os veículos.
-
-- **Buscar Veículo por Placa**
-  - **Método:** GET
-  - **URL:** `/veiculos/{placa}`
-  - **Descrição:** Retorna as informações de um veículo específico.
 
 - **Excluir Veículo**
   - **Método:** DELETE
-  - **URL:** `/veiculos/{placa}`
+  - **URL:** `http://localhost:8080/veiculos/excluirveiculo/{placa}`
   - **Descrição:** Remove um veículo do sistema.
 
 ### 2. Abastecimentos
 
 - **Registrar Abastecimento**
   - **Método:** POST
-  - **URL:** `/veiculos/{placa}/abastecimentos`
+  - **URL:** `http://localhost:8080/abastecimentos/registrarabastecimento/{placa}`
   - **Descrição:** Registra um abastecimento para um veículo específico.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "valor": 200.00,
+        "quantidadeCombustivel": 60.0,
+        "quilometragem": 12500.0,
+        "dataAbastecimento": "2024-08-25"
+    }
+    ```
 
 - **Listar Abastecimentos por Placa**
   - **Método:** GET
-  - **URL:** `/veiculos/{placa}/abastecimentos`
+  - **URL:** `http://localhost:8080/abastecimentos/listarabastecimento/{placa}`
   - **Descrição:** Retorna a lista de abastecimentos de um veículo específico.
 
 ### 3. Despesas
 
 - **Registrar Despesa**
   - **Método:** POST
-  - **URL:** `/veiculos/{placa}/despesas`
+  - **URL:** `http://localhost:8080/despesas/registrardespesa/{placa}`
   - **Descrição:** Registra uma despesa para um veículo específico.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "valor": 150.0,
+        "tipo": "Manutenção",
+        "descricao": "Troca de óleo e revisão do sistema de freios",
+        "dataDespesa": "2024-08-25"
+    }
+    ```
 
 - **Listar Despesas por Placa**
   - **Método:** GET
-  - **URL:** `/veiculos/{placa}/despesas`
+  - **URL:** `http://localhost:8080/despesas/listardespesaplaca/{placa}`
   - **Descrição:** Retorna a lista de despesas de um veículo específico.
 
 ### 4. Relatórios
 
 - **Gerar Relatório Geral por Categoria**
   - **Método:** GET
-  - **URL:** `/veiculos/relatorio/{placa}`
+  - **URL:** `http://localhost:8080/veiculos/relatorio/{placa}`
   - **Descrição:** Gera um relatório geral de despesas e abastecimentos por categoria para um veículo específico.
 
+### 5. Cálculo de Consumo Médio
+
+- **Descrição:** Calcula o consumo médio de combustível de um veículo com base nos abastecimentos registrados.
+- **Requisitos:** Placa do veículo, variação de abastecimento.
+- - **Método:** GET
+  - **URL:** `http://localhost:8080/veiculos/consumo-medio/{placa}`
+    
 ## Como Contribuir
 
 Se você deseja contribuir para o projeto, por favor, siga estas etapas:
@@ -202,5 +222,3 @@ Se você deseja contribuir para o projeto, por favor, siga estas etapas:
 4. Envie um pull request com uma descrição clara das suas mudanças.
 
 ---
-
-Esse README cobre as principais informações sobre o projeto, incluindo dependências, configuração, casos de uso e endpoints da API. Adapte conforme necessário para refletir detalhes específicos do seu projeto.
