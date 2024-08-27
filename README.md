@@ -212,13 +212,3 @@ O projeto utiliza as seguintes dependências:
 - - **Método:** GET
   - **URL:** `http://localhost:8080/veiculos/consumo-medio/{placa}`
     
-## Como Contribuir
-
-Se você deseja contribuir para o projeto, por favor, siga estas etapas:
-
-1. Faça um fork do repositório.
-2. Crie uma branch para suas alterações.
-3. Faça suas alterações e teste.
-4. Envie um pull request com uma descrição clara das suas mudanças.
-
----
