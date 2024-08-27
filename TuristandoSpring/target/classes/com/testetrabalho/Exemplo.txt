@@ -1,0 +1,62 @@
+localhost:8080/cadastarveiculo
+
+{ 
+"placa":"SMM3D45",
+"marca":"Citroen",
+"modelo":"C3",
+"anoModelo":2024,
+"anoFabricacao":2024,
+"cor":"cinza",
+"RENAVAN":"54654545456",
+"motorizacao":1.0,
+"capacidadeTanque":"40.00",
+"combustivel": GASOLINA
+
+"placa":"JDK5241",
+"marca":"Ford",
+"modelo":"Fiesta",
+"anoModelo":2011,
+"anoFabricacao":2010,
+"cor":"preto",
+"RENAVAN":"81425367954",
+"motorizacao":1.6,
+"capacidadeTanque":"40.00",
+"combustivel": ALCOOL
+   
+}
+
+ localhost:8080/abs
+{  
+     "Placa":{"veiculo":"SMM3D45"},
+     "data":"2024-09-09",
+     "valor": 234.00,
+     "abs": 20.4,
+     "quilometragem": 144.45,
+     "tipo": "GASOLINA"
+
+     "Placa":{"veiculo":"SMM3D45"},
+     "data":"2024-10-08",
+     "valor": 104.00,
+     "abs": 15.4,
+     "quilometragem": 200.45,
+     "tipo": "GASOLINA"
+
+  "Placa":{"veiculo":"JDK5241"},
+     "data":"2024-07-22",
+     "valor": 100.00,
+     "abs": 18.4,
+     "quilometragem": 182.9,
+     "tipo": "ALCOOL"
+
+}
+
+localhost:8080/cadastargasto
+
+{"data":"2024-12-01",
+	"descricao":"Ipva ano 2024",
+	"tipo":"IMPOSTO",
+	"valor":15650.0,
+	"veiculo":{"placa":"SMM3D45"}
+
+}
+ 
