@@ -1,7 +1,3 @@
-Aqui está o README atualizado com o exemplo de JSON para registrar abastecimento:
-
----
-
 # Projeto Turistando
 
 O **Turistando** é um sistema para gerenciar e controlar os gastos com veículos de uma empresa de transporte de turistas. O sistema permite registrar abastecimentos, despesas e visualizar relatórios detalhados por veículo.
