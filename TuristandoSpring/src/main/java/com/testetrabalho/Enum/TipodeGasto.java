@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 package com.testetrabalho.Enum;
 
 public enum TipodeGasto {
@@ -7,3 +8,14 @@ public enum TipodeGasto {
     OUTROS;
 
 }
+=======
+package com.testetrabalho.Enum;
+
+public enum TipodeGasto {
+    MULTAS,
+    IMPOSTO,
+    MANUTENCAO,
+    OUTROS;
+
+}
+>>>>>>> Stashed changes
