@@ -32,4 +32,7 @@ public class GastoController {
         public List<GastoModel>gastogeral() {
             return gastoRepository.findAll();
         }
+        // modifica
+
+        //deleta
 }

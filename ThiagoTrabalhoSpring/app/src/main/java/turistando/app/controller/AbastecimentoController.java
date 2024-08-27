@@ -33,6 +33,7 @@ public class AbastecimentoController {
     //     abastecimentoRepository.deleteById(id);
     // }
 
+    //método não funcional
     @GetMapping("/abastecimentoveiculo/{id}")
     public List<AbastecimentoModel> veiculoabastecimento(@PathVariable String id, @RequestBody AbastecimentoModel placaveiculo) {
         return abastecimentoRepository.findByPlacaveiculo(placaveiculo);
