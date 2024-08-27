@@ -1,0 +1,15 @@
+<div class="calcular-consumo">
+    <h2>Calcular Consumo Médio</h2>
+    <form (ngSubmit)="calcularConsumo()">
+      <div>
+        <label for="placa">Placa do Veículo:</label>
+        <input id="placa" name="placa" [(ngModel)]="placa" type="text" required>
+      </div>
+      <button type="submit">Calcular</button>
+    </form>
+    <div *ngIf="consumoMedio !== null">
+      <h3>Resultado:</h3>
+      <p>Consumo médio: {{ consumoMedio | number:'1.2-2' }} km/l</p>
+    </div>
+  </div>
+  

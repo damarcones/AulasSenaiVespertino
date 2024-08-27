@@ -1,0 +1,43 @@
+<!-- cadastro-veiculo.component.html -->
+<div class="cadastro-veiculo">
+  <h2>Cadastro de Veículo</h2>
+  <form (ngSubmit)="onSubmit()" #veiculoForm="ngForm">
+    <div>
+      <label for="placa">Placa:</label>
+      <input id="placa" name="placa" [(ngModel)]="veiculo.placa" required>
+    </div>
+    <div>
+      <label for="marca">Marca:</label>
+      <input id="marca" name="marca" [(ngModel)]="veiculo.marca" required>
+    </div>
+    <div>
+      <label for="modelo">Modelo:</label>
+      <input id="modelo" name="modelo" [(ngModel)]="veiculo.modelo" required>
+    </div>
+    <div>
+      <label for="anoModelo">Ano do Modelo:</label>
+      <input id="anoModelo" name="anoModelo" [(ngModel)]="veiculo.anoModelo" type="number" required>
+    </div>
+    <div>
+      <label for="anoFabricacao">Ano de Fabricação:</label>
+      <input id="anoFabricacao" name="anoFabricacao" [(ngModel)]="veiculo.anoFabricacao" type="number" required>
+    </div>
+    <div>
+      <label for="cor">Cor:</label>
+      <input id="cor" name="cor" [(ngModel)]="veiculo.cor" required>
+    </div>
+    <div>
+      <label for="renavam">Renavam:</label>
+      <input id="renavam" name="renavam" [(ngModel)]="veiculo.renavam" type="number" required>
+    </div>
+    <div>
+      <label for="motorizacao">Motorização:</label>
+      <input id="motorizacao" name="motorizacao" [(ngModel)]="veiculo.motorizacao" type="number" step="0.1" required>
+    </div>
+    <div>
+      <label for="capacidadeTanque">Capacidade do Tanque:</label>
+      <input id="capacidadeTanque" name="capacidadeTanque" [(ngModel)]="veiculo.capacidadeTanque" type="number" step="0.1" required>
+    </div>
+    <button type="submit" [disabled]="!veiculoForm.form.valid">Cadastrar</button>
+  </form>
+</div>

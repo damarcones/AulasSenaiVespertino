@@ -1,0 +1,109 @@
+GET
+http://localhost:8080/veiculo/listar
+http://localhost:8080/veiculo/ABC1234
+
+POST
+http://localhost:8080/veiculo/cadastrar
+   {
+        "placa": "ABC1234",
+        "marca": "Fiat",
+        "modelo": "Uno",
+        "anoModelo": 2020,
+        "anoFabricacao": 2019,
+        "cor": "Preto",
+        "renavam": 123456789,
+        "motorizacao": 1.0,
+        "capacidadeTanque": 50.0,
+        "combustivel": "Flex"
+    }
+
+PUT
+http://localhost:8080/veiculo/modificar/ABC1234
+   {
+        "placa": "ABC1234",
+        "marca": "Fiat",
+        "modelo": "Mobi",
+        "anoModelo": 2020,
+        "anoFabricacao": 2019,
+        "cor": "Preto",
+        "renavam": 123456789,
+        "motorizacao": 1.0,
+        "capacidadeTanque": 50.0,
+        "combustivel": "Flex"
+    }
+
+DELETE
+http://localhost:8080/veiculos/apagar/ABC1234
+
+-----------------------------------------------------------
+
+GET
+http://localhost:8080/abastecimento/ABC1234
+http://localhost:8080/abastecimento/2
+http://localhost:8080/abastecimento/listar
+http://localhost:8080/abastecimento/consumo-medio/ABC1234
+
+
+POST
+http://localhost:8080/abastecimento/cadastrar
+
+{
+    "quilometragem": 20000,
+    "valor": 220.00,
+    "quantidade": 45.0,
+    "combustivelEnum": "Gasolina",
+    "veiculo": {
+        "placa": "ABC1234"
+    }
+}
+
+--
+
+    {
+    "quilometragem": 12000,
+    "valor": 250.00,
+    "quantidade": 50.0,
+    "combustivelEnum": "Álcool",
+    "veiculo": {
+        "placa": "ABC1234"
+    }
+}
+
+DELETE
+http://localhost:8080/abastecimento/apagar/2
+
+-------------------------------------------------
+
+GET
+http://localhost:8080/gasto/geral/ABC1234
+http://localhost:8080/gasto/categoria/ABC1234/IMPOSTO
+http://localhost:8080/gasto/1
+
+POST
+http://localhost:8080/gasto/cadastrar
+{
+    "categoria": "IMPOSTO",
+    "valor": 300.00,
+    "descricao": "IPVA 2024",
+    "veiculo": {
+        "placa": "ABC1234"
+    }
+}
+PUT
+http://localhost:8080/gasto/modificar/1
+
+{
+    "id": 1,
+    "categoria": "IMPOSTO",
+    "valor": 250.00,
+    "descricao": "IPVA 2024",
+    "veiculo": {
+        "placa": "ABC1234"
+    }
+}
+
+DELETE
+http://localhost:8080/gasto/apagar/1
+
+------------------------------------------------------------
+

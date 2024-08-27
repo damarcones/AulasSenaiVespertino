@@ -1,0 +1,31 @@
+<p>Registrar Abastecimento</p>
+<div class="registrar-abastecimento">
+  <h2>Registrar Abastecimento</h2>
+  <form (ngSubmit)="onSubmit()" #abastecimentoForm="ngForm">
+    <div>
+      <label for="quilometragem">Quilometragem:</label>
+      <input id="quilometragem" name="quilometragem" [(ngModel)]="abastecimento.quilometragem" type="number" required>
+    </div>
+    <div>
+      <label for="valor">Valor:</label>
+      <input id="valor" name="valor" [(ngModel)]="abastecimento.valor" type="number" step="0.01" required>
+    </div>
+    <div>
+      <label for="quantidade">Quantidade:</label>
+      <input id="quantidade" name="quantidade" [(ngModel)]="abastecimento.quantidade" type="number" step="0.01" required>
+    </div>
+    <div>
+      <label for="combustivel">Tipo de Combustível:</label>
+      <select id="combustivel" name="combustivel" [(ngModel)]="abastecimento.combustivelEnum" required>
+        <option value="GASOLINA">Gasolina</option>
+        <option value="DIESEL">Diesel</option>
+        <option value="ETANOL">Etanol</option>
+      </select>
+    </div>
+    <div>
+      <label for="veiculo">Veículo:</label>
+      <input id="veiculo" name="veiculo" [(ngModel)]="abastecimento.veiculoId" type="number" required>
+    </div>
+    <button type="submit">Registrar</button>
+  </form>
+</div>
