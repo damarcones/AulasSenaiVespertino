@@ -2,6 +2,7 @@ package turistando.example.springturistando.controller;
 
 import java.util.List;
 
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,4 +51,11 @@ public class VeiculoController {
         double consumoMedio = veiculoService.calcularConsumoMedio(placa);
         return ResponseEntity.ok(consumoMedio);
     }
+
+    @GetMapping("/relatorio/{placa}")
+    public ResponseEntity<Map<String, Double>> gerarRelatorio(@PathVariable String placa) {
+        Map<String, Double> relatorio = veiculoService.gerarRelatorioGeralPorCategoria(placa);
+        return ResponseEntity.ok(relatorio);
+    }
+
 }

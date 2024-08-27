@@ -26,7 +26,6 @@ public class AbastecimentoModel {
     @JoinColumn(name = "veiculo_placa", nullable = false) 
     private VeiculoModel veiculo;
 
-    // Getters e Setters
     public Long getId() {
         return id;
     }

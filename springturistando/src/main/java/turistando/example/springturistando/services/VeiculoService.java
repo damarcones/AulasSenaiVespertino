@@ -1,15 +1,17 @@
 package turistando.example.springturistando.services;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import turistando.example.springturistando.exception.VeiculoNaoEncontradoException;
 import turistando.example.springturistando.model.AbastecimentoModel;
+import turistando.example.springturistando.model.DespesasModel;
 import turistando.example.springturistando.model.VeiculoModel;
 import turistando.example.springturistando.repositories.AbastecimentoRepository;
 import turistando.example.springturistando.repositories.VeiculoRepository;
-
-import java.util.List;
 
 @Service
 public class VeiculoService {
@@ -39,7 +41,8 @@ public class VeiculoService {
     public double calcularConsumoMedio(String placa) {
         @SuppressWarnings("unused")
         VeiculoModel veiculo = buscarVeiculoPorPlaca(placa);
-        List<AbastecimentoModel> abastecimentos = abastecimentoRepository.findByVeiculoPlacaOrderByDataAbastecimento(placa);
+        List<AbastecimentoModel> abastecimentos = abastecimentoRepository
+                .findByVeiculoPlacaOrderByDataAbastecimento(placa);
 
         if (abastecimentos.isEmpty()) {
             throw new IllegalArgumentException("Nenhum abastecimento encontrado para o veículo com a placa " + placa);
@@ -65,4 +68,32 @@ public class VeiculoService {
 
         return totalDistancia / totalCombustivel;
     }
+
+    public Map<String, Double> gerarRelatorioGeralPorCategoria(String placa) {
+        VeiculoModel veiculo = veiculoRepository.findById(placa)
+                .orElseThrow(() -> new VeiculoNaoEncontradoException("Veículo não encontrado com a placa: " + placa));
+
+        Map<String, Double> relatorio = new HashMap<>();
+
+        // Calcula o total de despesas por categoria
+        List<DespesasModel> despesas = veiculo.getDespesas();
+        for (DespesasModel despesa : despesas) {
+            String categoria = despesa.getTipo(); // Alterado para 'getTipo' já que não há 'getCategoria' na model
+            if (categoria != null) {
+                double valor = despesa.getValor();
+                relatorio.put(categoria, relatorio.getOrDefault(categoria, 0.0) + valor);
+            }
+        }
+
+        // Calcula o total de abastecimentos
+        List<AbastecimentoModel> abastecimentos = veiculo.getAbastecimentos();
+        double totalAbastecimentos = 0;
+        for (AbastecimentoModel abastecimento : abastecimentos) {
+            totalAbastecimentos += abastecimento.getValor();
+        }
+        relatorio.put("Abastecimentos", totalAbastecimentos);
+
+        return relatorio;
+    }
+
 }

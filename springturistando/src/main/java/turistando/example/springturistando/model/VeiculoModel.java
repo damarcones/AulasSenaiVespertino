@@ -1,12 +1,17 @@
 package turistando.example.springturistando.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
-@Table(name = "veiculos") 
+@Table(name = "veiculos")
 public class VeiculoModel {
+
     @Id
     private String placa; // Chave primária
 
@@ -20,7 +25,14 @@ public class VeiculoModel {
     private String cor;
     private String renavam;
 
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AbastecimentoModel> abastecimentos;
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DespesasModel> despesas;
+
     // Getters e Setters
+
     public String getPlaca() {
         return placa;
     }
@@ -99,5 +111,21 @@ public class VeiculoModel {
 
     public void setRenavam(String renavam) {
         this.renavam = renavam;
+    }
+
+    public List<AbastecimentoModel> getAbastecimentos() {
+        return abastecimentos;
+    }
+
+    public void setAbastecimentos(List<AbastecimentoModel> abastecimentos) {
+        this.abastecimentos = abastecimentos;
+    }
+
+    public List<DespesasModel> getDespesas() {
+        return despesas;
+    }
+
+    public void setDespesas(List<DespesasModel> despesas) {
+        this.despesas = despesas;
     }
 }

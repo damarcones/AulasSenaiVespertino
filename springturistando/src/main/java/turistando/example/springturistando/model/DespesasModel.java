@@ -1,7 +1,6 @@
 package turistando.example.springturistando.model;
 
 import java.time.LocalDate;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,22 +10,26 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Despesas")
+@Table(name = "despesas")
 public class DespesasModel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //chave primária
+    private Long id; // Chave primária
 
     private double valor;
-    private String tipo; 
-    private String descricao; 
+    private String tipo;
+    private String descricao;
     private LocalDate dataDespesa;
 
+    // Adicionando o campo categoria
+    private String categoria; // Novo campo para armazenar a categoria da despesa
+
     @ManyToOne
-    @JoinColumn(name = "veiculo_placa")
+    @JoinColumn(name = "veiculo_placa", referencedColumnName = "placa", nullable = false)
     private VeiculoModel veiculo;
 
-    // Getters e setters
+    // Getters e Setters
 
     public Long getId() {
         return id;
@@ -66,6 +69,14 @@ public class DespesasModel {
 
     public void setDataDespesa(LocalDate dataDespesa) {
         this.dataDespesa = dataDespesa;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public VeiculoModel getVeiculo() {
