@@ -32,7 +32,7 @@ public class AbastecimentoService {
         }
 
         if (abastecimento.getTipoCombustivel() == null) {
-            throw new Exception("Campo ttipo combustivel não pode ser null");
+            throw new Exception("Campo tipo combustivel não pode ser null");
         }
 
         if (abastecimento.getValorTotal() < 1) {

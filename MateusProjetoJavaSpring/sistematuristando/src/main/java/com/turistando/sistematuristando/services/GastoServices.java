@@ -20,6 +20,32 @@ public class GastoServices {
     @Autowired
     private GastoRepository gastoRepository;
 
+
+    public GastoModel registrarGasto(GastoModel gasto) throws Exception {
+
+        if(gasto.getData() == null){
+            throw new Exception("Campo data não pode ser null");
+        }
+        if(gasto.getDescricao() == null || gasto.getDescricao().isEmpty()){
+            throw new Exception("Campo descrição não pode ser null");
+        }
+        if(gasto.getTipo() == null){
+            throw new Exception("Campo tipo não pode ser null");
+        }
+        if(gasto.getValor() < 0){
+            throw new Exception("Campo valor não pode ser negativo ou null");
+        }
+        if (gasto.getVeiculo() == null) {
+            throw new Exception("Campo veículo não pode ser null ou vazio");
+        }
+
+        //save
+        return gastoRepository.save(gasto);
+    }
+
+
+
+
     public List<GastoModel> getGastosPorPlaca(String placa) throws Exception{
         Optional<VeiculoModel> obj = veiculoRepository.findById(placa);
         if(!(obj.isPresent())){

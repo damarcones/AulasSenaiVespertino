@@ -43,17 +43,21 @@ public class GastoController {
     }
 
     @PostMapping()
-    public ResponseEntity<GastoModel> registrar(@RequestBody GastoModel gasto){
+    public ResponseEntity<Object> registrar(@RequestBody GastoModel gasto){
         
         Optional<VeiculoModel> veiculoOpt = repoVeiculo.findById(gasto.getVeiculo().getPlaca());
-
-        if (veiculoOpt.isPresent()) {
+        try {
+            if (veiculoOpt.isPresent()) {
             gasto.setVeiculo(veiculoOpt.get());
-            GastoModel obj = repoGasto.save(gasto);
+            GastoModel obj = gastoService.registrarGasto(gasto);
             return new ResponseEntity<>(obj, HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.notFound().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
+        
         
     }
     

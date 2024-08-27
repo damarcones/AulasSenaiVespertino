@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,15 +48,23 @@ public class VeiculoController {
     }
 
     @PostMapping()
-    public ResponseEntity<VeiculoModel>registrarVeiculo(@RequestBody  VeiculoModel veiculo){
-        VeiculoModel obj = repoVeiculo.save(veiculo);
-        return new ResponseEntity<>(obj, HttpStatus.CREATED);
+    public ResponseEntity<Object>registrarVeiculo(@RequestBody  VeiculoModel veiculo) throws Exception{
+        try {
+            VeiculoModel novoVeiculo = veiculoService.registrarVeiculo(veiculo);
+            return ResponseEntity.ok(novoVeiculo);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
     
     @PutMapping()
-    public ResponseEntity<VeiculoModel> atualizar(@RequestBody VeiculoModel veiculos){
-        VeiculoModel obj = repoVeiculo.save(veiculos);
-        return  ResponseEntity.ok(obj);
+    public ResponseEntity<Object> atualizar(@RequestBody VeiculoModel veiculo){
+        try {
+            VeiculoModel novoVeiculo = veiculoService.registrarVeiculo(veiculo);
+            return ResponseEntity.ok(novoVeiculo);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

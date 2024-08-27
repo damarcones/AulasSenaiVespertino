@@ -23,40 +23,54 @@ public class VeiculoServices {
     
     public VeiculoModel registrarVeiculo (VeiculoModel veiculo) throws Exception{
 
-        //Tratamento de valores null e invalido;
 
-        if(veiculo.getAnoFabricacao() < 1){
-            throw new Exception("Campo ano de fabricação não pode ser null ou negativo");
-        }
-        if(veiculo.getAnoModelo() < 1 ){
-            throw new Exception("Campo ano de modelo não pode ser null ou negativo");
-        }
-        if(veiculo.getMarca() == null){
-            throw new Exception("Campo marca não pode ser null ou vazio");
-        }
-        if(veiculo.getModelo() == null ){
-            throw new Exception("Campo modelo não pode ser null ou vazio");
-        }
-        if(veiculo.getCapacidadeTanque() < 1){
-            throw new Exception("Campo capacidade do tanque não pode ser negativa");
-        }
-        if(veiculo.getMotorizacao() < 1){
-            throw new Exception("Campo motorização não pode ser negativa");
-        }
-        if(veiculo.getRenavam() > 16 || veiculo.getRenavam() < 0 ){
-            throw new Exception("Campo renavem deve ter 16 caracteres numéricos");
-        }
-        if(veiculo.getCor() == null ){
-            throw new Exception("Campo cor não pode ser null ou vazio");
+        //placa existe
+        if (veiculoRepository.findByPlaca(veiculo.getPlaca()).isPresent()) {
+            throw new Exception("Já existe um veículo registrado com essa placa.");
         }
 
-        if (!(veiculo.getPlaca().length() == 7)) {
+        //renavam existe;
+        if (veiculoRepository.findByRenavam(veiculo.getRenavam()).isPresent()) {
+            throw new Exception("Já existe um veículo registrado com esse RENAVAM.");
+        }
+
+        //null e vazio;
+        if (veiculo.getAnoFabricacao() < 1) {
+            throw new Exception("Campo ano de fabricação não pode ser nulo ou negativo");
+        }
+        if (veiculo.getAnoModelo() < 1) {
+            throw new Exception("Campo ano de modelo não pode ser nulo ou negativo");
+        }
+        if (veiculo.getMarca() == null) {
+            throw new Exception("Campo marca não pode ser nulo ou vazio");
+        }
+        if (veiculo.getModelo() == null) {
+            throw new Exception("Campo modelo não pode ser nulo ou vazio");
+        }
+        if (veiculo.getCapacidadeTanque() < 1) {
+            throw new Exception("Campo capacidade do tanque não pode ser negativo");
+        }
+        if (veiculo.getMotorizacao() < 1) {
+            throw new Exception("Campo motorização não pode ser negativo");
+        }
+
+        long renavamLength = String.valueOf(veiculo.getRenavam()).length();
+        if (renavamLength != 11) {
+            throw new Exception("Campo RENAVAM deve ter 11 caracteres numéricos");
+        }
+
+
+        if (veiculo.getCor() == null) {
+            throw new Exception("Campo cor não pode ser nulo ou vazio");
+        }
+
+        if (veiculo.getPlaca() == null || veiculo.getPlaca().length() != 7) {
             throw new Exception("Campo placa deve ter 7 caracteres");
         }
 
-        
-
+        // Salva o veículo no banco de dados
         return veiculoRepository.save(veiculo);
+    
     }
     
     
