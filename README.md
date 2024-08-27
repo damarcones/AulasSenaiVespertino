@@ -62,6 +62,7 @@ O projeto utiliza as seguintes dependências:
         <version>1.18.24</version>
         <scope>provided</scope>
     </dependency>
+</dependencies>
 ```
 
 ## Instalação e Configuração
@@ -86,7 +87,7 @@ O projeto utiliza as seguintes dependências:
     spring.application.name=springturistando
 
     spring.jpa.hibernate.ddl-auto=update
-    spring.datasource.url=jdbc:mysql://localhost:3306/BancoTuristando?createDatabaseIfNotExist=true
+    spring.datasource.url=jdbc:mysql://localhost:3306/turistando?createDatabaseIfNotExist=true
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
     spring.datasource.username=root
     spring.datasource.password=
@@ -112,8 +113,7 @@ O projeto utiliza as seguintes dependências:
 - **Descrição:** Registra uma despesa associada a um veículo.
 - **Requisitos:** Placa do veículo, valor, tipo de despesa e descrição.
 
-
-### 5. Geração de Relatórios
+### 4. Geração de Relatórios
 
 - **Descrição:** Gera relatórios detalhados de despesas e abastecimentos por veículo.
 - **Requisitos:** Placa do veículo.
@@ -124,7 +124,7 @@ O projeto utiliza as seguintes dependências:
 
 - **Cadastrar Veículo**
   - **Método:** POST
-  - **URL:** `http://localhost:8080/veiculos/cadastrarveiculo`
+  - **URL:** [http://localhost:8080/veiculos/cadastrarveiculo](http://localhost:8080/veiculos/cadastrarveiculo)
   - **Descrição:** Cadastra um novo veículo.
   - **Corpo da Requisição (JSON):**
     ```json
@@ -144,19 +144,19 @@ O projeto utiliza as seguintes dependências:
 
 - **Listar Veículos**
   - **Método:** GET
-  - **URL:** `http://localhost:8080/veiculos/listarveiculos`
+  - **URL:** [http://localhost:8080/veiculos/listarveiculos](http://localhost:8080/veiculos/listarveiculos)
   - **Descrição:** Retorna a lista de todos os veículos.
 
 - **Excluir Veículo**
   - **Método:** DELETE
-  - **URL:** `http://localhost:8080/veiculos/excluirveiculo/{placa}`
+  - **URL:** [http://localhost:8080/veiculos/excluirveiculo/{placa}](http://localhost:8080/veiculos/excluirveiculo/{placa})
   - **Descrição:** Remove um veículo do sistema.
 
 ### 2. Abastecimentos
 
 - **Registrar Abastecimento**
   - **Método:** POST
-  - **URL:** `http://localhost:8080/abastecimentos/registrarabastecimento/{placa}`
+  - **URL:** [http://localhost:8080/abastecimentos/registrarabastecimento/{placa}](http://localhost:8080/abastecimentos/registrarabastecimento/{placa})
   - **Descrição:** Registra um abastecimento para um veículo específico.
   - **Corpo da Requisição (JSON):**
     ```json
@@ -170,14 +170,14 @@ O projeto utiliza as seguintes dependências:
 
 - **Listar Abastecimentos por Placa**
   - **Método:** GET
-  - **URL:** `http://localhost:8080/abastecimentos/listarabastecimento/{placa}`
+  - **URL:** [http://localhost:8080/abastecimentos/listarabastecimento/{placa}](http://localhost:8080/abastecimentos/listarabastecimento/{placa})
   - **Descrição:** Retorna a lista de abastecimentos de um veículo específico.
 
 ### 3. Despesas
 
 - **Registrar Despesa**
   - **Método:** POST
-  - **URL:** `http://localhost:8080/despesas/registrardespesa/{placa}`
+  - **URL:** [http://localhost:8080/despesas/registrardespesa/{placa}](http://localhost:8080/despesas/registrardespesa/{placa})
   - **Descrição:** Registra uma despesa para um veículo específico.
   - **Corpo da Requisição (JSON):**
     ```json
@@ -191,20 +191,19 @@ O projeto utiliza as seguintes dependências:
 
 - **Listar Despesas por Placa**
   - **Método:** GET
-  - **URL:** `http://localhost:8080/despesas/listardespesaplaca/{placa}`
+  - **URL:** [http://localhost:8080/despesas/listardespesaplaca/{placa}](http://localhost:8080/despesas/listardespesaplaca/{placa})
   - **Descrição:** Retorna a lista de despesas de um veículo específico.
 
 ### 4. Relatórios
 
 - **Gerar Relatório Geral por Categoria**
   - **Método:** GET
-  - **URL:** `http://localhost:8080/veiculos/relatorio/{placa}`
+  - **URL:** [http://localhost:8080/veiculos/relatorio/{placa}](http://localhost:8080/veiculos/relatorio/{placa})
   - **Descrição:** Gera um relatório geral de despesas e abastecimentos por categoria para um veículo específico.
 
 ### 5. Cálculo de Consumo Médio
 
 - **Descrição:** Calcula o consumo médio de combustível de um veículo com base nos abastecimentos registrados.
 - **Requisitos:** Placa do veículo, variação de abastecimento.
-- - **Método:** GET
-  - **URL:** `http://localhost:8080/veiculos/consumo-medio/{placa}`
-    
+- **Método:** GET
+  - **URL:** [http://localhost:8080/veiculos/consumo-medio/{placa}](http://localhost:8080/veiculos/consumo-medio/{placa})
