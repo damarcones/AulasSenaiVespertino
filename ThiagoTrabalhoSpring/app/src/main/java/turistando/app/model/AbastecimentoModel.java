@@ -39,7 +39,7 @@ public class AbastecimentoModel implements Serializable {
     }
 
     public double getLitroAbastecido() {
-        return placaveiculo.getCapacidadeTanque();
+        return litroAbastecido;
     }
 
     public void setLitroAbastecido(double litroAbastecido) {
