@@ -12,7 +12,7 @@ O **Turistando** é um sistema para gerenciar e controlar os gastos com veículo
 - [Exemplo de Cadastro de Veículo](#exemplo-de-cadastro-de-veículo)
 - [Exemplo de Registro de Despesa](#exemplo-de-registro-de-despesa)
 - [Exemplo de Registro de Abastecimento](#exemplo-de-registro-de-abastecimento)
-- [Como Contribuir](#como-contribuir)
+
 
 ## Descrição do Projeto
 
