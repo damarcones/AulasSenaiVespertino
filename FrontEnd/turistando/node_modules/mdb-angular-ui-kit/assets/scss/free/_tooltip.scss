@@ -1,0 +1,31 @@
+// Tooltip
+
+.tooltip {
+  --#{$prefix}tooltip-font-size: #{$tooltip-font-size};
+
+  // &.show {
+  //   opacity: 1;
+  // }
+
+  // .tooltip-arrow {
+  //   display: none;
+  // }
+
+  // Additional MDB Angular styles
+  opacity: 1;
+  // Additional MDB Angular styles
+}
+
+.tooltip-inner {
+  font-size: var(--#{$prefix}tooltip-font-size);
+
+  // Additional MDB Angular styles
+  opacity: 0;
+  // Additional MDB Angular styles
+}
+
+// Additional MDB Angular styles
+.notification-open .cdk-overlay-container {
+  z-index: $zindex-toast;
+}
+// Additional MDB Angular styles

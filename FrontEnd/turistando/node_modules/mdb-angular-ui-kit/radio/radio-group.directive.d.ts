@@ -1,0 +1,32 @@
+import { AfterContentInit, OnDestroy, QueryList } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import { MdbRadioDirective } from './radio-button.directive';
+import * as i0 from "@angular/core";
+export declare const MDB_RADIO_GROUP_VALUE_ACCESSOR: any;
+export declare class MdbRadioGroupDirective implements ControlValueAccessor, AfterContentInit, OnDestroy {
+    radios: QueryList<MdbRadioDirective>;
+    get value(): any;
+    set value(value: any);
+    private _value;
+    get name(): string;
+    set name(name: string);
+    private _name;
+    get disabled(): boolean;
+    set disabled(disabled: boolean);
+    private _disabled;
+    private _destroy$;
+    onChange: (_: any) => void;
+    onTouched: () => void;
+    ngAfterContentInit(): void;
+    ngOnDestroy(): void;
+    private _updateRadiosState;
+    private _updateNames;
+    private _updateChecked;
+    private _updateDisabled;
+    registerOnChange(fn: (value: any) => any): void;
+    registerOnTouched(fn: () => any): void;
+    setDisabledState(isDisabled: boolean): void;
+    writeValue(value: any): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MdbRadioGroupDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<MdbRadioGroupDirective, "[mdbRadioGroup]", never, { "value": { "alias": "value"; "required": false; }; "name": { "alias": "name"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; }, {}, ["radios"], never, false, never>;
+}

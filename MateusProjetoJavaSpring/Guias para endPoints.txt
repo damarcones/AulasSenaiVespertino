@@ -1,0 +1,113 @@
+GET
+http://localhost:8080/veiculos
+
+http://localhost:8080/veiculos/ABC1265
+
+POST
+http://localhost:8080/veiculos
+{	"placa":"TRC1265",
+ 	"marca":"Honda",
+ 	"modelo":"Fit",
+  	"anoFabricacao":2020,
+  	"anoModelo":2021,
+  	"motorizacao":1.8,
+  	"capacidadeTanque":50.0,
+  	"combustiveisAceitos":"FLEX",
+  	"cor":"Prata",
+  	"renavam":6534561290
+}
+
+PUT
+http://localhost:8080/veiculos
+{
+	"placa":"TRC1265",
+ 	"marca":"Honda",
+ 	"modelo":"CITY",
+  	"anoFabricacao":2022,
+  	"anoModelo":2022,
+  	"motorizacao":1.8,
+ 	"capacidadeTanque":50.0,
+ 	"combustiveisAceitos":"FLEX",
+ 	"cor":"Prata",
+ 	"renavam":6534561290
+}
+
+DELETE
+http://localhost:8080/veiculos/TRC1265
+
+-----------------------------------------------------------
+
+GET
+
+
+http://localhost:8080/abastecimentos/veiculo/ABC1265
+http://localhost:8080/abastecimentos/1
+http://localhost:8080/abastecimentos
+
+
+POST
+http://localhost:8080/abastecimentos
+{
+  	"veiculo":{"placa":"TRC1265"},
+	"data":"2024-08-17",
+	"quilometragem": 1420.0,
+	"tipoCombustivel":"GASOLINA",
+	"quantidadeCombustivel":"16.0",
+	"valorTotal": 80
+}
+
+PUT
+http://localhost:8080/abastecimentos
+{
+	"idAbastecimento": 1,
+	"veiculo":{"placa":"TRC1265"},
+	"data":"2024-08-17",
+	"quilometragem": 1000.0,
+	"tipoCombustivel":"GASOLINA",
+	"quantidadeCombustivel":"45.0",
+	"valorTotal": 225.0
+}
+
+DELETE
+http://localhost:8080/abastecimentos/1 
+
+
+
+-------------------------------------------------
+
+
+GET
+
+
+POST
+http://localhost:8080/gastos
+{
+  	"data":"2024-08-17",
+	"descricao":"Ipva ano 2024",
+	"tipo":"IMPOSTO",
+	"valor":15650.0,
+	"veiculo":{"placa":"TRC1265"}
+}
+
+
+PUT
+http://localhost:8080/gastos
+{
+  	"id": 10,
+	"data":"2024-08-17",
+	"descricao":"Ipva ano 2023",
+	"tipo":"IMPOSTO",
+	"valor":15650.0,
+	"veiculo":{"placa":"TRC1265"}
+}
+
+
+DELETE
+http://localhost:8080/gastos/1
+
+------------------------------------------------------------
+GET
+
+http://localhost:8080/veiculos/consumo-medio?placa=ABC1265
+
+ 

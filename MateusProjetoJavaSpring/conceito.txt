@@ -1,0 +1,5 @@
+controller= serviços rest
+model= Classes completas
+repository= acesso a dados
+service= logica do negocio
+impl= implementação do service
