@@ -1,0 +1,42 @@
+#formDespesa{
+    background-color: white;
+    max-width: 500px;
+    margin: 186px auto;
+    padding: 20px 25px;
+    border: 1px solid #d2d6de;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#formDespesa legend{
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #3c8dbc;
+    font-size: 19px;
+}
+
+input, select{
+    border: 1px solid #d2d6de;
+    border-radius: 5px;
+    outline: none;
+    text-indent: 10px;
+    height: 27px;
+    margin-bottom: 13px;
+}
+
+label{
+    margin-bottom: 4px;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+#cadastrarDespesa{
+    background-color: #3c8dbc;
+    color: white;
+    border: none;
+}
+#cadastrarDespesa:hover {
+    background-color: #2f739b;
+}

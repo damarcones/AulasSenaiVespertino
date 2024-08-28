@@ -1,0 +1,38 @@
+
+
+/* p,h1,h2,label,form, button{
+    text-align: center;
+}
+*{
+    background-color: lightgray;
+}   
+h1{
+    text-transform: uppercase;
+    color: blue;
+} 
+h2{
+    color: red;
+}
+h4{
+    color:rebeccapurple;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+#containerForm{
+    width: 500px;
+    padding: 20px;
+    margin: 0 auto;
+    border: 1px solid gray;
+}
+input{
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+input:hover, input:focus{
+    border-color: red;
+    box-shadow: 5px 0px 10px coral;
+    background-color: chocolate;
+    color: red;
+} */
+
