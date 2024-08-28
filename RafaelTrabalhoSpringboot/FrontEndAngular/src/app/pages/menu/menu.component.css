@@ -1,0 +1,25 @@
+#menu{
+    background-color: #3c8dbc;
+    /*border-bottom: 2px solid rgb(39, 101, 216);*/
+    padding: 30px 20px;
+}
+#menu ul{
+    padding: 0; 
+    margin: 0; 
+    display: flex;
+    
+}
+#menu ul li{
+    list-style: none;
+    margin-right: 20px;
+}
+#menu ul li a{
+    text-decoration: none;
+    color: white;
+    padding: 20px;
+    font-weight: 600;
+}
+#menu ul li a:hover{
+    color: #275e7f;
+    
+}

@@ -1,0 +1,27 @@
+
+<form name="formDespesa" id="formDespesa">
+    <legend>Cadastro Despesa</legend>
+
+    <label for="nomeDespesa">Nome: </label>
+    <input type="text" id="nomeDespesa" name="nomeDespesa" placeholder="Digite o nome da despesa" required #nome>
+
+    <label for="valorDespesa">Valor: </label>
+    <input type="text" id="valorDespesa" name="valorDespesa" placeholder="Digite o valor da despesa" required>
+
+    <label for="Placa">Placa: </label>
+    <input type="text" id="Placa" name="Placa" placeholder="Digite a Placa do veiculo"required>
+
+    <label for="categoria">Categoria: </label>
+    <select id="categoria" name="categoria">
+        <option value="imposto">Imposto</option>
+        <option value="multa">Multa</option>
+        <option value="mecanico">Mecânico</option>
+        <option value="outros">Outros</option>
+    </select>
+
+    <label for="descricao">Descrição: </label>
+    <input type="text" id="descricao" name="descricao" placeholder="Digite a descricao" required>
+
+    <input type="submit" id="cadastrarDespesa" name="cadastrarDespesa" type="button" value="Cadastrar" />
+</form>
+
