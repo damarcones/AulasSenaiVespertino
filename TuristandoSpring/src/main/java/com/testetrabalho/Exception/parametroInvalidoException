@@ -1,0 +1,8 @@
+package com.testetrabalho.Exception;
+
+public class parametroInvalidoException extends Exception{
+    public parametroInvalidoException (String message){
+        super(message);
+    }
+
+}
