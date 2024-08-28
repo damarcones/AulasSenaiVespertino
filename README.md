@@ -1,6 +1,6 @@
 # Trabalho Prático de Spring Boot
 
-Essa branch é destinada para o trabalho prático de ``` Spring Boot ``` da turma ```  QUA.209.071 - Desenvolvedor JAVA ``` Vespertina do Senai Taguatinga de 2024. 
+Essa branch é destinada para o trabalho prático de ``` Spring Boot ``` da turma ```  QUA.209.071 - Desenvolvedor JAVA ``` Vespertina do Senai Taguatinga de 2024.. 
 
 ## Enunciado
 
