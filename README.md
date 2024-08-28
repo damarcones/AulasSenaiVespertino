@@ -1,37 +1,209 @@
-# Trabalho Prático de Spring Boot
+# Projeto Turistando
 
-Essa branch é destinada para o trabalho prático de ``` Spring Boot ``` da turma ```  QUA.209.071 - Desenvolvedor JAVA ``` Vespertina do Senai Taguatinga de 2024. 
+O **Turistando** é um sistema para gerenciar e controlar os gastos com veículos de uma empresa de transporte de turistas. O sistema permite registrar abastecimentos, despesas e visualizar relatórios detalhados por veículo.
 
-## Enunciado
+## Índice
 
-Você foi contratado(a) pela Turistando, uma empresa que possui uma frota de veículos que transporta turistas em Porto Seguro - BA, para refatorar um programa cujo objetivo é contabilizar os gastos (abastecimento, manutenção, impostos, multas e outros) gerados com os carros da empresa.
-
-Uma das exigências da Turistando é que o programa faça o cálculo do consumo de combustível de seus veículos, ou seja, calcule quantos quilometros o veículo faz por litro de combustível. Para isso, foi informado a você que todo abastecimento do veículo é do tipo "completar o tanque" até o automático da bomba; e para registrar o abastecimento é preciso inserir o valor e a quantidade de combustível abastecido, e a quilometragem atual do veículo (exemplo: 168,00, 27.42 e 112,352). Assim, você deverá utilizar todos os abastecimentos registrados no sistema e apresentar quantos quilometros o veículo faz, em média, por litro de combustível.
-
-As outras funcionalidades que o sistema que você irá deselvolver deve possuir são cálculos de outros gastos do veículo. Estes gastos devem ser sinalizados conforme sua categoria:  manutenção (Troca de óleo, alinhamento e balanceamento, etc); imposto (IPVA, licenciamento, etc); multa (Estacionamento proibido, etc ) e outros(pedágios, balsas, etc); e, sempre que solicitado, o programa exibirá um relatório com todos os eventos lançados no programa, sendo possível selecionar um relatório por categoria de despesa ou um relatório geral.
-
-## Requisitos Mínimos
-
-Como você é um(a) desenvolvedor(a) atencioso(a), desenvolverá o programa que permita o cadastro de mais de um veículo da Turistando, contendo as seguintes informações: Marca, modelo, ano de fabricação, ano do modelo, motorização, capacidade do tanque, combustíveis, cor, placa, renavam.
-
-Com o veículo cadastrado, será possível inserir os dados sobre os gastos do veículo em questão.
-
-O dono da empresa é um grande fã de tecnologia e fez um pedido especial a você: que o programa seja desenvolvido utilizando Java e Spring Boot.
-
-Para garantir que as informações sejam salvas de maneira correta, você criará exceções personalizadas para tratar os seguintes casos:
-- O tipo de combustível que será abastecido não é válido;
-- Ao cadastrar algo no sistema, o usuário deixa alguma informação em branco;
-- O usuário tente cadastrar um valor inválido (ex.: colocar um custo negativo);
-- O usuário tente inserir informações em carros que não foram cadastrados;
-- O cálculo de consumo só poderá ser feito quando houver, no mínimo, dois abastecimentos completos cadastrados.
+- [Descrição do Projeto](#descrição-do-projeto)
+- [Dependências](#dependências)
+- [Instalação e Configuração](#instalação-e-configuração)
+- [Casos de Uso](#casos-de-uso)
+- [Endpoints da API](#endpoints-da-api)
+- [Exemplo de Cadastro de Veículo](#exemplo-de-cadastro-de-veículo)
+- [Exemplo de Registro de Despesa](#exemplo-de-registro-de-despesa)
+- [Exemplo de Registro de Abastecimento](#exemplo-de-registro-de-abastecimento)
 
 
-**Observação**: Certamente haverá classes e atributos que não estão descritos no problema, mas que são necessários para o desenvolvimento do projeto e é obrigatório o armazenamento de dados em um banco MySQL.
+## Descrição do Projeto
 
-## Forma de Entrega
+Este projeto foi desenvolvido utilizando Java com o framework Spring Boot e um banco de dados MySQL. O sistema inclui funcionalidades para:
 
-- Deverá ser realizado um `Fork` dessa branch em seu repositório pessoal;
-- A raiz do projeto deve ser nomeada com seu nome + "TrabalhoSpring" (Ex: DamarconesTrabalhoSpring);
-- O trabalho deve ser entregue até o dia 27/08/2024, com o último commit podendo ser realizado até às 13:50h do dia limite para entrega;
-- A entrega será realizada com a criação de um  `Pull Request` para a branch `TrabalhoSpringBoot`, que deverá ser realizado até dia 27/08/2024;
-- É recomendável que o trabalho seja adicionado ao seu GitHub periodicamente, não havendo apenas 1 commit para todo o seu trabalho.
+- Registrar e gerenciar veículos.
+- Registrar abastecimentos e despesas dos veículos.
+- Calcular consumo médio de combustível.
+- Gerar relatórios de despesas e abastecimentos por veículo.
+
+## Dependências
+
+O projeto utiliza as seguintes dependências:
+
+- **Spring Boot**: Framework para construção da aplicação.
+- **Spring Data JPA**: Para acesso ao banco de dados.
+- **MySQL**: Banco de dados relacional.
+- **Lombok**: Biblioteca para reduzir a verbosidade do código Java.
+- **Gson** ou **org.json** (opcional): Para serialização/deserialização JSON.
+
+**Exemplo de dependências Maven:**
+
+```xml
+<dependencies>
+    <!-- Spring Boot Starter Web -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Starter Data JPA -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- MySQL Connector -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+    <!-- Lombok -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.24</version>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+```
+
+## Instalação e Configuração
+
+1. **Clone o repositório:**
+
+    ```bash
+    git clone https://github.com/Isaac-code-maker/AulasSenaiVespertino/TrabalhoSpringBoot
+    ```
+
+2. **Navegue até o diretório do projeto:**
+
+    ```bash
+    cd turistando
+    ```
+
+3. **Configure o banco de dados MySQL:**
+
+    Crie um banco de dados chamado `turistando` no MySQL e configure as credenciais no arquivo `application.properties`:
+
+    ```properties
+    spring.application.name=springturistando
+
+    spring.jpa.hibernate.ddl-auto=update
+    spring.datasource.url=jdbc:mysql://localhost:3306/turistando?createDatabaseIfNotExist=true
+    spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    spring.datasource.username=root
+    spring.datasource.password=
+
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+    spring.jpa.show-sql=true
+    ```
+
+## Casos de Uso
+
+### 1. Registro de Veículo
+
+- **Descrição:** Adiciona um novo veículo ao sistema.
+- **Requisitos:** Informações como placa, marca, modelo, ano, motorização e capacidade do tanque.
+
+### 2. Registro de Abastecimento
+
+- **Descrição:** Registra um abastecimento realizado em um veículo.
+- **Requisitos:** Placa do veículo, quilometragem, quantidade de combustível e valor.
+
+### 3. Registro de Despesa
+
+- **Descrição:** Registra uma despesa associada a um veículo.
+- **Requisitos:** Placa do veículo, valor, tipo de despesa e descrição.
+
+### 4. Geração de Relatórios
+
+- **Descrição:** Gera relatórios detalhados de despesas e abastecimentos por veículo.
+- **Requisitos:** Placa do veículo.
+
+## Endpoints da API
+
+### 1. Veículos
+
+- **Cadastrar Veículo**
+  - **Método:** POST
+  - **URL:** [http://localhost:8080/veiculos/cadastrarveiculo](http://localhost:8080/veiculos/cadastrarveiculo)
+  - **Descrição:** Cadastra um novo veículo.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "placa": "DEF-5678",
+        "marca": "Honda",
+        "modelo": "Civic",
+        "anoFabricacao": 2019,
+        "anoModelo": 2020,
+        "motorizacao": "2.0L",
+        "capacidadeTanque": 45.0,
+        "combustiveis": "Gasolina",
+        "cor": "Preto",
+        "renavam": "23456789012"
+    }
+    ```
+
+- **Listar Veículos**
+  - **Método:** GET
+  - **URL:** [http://localhost:8080/veiculos/listarveiculos](http://localhost:8080/veiculos/listarveiculos)
+  - **Descrição:** Retorna a lista de todos os veículos.
+
+- **Excluir Veículo**
+  - **Método:** DELETE
+  - **URL:** [http://localhost:8080/veiculos/excluirveiculo/{placa}](http://localhost:8080/veiculos/excluirveiculo/{placa})
+  - **Descrição:** Remove um veículo do sistema.
+
+### 2. Abastecimentos
+
+- **Registrar Abastecimento**
+  - **Método:** POST
+  - **URL:** [http://localhost:8080/abastecimentos/registrarabastecimento/{placa}](http://localhost:8080/abastecimentos/registrarabastecimento/{placa})
+  - **Descrição:** Registra um abastecimento para um veículo específico.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "valor": 200.00,
+        "quantidadeCombustivel": 60.0,
+        "quilometragem": 12500.0,
+        "dataAbastecimento": "2024-08-25"
+    }
+    ```
+
+- **Listar Abastecimentos por Placa**
+  - **Método:** GET
+  - **URL:** [http://localhost:8080/abastecimentos/listarabastecimento/{placa}](http://localhost:8080/abastecimentos/listarabastecimento/{placa})
+  - **Descrição:** Retorna a lista de abastecimentos de um veículo específico.
+
+### 3. Despesas
+
+- **Registrar Despesa**
+  - **Método:** POST
+  - **URL:** [http://localhost:8080/despesas/registrardespesa/{placa}](http://localhost:8080/despesas/registrardespesa/{placa})
+  - **Descrição:** Registra uma despesa para um veículo específico.
+  - **Corpo da Requisição (JSON):**
+    ```json
+    {
+        "valor": 150.0,
+        "tipo": "Manutenção",
+        "descricao": "Troca de óleo e revisão do sistema de freios",
+        "dataDespesa": "2024-08-25"
+    }
+    ```
+
+- **Listar Despesas por Placa**
+  - **Método:** GET
+  - **URL:** [http://localhost:8080/despesas/listardespesaplaca/{placa}](http://localhost:8080/despesas/listardespesaplaca/{placa})
+  - **Descrição:** Retorna a lista de despesas de um veículo específico.
+
+### 4. Relatórios
+
+- **Gerar Relatório Geral por Categoria**
+  - **Método:** GET
+  - **URL:** [http://localhost:8080/veiculos/relatorio/{placa}](http://localhost:8080/veiculos/relatorio/{placa})
+  - **Descrição:** Gera um relatório geral de despesas e abastecimentos por categoria para um veículo específico.
+
+### 5. Cálculo de Consumo Médio
+
+- **Descrição:** Calcula o consumo médio de combustível de um veículo com base nos abastecimentos registrados.
+- **Requisitos:** Placa do veículo, variação de abastecimento.
+- **Método:** GET
+  - **URL:** [http://localhost:8080/veiculos/consumo-medio/{placa}](http://localhost:8080/veiculos/consumo-medio/{placa})
