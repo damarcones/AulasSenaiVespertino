@@ -1,0 +1,34 @@
+import { ElementRef, AfterContentInit, Renderer2, OnDestroy, NgZone } from '@angular/core';
+import { MdbAbstractFormControl } from './form-control';
+import { ContentObserver } from '@angular/cdk/observers';
+import { Subject } from 'rxjs';
+import * as i0 from "@angular/core";
+export declare class MdbFormControlComponent implements AfterContentInit, OnDestroy {
+    private _renderer;
+    private _contentObserver;
+    private _elementRef;
+    private _ngZone;
+    _notchLeading: ElementRef;
+    _notchMiddle: ElementRef;
+    _formControl: MdbAbstractFormControl<any>;
+    _label: ElementRef;
+    outline: boolean;
+    display: boolean;
+    get input(): HTMLInputElement;
+    constructor(_renderer: Renderer2, _contentObserver: ContentObserver, _elementRef: ElementRef, _ngZone: NgZone);
+    readonly _destroy$: Subject<void>;
+    private _notchLeadingLength;
+    private _labelMarginLeft;
+    private _labelGapPadding;
+    private _labelScale;
+    private _recalculateGapWhenVisible;
+    ngAfterContentInit(): void;
+    ngOnDestroy(): void;
+    private _getLabelWidth;
+    private _updateBorderGap;
+    private _updateLabelActiveState;
+    private _isLabelActive;
+    private _isHidden;
+    static ɵfac: i0.ɵɵFactoryDeclaration<MdbFormControlComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<MdbFormControlComponent, "mdb-form-control", never, {}, {}, ["_formControl", "_label"], ["*"], false, never>;
+}
